@@ -1,0 +1,18 @@
+#+TITLE: PPL -- Preliminary
+#+SETUPFILE: ../setup.org
+
+-----
+
+#+BEGIN_abstract
+
+#+END_abstract
+
+#+TOC: headlines: 2
+
+* Overview
+
+  Programming Languages are essential to computers.  Everything you
+  see and use on computers, tablets, phones, wearables and etc is
+  implemented somehow with programming languages.
+
+-----

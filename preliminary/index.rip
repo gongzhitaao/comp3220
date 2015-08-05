@@ -1,0 +1,6 @@
+% -*- mode: reftex-index-phrases; TeX-master: "index.org" -*-
+%                              Key      Macro Format            Repeat
+%---------------------------------------------------------------------
+>>>INDEX_MACRO_DEFINITION:	i	\index{%s}          	t
+>>>INDEX_MACRO_DEFINITION:	g	\glossary{%s}       	t
+%---------------------------------------------------------------------
