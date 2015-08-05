@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 2015-08-05 Wed 18:29 -->
+<meta  charset="utf-8">
+<meta  name="viewport" content="width=device-width, initial-scale=1">
+<title>PPL &#x2013; BNF</title>
+<meta  name="generator" content="Org-mode">
+<meta  name="author" content="Zhitao Gong">
+<meta name="description" content="COMP 3220 Principle of Programming Languages, Auburn University">
+<meta name="keywords" content="comp3220, principle of programming languages, auburn university">
+<link rel="stylesheet" href="/comp3220/css/normalize.css" type="text/css" />
+<link rel="stylesheet" href="/comp3220/css/font-awesome.min.css" type="text/css" />
+<link rel="stylesheet" href="https://gongzhitaao.github.io/orgcss/org.css" type="text/css" />
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<header>
+<h1 class="title">PPL &#x2013; BNF</h1>
+</header><div class="abstract">
+<p>
+We describe the syntax of programming languages with BNF and <i>e</i>-BNF.
+</p>
+
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="sec:introduction"><a id="orgheadline2"></a><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-sec:introduction">
+<p>
+BNF, short for <i>Backus Normal Form</i> or <i>Backus–Naur Form</i>, is a
+metalanguage used to describe other languages, including itself.
+The following snippet shows one possible representation of BNF
+syntax by itself [<a href="#wiki:bnf">1</a>].
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bnf"><span style="color: #fcaf3e; font-weight: bold;">&lt;syntax&gt;</span>         ::= <span style="color: #729fcf;">&lt;rule&gt;</span> <span style="color: #fcaf3e; font-weight: bold; font-style: italic;">|</span> <span style="color: #729fcf;">&lt;rule&gt;</span> <span style="color: #729fcf;">&lt;syntax&gt;</span>
+<span style="color: #fcaf3e; font-weight: bold;">&lt;rule&gt;</span>           ::= <span style="color: #729fcf;">&lt;opt-whitespace&gt;</span> <span style="color: #de7fa8;">"&lt;"</span> <span style="color: #729fcf;">&lt;rule-name&gt;</span> <span style="color: #de7fa8;">"&gt;"</span> <span style="color: #729fcf;">&lt;opt-whitespace&gt;</span> <span style="color: #de7fa8;">"::="</span>
+                     <span style="color: #729fcf;">&lt;opt-whitespace&gt;</span> <span style="color: #729fcf;">&lt;expression&gt;</span> <span style="color: #729fcf;">&lt;line-end&gt;</span>
+<span style="color: #fcaf3e; font-weight: bold;">&lt;opt-whitespace&gt;</span> ::= <span style="color: #de7fa8;">" "</span> <span style="color: #729fcf;">&lt;opt-whitespace&gt;</span> <span style="color: #fcaf3e; font-weight: bold; font-style: italic;">|</span> <span style="color: #de7fa8;">""</span>
+<span style="color: #fcaf3e; font-weight: bold;">&lt;expression&gt;</span>     ::= <span style="color: #729fcf;">&lt;list&gt;</span> <span style="color: #fcaf3e; font-weight: bold; font-style: italic;">|</span> <span style="color: #729fcf;">&lt;list&gt;</span> <span style="color: #de7fa8;">"|"</span> <span style="color: #729fcf;">&lt;expression&gt;</span>
+<span style="color: #fcaf3e; font-weight: bold;">&lt;line-end&gt;</span>       ::= <span style="color: #729fcf;">&lt;opt-whitespace&gt;</span> <span style="color: #729fcf;">&lt;EOL&gt;</span> <span style="color: #fcaf3e; font-weight: bold; font-style: italic;">|</span> <span style="color: #729fcf;">&lt;line-end&gt;</span> <span style="color: #729fcf;">&lt;line-end&gt;</span>
+<span style="color: #fcaf3e; font-weight: bold;">&lt;list&gt;</span>           ::= <span style="color: #729fcf;">&lt;term&gt;</span> <span style="color: #fcaf3e; font-weight: bold; font-style: italic;">|</span> <span style="color: #729fcf;">&lt;term&gt;</span> <span style="color: #729fcf;">&lt;opt-whitespace&gt;</span> <span style="color: #729fcf;">&lt;list&gt;</span>
+<span style="color: #fcaf3e; font-weight: bold;">&lt;term&gt;</span>           ::= <span style="color: #729fcf;">&lt;literal&gt;</span> <span style="color: #fcaf3e; font-weight: bold; font-style: italic;">|</span> <span style="color: #de7fa8;">"&lt;"</span> <span style="color: #729fcf;">&lt;rule-name&gt;</span> <span style="color: #de7fa8;">"&gt;"</span>
+<span style="color: #fcaf3e; font-weight: bold;">&lt;literal&gt;</span>        ::= '<span style="color: #de7fa8;">"' &lt;text&gt; '"</span>' <span style="color: #fcaf3e; font-weight: bold; font-style: italic;">|</span> <span style="color: #de7fa8;">"'"</span> <span style="color: #729fcf;">&lt;text&gt;</span> <span style="color: #de7fa8;">"'"</span>
+</pre>
+</div>
+
+<p>
+BNF represention, as seen above, is actually a collection of
+derivation rules, where the left-hand-side (LHS) may be replaced by
+the right-hand-side (RHS).  Symbols that appear on LHS are
+<i>nonterminals</i>, e.g., <code>&lt;syntax&gt;</code>, <code>&lt;rule&gt;</code> and etc.  And symbols
+that never appears on LFS are <i>terminals</i>, e.g., <code>&lt;rule-name&gt;</code> and
+<code>&lt;text&gt;</code>.  Terminal, as its name suggests, is the elementary symbols
+of the languages being represented.  It may not be changed by the
+derivation rules, since it never appears on the LHS.
+</p>
+
+<p>
+The symbol "|" means logic <i>OR</i>.  A nonterminal may have multiple
+derivation rules, which can be written separately or joined together
+with "|" as seen above.  The <code>&lt;syntax&gt;</code> representation can be also
+written as
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bnf"><span style="color: #fcaf3e; font-weight: bold;">&lt;syntax&gt;</span> ::= <span style="color: #729fcf;">&lt;rule&gt;</span>
+<span style="color: #fcaf3e; font-weight: bold;">&lt;syntax&gt;</span> ::= <span style="color: #729fcf;">&lt;rule&gt;</span> <span style="color: #729fcf;">&lt;syntax&gt;</span>
+</pre>
+</div>
+
+<p>
+Note that the rule may be ambiguous, which will be discussed in
+detail in Section <a href="#sec:parse-tree">2</a>.
+</p>
+</div>
+
+<div id="outline-container-orgheadline1" class="outline-3">
+<h3 id="orgheadline1"><span class="section-number-3">1.1</span> Relationship with CFG</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+CFG, short for context-free grammar, which is a formal grammer in
+formal language theory.  Usually is it defined by a 4-tuple, see
+[<a href="#wiki:cfg">2</a>].  BNF is popular notation of CFG.  In other words,
+they are doing the same thing.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="sec:parse-tree"><a id="orgheadline3"></a><span class="section-number-2">2</span> Parse Tree</h2>
+<div class="outline-text-2" id="text-sec:parse-tree">
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4"><span class="section-number-2">3</span> Reference</h2>
+<div class="outline-text-2" id="text-3">
+
+
+
+  <hr >
+
+  <div id="bibliography">
+<h2>References</h2>
+<table>
+
+<tr valign="top">
+<td align="right" class="bibtexnumber">
+[<a name="wiki:bnf">1</a>]
+</td>
+<td class="bibtexitem">
+Wikipedia.
+ Backus–naur form --- wikipedia, the free encyclopedia, 2015.
+ [Online; accessed 5-August-2015].
+[&nbsp;<a href="ref_bib.html#wiki:bnf">bib</a>&nbsp;|
+<a href="https://en.wikipedia.org/w/index.php?title=Backus%E2%80%93Naur_Form&amp;oldid=673235331">http</a>&nbsp;]
+
+</td>
+</tr>
+
+
+<tr valign="top">
+<td align="right" class="bibtexnumber">
+[<a name="wiki:cfg">2</a>]
+</td>
+<td class="bibtexitem">
+Wikipedia.
+ Context-free grammar --- wikipedia, the free encyclopedia, 2015.
+ [Online; accessed 5-August-2015].
+[&nbsp;<a href="ref_bib.html#wiki:cfg">bib</a>&nbsp;|
+<a href="https://en.wikipedia.org/w/index.php?title=Context-free_grammar&amp;oldid=664251154">http</a>&nbsp;]
+
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<a class="author"
+       href="http://gongzhitaao.org">Zhitao Gong</a> / <span
+       class="date">2015-08-05 Wed 18:29</span><span class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3.1)</span>
+</div>
+</body>
+</html>

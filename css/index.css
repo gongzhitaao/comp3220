@@ -1,0 +1,32 @@
+#outline-container-orgheadline1 {
+    float: left;
+    width: 45%;
+    height: 100%;
+}
+
+#outline-container-orgheadline2 {
+    float: right;
+    width: 45%;
+    height: 100%;
+}
+
+#content {
+    height: auto;
+}
+
+#postamble {
+    clear: both;
+}
+
+#outline-container-orgheadline1 h2 {
+    display: none;
+}
+
+div>ul {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+ul li {
+    list-style-type: none;
+}
