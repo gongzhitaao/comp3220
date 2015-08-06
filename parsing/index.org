@@ -1,8 +1,8 @@
-#+TITLE: PPL -- BNF
+#+TITLE: PPL -- Parsing
 #+SETUPFILE: ../setup.org
 
 #+BEGIN_abstract
-We describe the syntax of programming languages with BNF and /e/-BNF.
+In this article, we introduce how to formally describe a programming language
 #+END_abstract
 
 * Introduction
@@ -10,7 +10,9 @@ We describe the syntax of programming languages with BNF and /e/-BNF.
   :CUSTOM_ID: sec:introduction
   :END:
 
-  First of all, let's meet the jargons.
+  Whatever programming language you are choosing, you will need a
+  /compiler/ or an /interpreter/.  The compilation or interpretation
+  process are done automatically by programs.
 
 * BNF
   :PROPERTIES:

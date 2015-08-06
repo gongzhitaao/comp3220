@@ -13,68 +13,40 @@ all programming languages.  Many of the materials here are summary
 from Concepts of Programming Languages (10th edition).
 #+END_abstract
 
-* Outline
-  :PROPERTIES:
-  :CUSTOM_ID: sec:outline
-  :END:
-
-  - [[./syllabus][Syllabus]]
-  - [[./preliminary][Priliminaries]]
-  - Evolution
-  - Language Definition
-    + [[./bnf][BNF and /e/-BNF]]
-    + Attribute Grammers
-    + Dynamic Semantics
-      - Operational Semantics
-      - Denotational Semantics
-      - Axiomatic Semantics
-  - Parsing
-    + Lexical Analysis
-    + Syntax Analysis -- Parsing
-      - Top-Down Parser
-      - Bottom-Up Parser
-  - Basic Components
-    + Variable
-    + Expression
-    + Flow Control
-    + Subprogram
-  - Samples
-    + Scripting Language -- Javascript
-    + Functional Language -- Emacs-Lisp
-    + Logic Language -- Prolog
-  - Misc
-    + Data Types
-      - Builtin Data Types
-      - Abstract Data Types
-    + OOP
-    + Concurrency
-    + Exception and Event
-
-
 * {{{LOGO}}} -- Fall 2015
   :PROPERTIES:
   :CUSTOM_ID: sec:brief
   :END:
 
-  me (AT) gongzhitaao (DOT) org
-
-  Office hours (Shelby 2307) is /Tue/Thu 1430 till class/
+  - Email: /me (AT) gongzhitaao (DOT) org/
+  - Office: /Shelby 2307/
+  - Office Hour: /Tue/Thu 1430 till class/
 
   TA is TBA
 
-  Course Calendar
+  - [[./syllabus][Syllabus]]
+  - Course Calendar
+
 
   - Homework 1
   - Homework 2
   - Homework 3
   - Homework 4
-  - Midterm Guild
+  - Midterm Guide
   - Homework 5
   - Homework 6
   - Homework 7
   - Homework 8
-  - Final Guild
+  - Final Guide
+  - Term Project
 
-* Footnotes
+* Outline
+  :PROPERTIES:
+  :CUSTOM_ID: sec:outline
+  :END:
 
------
+  - [[./preliminary][Priliminaries]] :: Overview of topics in this course.
+  - History :: Brief history of some programming languages.
+  - [[./langdef][Language Definition]] :: Formally describe syntax and sematics.
+  - [[./parsing][Parsing]] :: Algorithms for syntax and lexical anaylysis.
+  - Components :: General view of programming language elements.

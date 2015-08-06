@@ -1,0 +1,106 @@
+#+TITLE: Language Definition
+#+SETUPFILE: ../setup.org
+
+-----
+
+#+BEGIN_abstract
+Describing the programming languages in a concise and wildly accepted
+way is difficult.  In this article, we introduce one possible
+solution, the BNF notation.
+#+END_abstract
+
+#+TOC: headlines: 2
+
+* Introduction
+  :PROPERTIES:
+  :CUSTOM_ID: sec:introduction
+  :END:
+
+  The problem we have in hand is describing a programming language.
+  This leads us to the question, what do we need to describe
+  concretely?  The answer is /syntax/ and /semantics/.  Syntax refers
+  to, informally, the right way to write a programming language,
+  including the expressions, statements and etc.  And semantics refers
+  to the meaning of them.
+
+  The following is a valid statement syntax in C++.
+
+  #+BEGIN_SRC c++
+int a = 0;
+  #+END_SRC
+
+  The semantics of the above statement is that we declare an integer
+  variable named =a=, and initalize it with an integer literal =0=.
+
+  Describing syntax and semantics in natural languages might be a
+  solution, but definitely a bad solution.  It might be ambiguous and
+  lengthy.  Besides, it lacks uniformity.  One widely accepted
+  notation is /BNF/, which will be introduced in Section [[#sec:bnf]].
+  And in Section [[#sec:describe-syntax]], we will show how to describe
+  syntax formally in BNF notation.  Describing semantics formally in
+  BNF comes in Section [[#sec:describe-semantics]].
+
+* BNF
+  :PROPERTIES:
+  :CUSTOM_ID: sec:bnf
+  :END:
+
+  BNF, short for /Backus Normal Form/ or /Backus–Naur Form/, is a
+  metalanguage used to describe other languages, including itself.
+  The following snippet shows one possible representation of BNF
+  syntax by itself \cite{wiki:bnf}.
+
+  #+BEGIN_SRC bnf
+<syntax>     ::= <rule> | <rule> <syntax>
+<rule>       ::= <opt-space> "<" <TEXT> ">" <opt-space> "::=" <opt-space> <expression> <line-end>
+<opt-space>  ::= " " <opt-space> | ""
+<expression> ::= <list> | <list> "|" <expression>
+<line-end>   ::= <opt-space> <EOL> | <line-end> <line-end>
+<list>       ::= <term> | <term> <opt-space> <list>
+<term>       ::= <literal> | "<" <TEXT> ">"
+<literal>    ::= "'" <TEXT> "'"
+  #+END_SRC
+
+  BNF represention, as seen above, is actually a collection of
+  derivation rules, where the left-hand-side (LHS) may be replaced by
+  the right-hand-side (RHS).  Symbols that appear on LHS are
+  /nonterminals/, e.g., =<syntax>=, =<rule>= and etc.  And symbols
+  that never appears on LFS are /terminals/, e.g., =<TEXT>= and
+  =<EOL>=.  Terminal, as its name suggests, is the elementary symbols
+  of the languages being represented.  It may not be changed by the
+  derivation rules, since it never appears on the LHS.  These
+  terminals are defined in specific languages which BNF describes.
+
+  The symbol "|" means /logic OR/.  A nonterminal may have multiple
+  derivation rules, which can be written separately or joined together
+  with "|" as seen above.  The =<syntax>= representation can be also
+  written as
+
+  #+BEGIN_SRC bnf
+<syntax> ::= <rule>
+<syntax> ::= <rule> <syntax>
+  #+END_SRC
+
+  Note that BNF rules might be ambiguous due to inappr
+
+** Relationship with CFG
+
+   CFG, short for context-free grammar, which is a formal grammer in
+   formal language theory.  Usually is it defined by a 4-tuple, see
+   \cite{wiki:cfg}.  BNF is popular notation of CFG.  In other words,
+   they are doing the same thing.
+
+* Describe Syntax
+  :PROPERTIES:
+  :CUSTOM_ID: sec:describe-syntax
+  :END:
+
+* Describe Semantics
+  :PROPERTIES:
+  :CUSTOM_ID: sec:describe-semantics
+  :END:
+* Reference
+
+#+BIBLIOGRAPHY: ref plain
+
+-----
