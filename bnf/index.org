@@ -23,14 +23,14 @@ We describe the syntax of programming languages with BNF and /e/-BNF.
   syntax by itself \cite{wiki:bnf}.
 
   #+BEGIN_SRC bnf
-<syntax>         ::= <rule> | <rule> <syntax>
-<rule>           ::= <opt-whitespace> "<" <TEXT> ">" <opt-whitespace> "::=" <opt-whitespace> <expression> <line-end>
-<opt-whitespace> ::= " " <opt-whitespace> | ""
-<expression>     ::= <list> | <list> "|" <expression>
-<line-end>       ::= <opt-whitespace> <EOL> | <line-end> <line-end>
-<list>           ::= <term> | <term> <opt-whitespace> <list>
-<term>           ::= <literal> | "<" <TEXT> ">"
-<literal>        ::= "'" <TEXT> "'"
+<syntax>     ::= <rule> | <rule> <syntax>
+<rule>       ::= <opt-space> "<" <TEXT> ">" <opt-space> "::=" <opt-space> <expression> <line-end>
+<opt-space>  ::= " " <opt-space> | ""
+<expression> ::= <list> | <list> "|" <expression>
+<line-end>   ::= <opt-space> <EOL> | <line-end> <line-end>
+<list>       ::= <term> | <term> <opt-space> <list>
+<term>       ::= <literal> | "<" <TEXT> ">"
+<literal>    ::= "'" <TEXT> "'"
   #+END_SRC
 
   BNF represention, as seen above, is actually a collection of
