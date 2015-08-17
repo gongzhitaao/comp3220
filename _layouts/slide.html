@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{page.title}}</title>
+
+    <link rel="stylesheet" href="/comp3220/css/reveal.css">
+    <link rel="stylesheet" href="/comp3220/css/theme/black.css" id="theme">
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        {{ content }}
+      </div>
+    </div>
+
+    <script src="/comp3220/lib/js/head.min.js"></script>
+    <script src="/comp3220/js/reveal.js"></script>
+
+    <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+
+      transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+      // Optional reveal.js plugins
+      dependencies: [
+      { src: '/comp3220/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: '/comp3220/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '/comp3220/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '/comp3220/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '/comp3220/plugin/zoom-js/zoom.js', async: true },
+      { src: '/comp3220/plugin/notes/notes.js', async: true }
+      ]
+      });
+
+    </script>
+
+  </body>
+</html>

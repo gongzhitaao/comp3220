@@ -1,0 +1,132 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic);
+@import url(http://fonts.googleapis.com/css?family=Merriweather:400,700italic,400italic,700);
+@import 'normalize.css';
+
+body {
+    background: #222;
+    background-color: #222;
+}
+
+.reveal {
+    font: normal normal normal 36px/1.6 "Open Sans", sans-serif;
+    color: #EEE;
+    text-rendering: optimizeLegibility;
+}
+
+.reveal a {
+    color: #3C97D6
+}
+
+.reveal .stack {
+    text-align: left;
+}
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  text-transform: uppercase;
+  word-wrap: break-word;
+}
+
+.reveal h1 {font-size: 2.5em; }
+.reveal h2 {font-size: 1.6em; padding-top: 0; padding-bottom: 0.2em; }
+.reveal h3 {font-size: 1.3em; padding-top: 0; padding-bottom: 0.52em; }
+.reveal h4 {font-size: 1em; }
+.reveal h1 {text-shadow: none; }
+
+.reveal section {
+    height: 100%;
+}
+
+.reveal table {
+    width: 90%;
+    margin-top: 1em;
+}
+
+.reveal table td {
+    border: none;
+}
+
+.reveal table tr>:first-child {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.reveal table caption {
+    font-size: 70%;
+    color: gray;
+}
+
+/* title slide */
+
+.reveal #sec-title-slide {
+    height: auto;
+}
+
+.reveal #sec-title-slide h2 {
+    font-style: italic;
+}
+
+.reveal #sec-title-slide .author {
+    color: gray;
+}
+
+.reveal #sec-title-slide .email {
+    text-transform: none;
+}
+
+/* toc */
+.reveal #table-of-contents h2 {
+    text-align: left;
+    border-bottom: 1px solid orange;
+}
+
+/* stack  */
+
+.reveal .slide-header {
+    position: fixed;
+    right: 20%;
+}
+
+.reveal .slide-header img{
+    margin: 0 10px;
+    border: none;
+    box-shadow: none;
+    background: rgba(0,0,0,0);
+    width: 64px;
+}
+
+.reveal .stack h2, .reveal .stack h3 {
+    text-align: left;
+    border-bottom: 1px solid orange;
+}
+
+span[class^="section-number"] {
+    float: right;
+}
+
+.ppl-logo sup {
+    top: 0;
+}
+
+.reveal .org-src-container {
+    border-top: 1px dashed #555;
+    border-bottom: 1px dashed #555;
+}
+
+.reveal pre {
+    box-shadow: none;
+}
+
+.reveal figure {
+    float: left;
+}
+
+.reveal code {
+    padding: 2px 5px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    font-size: 80%;
+}

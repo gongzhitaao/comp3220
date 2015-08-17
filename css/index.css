@@ -18,7 +18,7 @@
     clear: both;
 }
 
-#outline-container-orgheadline1 h2 {
+#outline-container-orgheadline2 h2 {
     display: none;
 }
 
@@ -29,4 +29,39 @@ div>ul {
 
 ul li {
     list-style-type: none;
+}
+
+.org-dl dd {
+    font-style: italic;
+    font-size: 90%;
+    color: grey;
+}
+
+.due-date {
+    font-size: 80%;
+    font-style: italic;
+    color: gray;
+}
+
+.exam-date {
+    font-size: 80%;
+    font-style: italic;
+    color: red;
+}
+
+table {
+    border: none;
+    margin: 0
+}
+
+table tr {
+    border: none;
+}
+
+table td + td {
+    border: none;
+}
+
+td {
+    padding-left: 0;
 }

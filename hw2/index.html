@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 2015-08-16 Sun 21:12 -->
+<meta  charset="utf-8">
+<meta  name="viewport" content="width=device-width, initial-scale=1">
+<title>PPL &#x2013; Homework 2</title>
+<meta  name="generator" content="Org-mode">
+<meta  name="author" content="Zhitao Gong">
+<meta name="description" content="COMP 3220 Principle of Programming Languages, Auburn University">
+<meta name="keywords" content="comp3220, principle of programming languages, auburn university">
+<link rel="stylesheet" href="/comp3220/css/normalize.css" type="text/css" />
+<link rel="stylesheet" href="/comp3220/css/font-awesome.min.css" type="text/css" />
+<link rel="stylesheet" href="https://gongzhitaao.github.io/orgcss/org.css" type="text/css" />
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<header>
+<h1 class="title">PPL &#x2013; Homework 2</h1>
+</header><hr >
+
+<div class="abstract">
+<p>
+Use BNF and <i>e</i>-NBF to formally describe syntax and semantics.
+</p>
+
+</div>
+
+<ol class="org-ol">
+<li><p>
+(<b>20 points</b>, Q3.7) Using the following grammar to show a parse
+tree and a leftmost derivation for each of the statements:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bnf"><span style="color: #ff2929;">&lt;assign&gt;</span> := <span style="color: #729fcf;">&lt;id&gt;</span> = <span style="color: #729fcf;">&lt;expr&gt;</span>
+<span style="color: #ff2929;">&lt;id&gt;</span>     := A <span style="color: #fcaf3e; font-weight: bold;">|</span> B <span style="color: #fcaf3e; font-weight: bold;">|</span> C
+<span style="color: #ff2929;">&lt;expr&gt;</span>   := <span style="color: #729fcf;">&lt;expr&gt;</span> <span style="color: #de7fa8;">"+"</span> <span style="color: #729fcf;">&lt;term&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;term&gt;</span>
+<span style="color: #ff2929;">&lt;term&gt;</span>   := <span style="color: #729fcf;">&lt;term&gt;</span> <span style="color: #de7fa8;">"*"</span> <span style="color: #729fcf;">&lt;factor&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;factor&gt;</span>
+<span style="color: #ff2929;">&lt;factor&gt;</span> := ( <span style="color: #729fcf;">&lt;expr&gt;</span> ) <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;id&gt;</span>
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><code>A = (A + B) * C</code></li>
+<li><code>A = B + C + A</code></li>
+<li><code>A = A * (B + C)</code></li>
+<li><code>A = B * (C * (A + B))</code></li>
+</ul></li>
+
+<li><p>
+(<b>20 points</b>, Q3.8) Prove that the following grammar is ambiguous:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bnf"><span style="color: #ff2929;">&lt;s&gt;</span>  := <span style="color: #729fcf;">&lt;a&gt;</span>
+<span style="color: #ff2929;">&lt;a&gt;</span>  := <span style="color: #729fcf;">&lt;a&gt;</span> <span style="color: #de7fa8;">"+"</span> <span style="color: #729fcf;">&lt;a&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;id&gt;</span>
+<span style="color: #ff2929;">&lt;id&gt;</span> := a <span style="color: #fcaf3e; font-weight: bold;">|</span> b <span style="color: #fcaf3e; font-weight: bold;">|</span> c
+</pre>
+</div></li>
+
+<li><p>
+(<b>20 points</b>, Q3.11) Consider the following grammar:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bnf"><span style="color: #ff2929;">&lt;stat&gt;</span> := <span style="color: #729fcf;">&lt;expa&gt;</span> <span style="color: #de7fa8;">"a"</span> <span style="color: #729fcf;">&lt;expb&gt;</span> <span style="color: #de7fa8;">"b"</span>
+<span style="color: #ff2929;">&lt;expa&gt;</span> := <span style="color: #729fcf;">&lt;expa&gt;</span> <span style="color: #de7fa8;">"b"</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #de7fa8;">"b"</span>
+<span style="color: #ff2929;">&lt;expb&gt;</span> := <span style="color: #de7fa8;">"a"</span> <span style="color: #729fcf;">&lt;expb&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #de7fa8;">"a"</span>
+</pre>
+</div>
+
+<p>
+Which of the following sentences could be generated
+</p>
+
+<ul class="org-ul">
+<li>baab</li>
+<li>bbbab</li>
+<li>bbaaaaa</li>
+<li>bbaab</li>
+</ul></li>
+
+<li>(<b>10 points</b>, Q3.13) Write a grammar for the language consisting of
+strings that have \(n\) copies of the letter "a" followed by the
+same number of copies of the letter "b", where \(n > 0\). For
+example, the strings "ab", "aaaabbbb", and "aaaaaaaabbbbbbbb" are
+in the language but "a", "abb", "ba", and "aaabb" are not.</li>
+
+<li>(<b>20 points</b>, Q3.23) Compute the weakest precondition for each of
+the following assignment statements and postconditions.
+
+<ul class="org-ul">
+<li><code>a = 2 * (b - 1) - 1 {a &gt; 0}</code></li>
+<li><code>b = (c + 10) / 3 {b &gt; 6}</code></li>
+<li><code>a = a + 2 * b - 1 {a &gt; 1}</code></li>
+<li><code>x = 2 * y + x - 1 {x &gt; 11}</code></li>
+</ul></li>
+
+<li>(<b>10 points</b>, Q3.24) Compute the weakest precondition for each of
+the following sequences of assignment statements and their
+postconditions.
+
+<ul class="org-ul">
+<li><code>a = 2 * b + 1; b = a - 3 {b &lt; 0}</code></li>
+<li><code>a = 3 * (2 * b + a); b = 2 * a - 1 {b &gt; 5}</code></li>
+</ul></li>
+</ol>
+</div>
+<div id="postamble" class="status">
+<a class="author"
+       href="http://gongzhitaao.org">Zhitao Gong</a> / <span
+       class="date">2015-08-16 Sun 21:12</span><span class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3.1)</span>
+</div>
+</body>
+</html>
