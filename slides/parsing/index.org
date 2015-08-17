@@ -72,6 +72,4 @@ In this article, we introduce how to formally describe a programming language
 
 * Reference
 
-#+BIBLIOGRAPHY: ref plain
-
 -----

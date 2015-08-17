@@ -5,32 +5,33 @@
 
 -----
 
-#+BEGIN_ABSTRACT
-Hopefull this is going to be a practical and fun course.
-#+END_ABSTRACT
+#+BEGIN_abstract
+Hopefull this is going to be a useful and fun course.
+#+END_abstract
 
 #+TOC: headlines: 2
 
 * Textbook
 
-  You may not need a textbook.  Everything I want to share is on this
-  site.  However, most of the materials on this site are adapted from
-  /Concepts of Programming Languages (10th Edition)/ (get from
-  [[http://www.amazon.com/Concepts-Programming-Languages-10th-Edition/dp/0131395319][{{{AMAZON_LOGO}}}]]), by Robert W. Sebesta.
+  You may need a textbook, /Concepts of Programming Languages (10th
+  Edition)/ (get from [[http://www.amazon.com/Concepts-Programming-Languages-10th-Edition/dp/0131395319][{{{AMAZON_LOGO}}}]]), by Robert W. Sebesta.  My
+  slides are adapted from the textbook and slides from Dr. Carlisle.
 
 * Homework
 
   *Homework is submitted on [[http://auburn.instructure.com/][Canvas]]*.  Late homework is penalized 40
   points no matter how late it is.  The last day to turn in late
-  homework is the final exam.
+  homework is the final exam.  The homework is accessible on the
+  [[http:/comp3220/][homepage]].
 
 * Grading
 
   I have a TA do all the grading.  If you have any doubts, talk to the
   TA first.  The tentitive weights for this semester are as follows.
 
-  - Homework: 60%
+  - Homework: 40%
   - Midterm: 20%
   - Final: 20%
+  - Term Project: 20%
 
 -----

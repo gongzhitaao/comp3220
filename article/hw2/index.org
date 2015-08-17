@@ -1,0 +1,68 @@
+#+TITLE: PPL -- Homework 2
+#+SETUPFILE: ../setup.org
+
+-----
+
+#+BEGIN_abstract
+Use BNF and /e/-NBF to formally describe syntax and semantics.
+#+END_abstract
+
+1. (*20 points*, Q3.7) Using the following grammar to show a parse
+   tree and a leftmost derivation for each of the statements:
+
+   #+BEGIN_SRC bnf
+<assign> := <id> = <expr>
+<id>     := A | B | C
+<expr>   := <expr> "+" <term> | <term>
+<term>   := <term> "*" <factor> | <factor>
+<factor> := ( <expr> ) | <id>
+   #+END_SRC
+
+   - =A = (A + B) * C=
+   - =A = B + C + A=
+   - =A = A * (B + C)=
+   - =A = B * (C * (A + B))=
+
+2. (*20 points*, Q3.8) Prove that the following grammar is ambiguous:
+
+   #+BEGIN_SRC bnf
+<s>  := <a>
+<a>  := <a> "+" <a> | <id>
+<id> := a | b | c
+   #+END_SRC
+
+3. (*20 points*, Q3.11) Consider the following grammar:
+
+   #+BEGIN_SRC bnf
+<stat> := <expa> "a" <expb> "b"
+<expa> := <expa> "b" | "b"
+<expb> := "a" <expb> | "a"
+   #+END_SRC
+
+   Which of the following sentences could be generated
+
+   - baab
+   - bbbab
+   - bbaaaaa
+   - bbaab
+
+4. (*10 points*, Q3.13) Write a grammar for the language consisting of
+   strings that have \(n\) copies of the letter "a" followed by the
+   same number of copies of the letter "b", where \(n > 0\). For
+   example, the strings "ab", "aaaabbbb", and "aaaaaaaabbbbbbbb" are
+   in the language but "a", "abb", "ba", and "aaabb" are not.
+
+5. (*20 points*, Q3.23) Compute the weakest precondition for each of
+   the following assignment statements and postconditions.
+
+   - =a = 2 * (b - 1) - 1 {a > 0}=
+   - =b = (c + 10) / 3 {b > 6}=
+   - =a = a + 2 * b - 1 {a > 1}=
+   - =x = 2 * y + x - 1 {x > 11}=
+
+6. (*10 points*, Q3.24) Compute the weakest precondition for each of
+   the following sequences of assignment statements and their
+   postconditions.
+
+   - =a = 2 * b + 1; b = a - 3 {b < 0}=
+   - =a = 3 * (2 * b + a); b = 2 * a - 1 {b > 5}=

@@ -1,0 +1,18 @@
+#+AUTHOR: Zhitao Gong
+#+EMAIL: me (at) gongzhitaao (dot) org
+#+OPTIONS: toc:nil
+#+STARTUP: overview content
+
+#+OPTIONS: reveal_history:t
+#+REVEAL_ROOT: /comp3220/reveal.js
+#+REVEAL_THEME: moon
+#+REVEAL_TRANS: none
+#+REVEAL_SPEED: 100
+#+REVEAL_SLIDE_HEADER: <img src="/comp3220/img/au.svg"/><span class="ppl-logo">P<sup>2</sup>L</span>
+#+REVEAL_EXTRA_CSS: /comp3220/css/style.css
+#+REVEAL_TITLE_SLIDE_TEMPLATE: <h1 class="title">%t</h1><h2 class="author">%a</h2> <h2 class="email">%e</h2><h2>%d</h2>
+#+REVEAL_EXTRA_JS: /comp3220/js/d3.min.js
+
+#+MACRO: NEWLINE @@latex:\\@@ @@html:<br>@@
+#+MACRO: ORANGE @@html:<span style="color: orange;">$1</span>@@
+#+MACRO: LOGO @@html: <span class="comp3220-logo">P<sup>2</sup>L</span>@@

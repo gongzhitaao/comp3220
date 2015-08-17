@@ -1,0 +1,16 @@
+#+TITLE: PPL -- Describing Syntax & Semantics
+#+SETUPFILE: ../setup.org
+
+* Tikz test
+
+  #+RESULTS:
+  [[file:img/test.svg]]
+
+* COMMENT SETUP
+
+  #+BEGIN_SRC emacs-lisp :results silent
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((latex . t)))
+(setq org-confirm-babel-evaluate nil)
+  #+END_SRC

@@ -1,0 +1,80 @@
+#+TITLE: Principle of Programming Languages
+#+SETUPFILE: ../setup.org
+
+* About Me
+  :PROPERTIES:
+  :CUSTOM_ID: sec:about-me
+  :END:
+
+  | Name    | Zhitao Gong          |
+  | Home    | [[http:gongzhitaao.org][gongzhitaao.org]]      |
+  | Email   | [[mailto:zzg0009@auburn.edu][zzg0009@auburn.edu]]   |
+  | Office  | Shelby 2307          |
+  |         | Tue/Thu before class |
+  | Advisor | Dr. Wei-Shinn Ku     |
+
+** Skills
+   :PROPERTIES:
+   :CUSTOM_ID: sec:short-bio
+   :END:
+
+   #+CAPTION: Programming Languages I use
+   | Proficient | C/C++ (9+), Javascript/CSS (4+), Python (3+), |
+   | Sometimes  | PHP, emacs-lisp, bash                         |
+   | Learning   | R, lua                                        |
+
+   #+CAPTION: Tools I use
+   | Libaries | Torch, D3js, Scipy Stack, Boost, Scikit |
+   | Software | Emacs, LaTeX, GnuPlot, Gnu Make, Git    |
+
+** Interests
+   :PROPERTIES:
+   :CUSTOM_ID: sec:interests
+   :PROPERTIES:
+   :END:
+
+   #+CAPTION: My interests
+   | Research | Neural Network, Machine Learning |
+   | Coding   | Web Development, Visualization   |
+
+** Pros & Cons
+   :PROPERTIES:
+   :CUSTOM_ID: sec:pros-cons
+   :END:
+
+   - Cons ::
+     - Not a native speaker
+     - First Time Teaching
+   - Pros ::
+     - I'm a student
+     - I'm a programmer
+
+* About PPL
+  :PROPERTIES:
+  :CUSTOM_ID: sec:syllabus
+  :END:
+
+  | Book          | Concepts of Programming Languages. (10th edition) |
+  | Prerequisites | Programming Experience                            |
+  | Hours         | Tue/Thu 1500--1645, 3 hours per week, 15 weeks    |
+
+** PPL Not Covers
+   :PROPERTIES:
+   :CUSTOM_ID: sec:ppl-not-about
+   :END:
+
+   What PPL is *NOT*
+   - a history course
+   - a programming course
+   - a compiler course
+
+** PPL Covers
+   :PROPERTIES:
+   :CUSTOM_ID: sec:ppl-about
+   :END:
+
+   | Preliminary | evaluation criteria, language categories, history and etc.   |
+   | Compiler    | syntax and semantics definition, lexical and syntax analysis |
+   | Concepts    | names, scopes, storage, classes, OOP, concurrency and etc    |
+   | Components  | expressions, flow control, subroutines                       |
+   | Types       | logic-based, functional, imperative                          |

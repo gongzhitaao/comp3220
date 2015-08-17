@@ -1,0 +1,48 @@
+\documentclass[crop,tikz,border=10px,convert=pdf2svg,multi=false]{standalone}
+\usepackage[defaultsans]{opensans}
+\usetikzlibrary{shapes,arrows,positioning}
+\begin{document}
+\begin{tikzpicture}[font=\sffamily,remember picture,
+  block/.style = {rectangle, draw, fill=blue!20, text centered, text
+    width=6em, rounded corners, minimum height=4em},
+  cloud/.style = {rectangle, draw, fill=red!20, text centered, text
+    width=6em, rounded corners=10pt, minimum height=2em},
+  line/.style = {-latex', red, thick},
+  outer/.style = {rectangle, fill=yellow!20, text centered, rounded
+    corners},
+  title/.style = {draw=none, font=\Large\bf\sffamily, text centered}]
+
+  \node [cloud] (src) {Souce\\ program};
+
+  \node [outer, right=of src] (compiler) {
+    \begin{tikzpicture}
+      \node [block] (lex) {Lexical\\ analyzer};
+      \node [block, right=of lex] (syn) {Syntax\\ analyzer};
+      \node [block, right=of syn] (int) {Intermediate\\ code generator and sementic analyzer};
+      \node [block, right=of int] (gen) {Code\\ generator};
+      \node [block, below=of int] (sym) {Symbol\\ table};
+      \node [block, above=of int] (opt) {Optimization\\ (optional)};
+
+      \node [title, above=of lex, yshift=2em] (cap) {Compiler};
+    \end{tikzpicture}
+  };
+
+  \node [cloud, right=of compiler] (bin) {Binary\\ code};
+
+  \draw [line] (src) -- (lex);
+  \draw [line] (lex) -- (syn);
+  \draw [line] (syn) -- (int);
+  \draw [line] (int) -- (gen);
+  \draw [line] (gen) -- (bin);
+
+  \draw [line] (lex) |- (sym.190);
+  \draw [line] (syn) |- (sym.170);
+
+  \draw [line] (sym) -- (int);
+  \draw [line] (int) -- (opt);
+
+  \coordinate[right=of int,xshift=-1.5em] (tmp);
+  \draw [line] (opt.east) -| (tmp);
+
+\end{tikzpicture}
+\end{document}

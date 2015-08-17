@@ -1,0 +1,53 @@
+#+TITLE: PPL -- Term Project
+#+SETUPFILE: ../setup.org
+
+#+MACRO: BF @@html: Brainf**k@@
+
+-----
+
+#+BEGIN_abstract
+Write a simple interpreter for [[http://www.muppetlabs.com/~breadbox/bf/][{{{BF}}}]].
+#+END_abstract
+
+* Introduction
+
+  A {{{BF}}} program has an implicit byte pointer, called *the
+  pointer*, which is free to move around within an array of *30000*
+  bytes, initially all set to zero.  The pointer itself is initialized
+  to point to the beginning of this array.
+
+  The Brainfuck programming language consists of eight commands, each
+  of which is represented as a single character.
+
+  - =>= Increment /the pointer/.
+  - =<= Decrement /the pointer/.
+  - =+= Increment the byte at /the pointer/.
+  - =-= Decrement the byte at /the pointer/.
+  - =.= Output the byte at /the pointer/.
+  - =,= Input a byte and store it in the byte at /the pointer/.
+  - =[= Jump forward past the matching =]= IF the byte at /the
+    pointer/ is zero.
+  - =]= Jump backward to the matching =[= UNLESS the byte at /the
+    pointer/ is zero.
+
+
+  For example, one version of the famous "Hello, World!" program in
+  {{{BF}}} is
+
+  #+BEGIN_EXAMPLE
+++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.
+  #+END_EXAMPLE
+
+* Requirement
+
+  - Please implement a simple /interpreter/ for the {{{BF}}}.
+  - Accepted programming languages are =C/C++=, =Python=,
+    =Javascript=, =Lua=, =Matlab/Octave=, =EmacsLisp=.
+  - Put all our source files in a zip file, named
+    =your_auburn_username.zip=.  You may include a =README.txt= for
+    intructions of how to compile and/or run your programs.
+  - Submit on Canvas before deadline.
+
+
+  /Finally, it is not required, but I hope that you all could put your
+  code on [[https://github.com/][Github]]./

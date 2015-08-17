@@ -1,0 +1,34 @@
+\documentclass[crop,tikz,border=10px,convert=pdf2svg,multi=false]{standalone}
+\usetikzlibrary{shapes,arrows,positioning,matrix}
+\begin{document}
+\begin{tikzpicture}[remember picture,
+  every node/.style = {rectangle, draw, text centered, rounded
+    corners, inner sep=1em, fill=blue!10},
+  cpu mem/.style = {row sep=1em},
+  inner/.style = {text width=6em, fill=yellow!20},
+  title/.style={draw=none, fill=none}]
+
+  \node[cpu mem] (cpu-mem) {
+    \begin{tikzpicture}
+      \matrix (cpu) [matrix of nodes,nodes={inner}]{
+        |[title]|CPU \\
+        Control Unit (CU) \\
+        Arithmetic-Logic Unit (ALU)\\
+      };
+
+      \node [below=of cpu] (mem) {Memory};
+
+      \draw[transform canvas={xshift=-0.5em}, ->] (cpu) -- (mem);
+      \draw[transform canvas={xshift= 0.5em}, <-] (cpu) -- (mem);
+
+    \end{tikzpicture}
+  };
+
+  \node[left=of cpu-mem] (input) {Input};
+  \node[right=of cpu-mem] (output) {Output};
+
+  \draw[->,white] (input) -- (cpu-mem);
+  \draw[->,white] (cpu-mem) -- (output);
+
+\end{tikzpicture}
+\end{document}
