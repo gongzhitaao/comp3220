@@ -1,16 +1,12 @@
 #+TITLE: PPL -- Describing Syntax & Semantics
 #+SETUPFILE: ../setup.org
 
-* Tikz test
+* Introduction
 
-  #+RESULTS:
-  [[file:img/test.svg]]
+  - Syntax :: the form or structure of the expressions, statements,
+       and program units.
+  - Semantics :: the meaning of the expressions, statements, and
+       program units.
 
-* COMMENT SETUP
 
-  #+BEGIN_SRC emacs-lisp :results silent
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((latex . t)))
-(setq org-confirm-babel-evaluate nil)
-  #+END_SRC
+  Syntax + Semantics = Language Definition

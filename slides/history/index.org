@@ -2,3 +2,39 @@
 #+SETUPFILE: ../setup.org
 
 * Genealogy
+
+* Interesting Facts
+
+  #+BEGIN_SRC C
+#include <stdio.h>
+
+int main(void)
+{
+  printf("hello, world\n");
+}
+  #+END_SRC
+
+
+** C
+
+   #+ATTR_HTML: :width 300px
+   #+CAPTION: Dennis Ritchie
+   [[./img/Dennis_Ritchie.jpg]]
+
+   - 1969 ~ 1973 Invented
+   - 1973 ~struct~ added!!!
+   - 1989 C89 by ANSI
+   - 1999 C99
+
+** C++
+
+   #+CAPTION: Bjarne Stroustrup
+   [[./img/bjarne2.jpg]]
+
+   - 1983 /C with Classes/ \to C++
+   - 1989 C++ 2.0
+   - 1998 C++98 the first ISO
+   - 2003 C++03
+   - 2011 C++11
+   - 2014 C++14 or C++1y
+   - 2017 C++17
