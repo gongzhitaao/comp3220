@@ -23,13 +23,80 @@
 <div class="reveal">
 <div class="slides">
 <section id="sec-title-slide">
-<h1 class="title">PPL &#x2013; History</h1><h2 class="author">Zhitao Gong</h2> <h2 class="email"><a href="mailto:me (at) gongzhitaao (dot) org">me (at) gongzhitaao (dot) org</a></h2><h2></h2>
+<h1 class="title">PPL &#x2013; History</h1>
+<p class="author">Zhitao Gong</p>
+<p class="email"><a href="mailto:me (at) gongzhitaao (dot) org">me (at) gongzhitaao (dot) org</a></p>
+</section>
+<section id="table-of-contents">
+<nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-orgheadline1">1. Genealogy</a></li>
+<li><a href="#/slide-orgheadline4">2. Interesting Facts</a></li>
+</ul>
+</div>
+</nav>
 </section>
 
 <section>
 <section id="slide-orgheadline1">
-<div class="slide-header"><img src="/comp3220/img/au.svg"/><span class="ppl-logo">P<sup>2</sup>L</span></div>
 <h2 id="orgheadline1"><span class="section-number-2">1</span> Genealogy</h2>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline4">
+<h2 id="orgheadline4"><span class="section-number-2">2</span> Interesting Facts</h2>
+<div class="org-src-container">
+
+<pre  class="src src-C"><span style="color: #729fcf;">#include</span> <span style="color: #de7fa8;">&lt;stdio.h&gt;</span>
+
+<span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #fcaf3e; font-weight: bold;">main</span>(<span style="color: #fce94f; font-weight: bold;">void</span>)
+{
+  printf(<span style="color: #de7fa8;">"hello, world\n"</span>);
+}
+</pre>
+</div>
+
+
+</section>
+<section id="slide-orgheadline2">
+<h3 id="orgheadline2"><span class="section-number-3">2.1</span> C</h3>
+
+<figure>
+<p><img src="./img/Dennis_Ritchie.jpg" alt="Dennis_Ritchie.jpg" width="300px">
+</p>
+<figcaption><span class="figure-number">Figure 1:</span> Dennis Ritchie</figcaption>
+</figure>
+
+<ul>
+<li>1969 ~ 1973 Invented</li>
+<li>1973 <code>struct</code> added!!!</li>
+<li>1989 C89 by ANSI</li>
+<li>1999 C99</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline3">
+<h3 id="orgheadline3"><span class="section-number-3">2.2</span> C++</h3>
+
+<figure>
+<p><img src="./img/bjarne2.jpg" alt="bjarne2.jpg">
+</p>
+<figcaption><span class="figure-number">Figure 2:</span> Bjarne Stroustrup</figcaption>
+</figure>
+
+<ul>
+<li>1983 <i>C with Classes</i> &rarr; C++</li>
+<li>1989 C++ 2.0</li>
+<li>1998 C++98 the first ISO</li>
+<li>2011 C++11</li>
+<li>2014 C++14 or C++1y</li>
+<li>2017 C++17</li>
+
+</ul>
 </section>
 </section>
 </div>
@@ -53,7 +120,7 @@ overview: true,
 
 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
-transitionSpeed: '100',
+transitionSpeed: 'default',
 multiplex: {
     secret: '', // null if client
     id: '', // id, obtained from socket.io server

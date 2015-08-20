@@ -61,16 +61,10 @@ body {
     height: auto;
 }
 
-.reveal #sec-title-slide h2 {
+.reveal #sec-title-slide .author,.reveal #sec-title-slide .email {
     font-style: italic;
-}
-
-.reveal #sec-title-slide .author {
+    font-family: "League Gothic"
     color: gray;
-}
-
-.reveal #sec-title-slide .email {
-    text-transform: none;
 }
 
 /* toc */
@@ -94,7 +88,7 @@ body {
     width: 64px;
 }
 
-.reveal .stack h2, .reveal .stack h3 {
+.reveal h2, .reveal h3 {
     text-align: left;
     border-bottom: 1px solid orange;
 }
