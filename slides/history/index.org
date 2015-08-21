@@ -1,40 +1,59 @@
 #+TITLE: PPL -- History
 #+SETUPFILE: ../setup.org
 
-* Genealogy
+* C
 
-* Interesting Facts
+  #+ATTR_HTML: :width 300px
+  #+CAPTION: Dennis Ritchie
+  [[./img/Dennis_Ritchie.jpg]]
 
-  #+BEGIN_SRC C
-#include <stdio.h>
+  - 1969 ~ 1973 Invented
+  - 1973 ~struct~ added!!!
+  - 1989 C89 by ANSI
+  - 1999 C99
 
-int main(void)
-{
-  printf("hello, world\n");
-}
-  #+END_SRC
+* C++
+
+  #+CAPTION: Bjarne Stroustrup
+  [[./img/bjarne2.jpg]]
+
+  - 1983 /C with Classes/ \to C++
+  - 1989 C++ 2.0
+  - 1998 C++98 the first ISO
+  - 2003 C++03
+  - 2011 C++11
+  - 2014 C++14 or C++1y
+  - 2017 C++17
+
+* Python
+
+  #+ATTR_HTML: :height 400px
+  #+CAPTION: Guido van Rossum {{{NEWLINE}}} Benevolent Dictator For Life
+  [[./img/Guido_van_Rossum.jpg]]
+
+  - 1980s Conceived
+  - 1989 Started
+  - 2000 Oct Python 2.0
+  - 2008 Dec Python 3.0 (py3k)
+
+* Javascript
+
+  #+ATTR_HTML: :height 400px
+  #+CAPTION: Brendan Eich
+  [[./img/Brendan_Eich.jpg]]
+
+  - 1995 born
+
+** Javascript vs Java
+
+   Similarities
+   - Sandboxed
+   - Keywords
+   - Naming Convention
+   - Math and Date
 
 
-** C
-
-   #+ATTR_HTML: :width 300px
-   #+CAPTION: Dennis Ritchie
-   [[./img/Dennis_Ritchie.jpg]]
-
-   - 1969 ~ 1973 Invented
-   - 1973 ~struct~ added!!!
-   - 1989 C89 by ANSI
-   - 1999 C99
-
-** C++
-
-   #+CAPTION: Bjarne Stroustrup
-   [[./img/bjarne2.jpg]]
-
-   - 1983 /C with Classes/ \to C++
-   - 1989 C++ 2.0
-   - 1998 C++98 the first ISO
-   - 2003 C++03
-   - 2011 C++11
-   - 2014 C++14 or C++1y
-   - 2017 C++17
+   Difference
+   - static vs dynamic typing
+   - compiled bytecode vs pure interprete
+   - classed based vs prototype-based
