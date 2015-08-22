@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title></title>
+<title>PPL &#x2013; Describing Syntax &amp; Semantics</title>
 <meta name="author" content="(Zhitao Gong)"/>
 <link rel="stylesheet" href="/comp3220/reveal.js/css/reveal.css"/>
 <link rel="stylesheet" href="/comp3220/reveal.js/css/theme/moon.css" id="theme"/>
@@ -23,12 +23,27 @@
 <div class="reveal">
 <div class="slides">
 <section id="sec-title-slide">
-<h1 class="title"></h1><h2 class="author">Zhitao Gong</h2> <h2 class="email"><a href="mailto:me (at) gongzhitaao (dot) org">me (at) gongzhitaao (dot) org</a></h2><h2></h2>
+<h1 class="title">PPL &#x2013; Describing Syntax &amp; Semantics</h1>
+<p class="author">Zhitao Gong</p>
+<p class="email"><a href="mailto:me (at) gongzhitaao (dot) org">me (at) gongzhitaao (dot) org</a></p>
+</section>
+<section id="table-of-contents">
+<nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-orgheadline1">1. Introduction</a></li>
+<li><a href="#/slide-orgheadline5">2. Problem Overview</a></li>
+<li><a href="#/slide-orgheadline25">3. Describing Syntax</a></li>
+<li><a href="#/slide-orgheadline26">4. Attribute Grammers</a></li>
+<li><a href="#/slide-orgheadline27">5. Describing Semantics</a></li>
+</ul>
+</div>
+</nav>
 </section>
 
 <section>
 <section id="slide-orgheadline1">
-<div class="slide-header"><img src="/comp3220/img/au.svg"/><span class="ppl-logo">P<sup>2</sup>L</span></div>
 <h2 id="orgheadline1"><span class="section-number-2">1</span> Introduction</h2>
 <dl>
 <dt>Syntax</dt><dd>the form or structure of the expressions, statements,
@@ -42,6 +57,554 @@ program units.</dd>
 <p>
 Syntax + Semantics = Language Definition
 </p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline5">
+<h2 id="orgheadline5"><span class="section-number-2">2</span> Problem Overview</h2>
+<dl>
+<dt>Sentence</dt><dd>A string of characters over pre-defined alphabet.</dd>
+<dt>Language</dt><dd>A set of sentences.</dd>
+<dt>Lexeme</dt><dd>The lowest level syntactic unit of a language.</dd>
+<dt>Token</dt><dd>A category of lexemes.</dd>
+
+</dl>
+
+</section>
+<section id="slide-orgheadline2">
+<h3 id="orgheadline2"><span class="section-number-3">2.1</span> Example</h3>
+<div class="org-src-container">
+
+<pre  class="src src-C">index = 2 * count + 17;
+</pre>
+</div>
+
+<table style="font-size:80%">
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Lexemes</th>
+<th scope="col" class="org-left">Tokens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">index</td>
+<td class="org-left">identifier</td>
+</tr>
+
+<tr>
+<td class="org-left">=</td>
+<td class="org-left">equal sign, operator</td>
+</tr>
+
+<tr>
+<td class="org-left">2</td>
+<td class="org-left">integer, literal</td>
+</tr>
+
+<tr>
+<td class="org-left">*</td>
+<td class="org-left">multiply, operator</td>
+</tr>
+
+<tr>
+<td class="org-left">count</td>
+<td class="org-left">identifier</td>
+</tr>
+
+<tr>
+<td class="org-left">+</td>
+<td class="org-left">plus, operator</td>
+</tr>
+
+<tr>
+<td class="org-left">17</td>
+<td class="org-left">integer, literal</td>
+</tr>
+
+<tr>
+<td class="org-left">;</td>
+<td class="org-left">semicolon</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<section id="slide-orgheadline3">
+<h3 id="orgheadline3"><span class="section-number-3">2.2</span> Language Recognizer</h3>
+<p>
+If R, when fed any string of characters over &Sigma;, accepts it
+only if it is in L, then R is a description of L.
+</p>
+
+<p>
+Pushdown Automatas (PDAs) is a recognizer.
+</p>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/recognizer.svg" height="210px">
+Sorry, your browser does not support SVG.</object>
+</p>
+<figcaption><span class="figure-number">Figure 1:</span> Language Recognizer/Syntax Analyzer</figcaption>
+</figure>
+
+</section>
+<section id="slide-orgheadline4">
+<h3 id="orgheadline4"><span class="section-number-3">2.3</span> Language Generator</h3>
+<p>
+Generator is like a box of <i>chocolates</i> (strings).  You never know
+what you're gonna get.
+</p>
+
+<p>
+A generator provides a construction description.  Context Free
+Grammers (CFGs) is a generator.
+</p>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/generator.svg" height="200px">
+Sorry, your browser does not support SVG.</object>
+</p>
+<figcaption><span class="figure-number">Figure 2:</span> Language Generator</figcaption>
+</figure>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline25">
+<h2 id="orgheadline25"><span class="section-number-2">3</span> Describing Syntax</h2>
+<p>
+Grammer is a formal <i>language generation</i> mechanisms.
+</p>
+
+<p>
+For programming languages:
+</p>
+<ul>
+<li><i>Context Free Grammar</i> (CFG) or</li>
+<li><i>Backus-Naur Form</i> (BNF)</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline6">
+<h3 id="orgheadline6"><span class="section-number-3">3.1</span> Context Free Grammar</h3>
+<p>
+Developed by Noam Chomsky in the mid-1950s
+</p>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/chomsky-hierarchy.svg" height="360px">
+Sorry, your browser does not support SVG.</object>
+</p>
+<figcaption><span class="figure-number">Figure 3:</span> Chomsky Hierarchy</figcaption>
+</figure>
+
+</section>
+<section id="slide-orgheadline12">
+<h3 id="orgheadline12"><span class="section-number-3">3.2</span> BNF</h3>
+<p>
+BNF is a <b>metalanguage</b>.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;syntax&gt;</span>     <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;rule&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;rule&gt;</span> <span style="color: #729fcf;">&lt;syntax&gt;</span>
+<span style="color: #ff2929;">&lt;rule&gt;</span>       <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;space&gt;</span> <span style="color: #de7fa8;">"&lt;"</span> <span style="color: #fce94f; font-weight: bold;">&lt;TEXT&gt;</span> <span style="color: #de7fa8;">"&gt;"</span> <span style="color: #729fcf;">&lt;space&gt;</span> <span style="color: #de7fa8;">"::="</span> <span style="color: #729fcf;">&lt;space&gt;</span> <span style="color: #729fcf;">&lt;expression&gt;</span> <span style="color: #729fcf;">&lt;line-end&gt;</span>
+<span style="color: #ff2929;">&lt;space&gt;</span>      <span style="color: #73d216;">::=</span> <span style="color: #de7fa8;">" "</span> <span style="color: #729fcf;">&lt;space&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #de7fa8;">""</span>
+<span style="color: #ff2929;">&lt;expression&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;list&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;list&gt;</span> <span style="color: #de7fa8;">"|"</span> <span style="color: #729fcf;">&lt;expression&gt;</span>
+<span style="color: #ff2929;">&lt;line-end&gt;</span>   <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;space&gt;</span> <span style="color: #fce94f; font-weight: bold;">&lt;EOL&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;line-end&gt;</span> <span style="color: #729fcf;">&lt;line-end&gt;</span>
+<span style="color: #ff2929;">&lt;list&gt;</span>       <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;term&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;term&gt;</span> <span style="color: #729fcf;">&lt;space&gt;</span> <span style="color: #729fcf;">&lt;list&gt;</span>
+<span style="color: #ff2929;">&lt;term&gt;</span>       <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;literal&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #de7fa8;">"&lt;"</span> <span style="color: #729fcf;">&lt;rule-name&gt;</span> <span style="color: #de7fa8;">"&gt;"</span>
+<span style="color: #ff2929;">&lt;literal&gt;</span>    <span style="color: #73d216;">::=</span> <span style="color: #de7fa8;">"\""</span> <span style="color: #fce94f; font-weight: bold;">&lt;TEXT&gt;</span> <span style="color: #de7fa8;">"\""</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #de7fa8;">"'"</span> <span style="color: #fce94f; font-weight: bold;">&lt;TEXT&gt;</span> <span style="color: #de7fa8;">"'"</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline7">
+<h4 id="orgheadline7"><span class="section-number-4">3.2.1</span> Terminology</h4>
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;line-end&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;space&gt;</span> <span style="color: #fce94f; font-weight: bold;">&lt;EOL&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;line-end&gt;</span> <span style="color: #729fcf;">&lt;line-end&gt;</span>
+</pre>
+</div>
+
+<ul>
+<li><span style="color: #ff2929">&lt;NAME&gt;</span> is <i>nonterminal symbol</i> or
+<i>nonterminal</i> or an <i>abstraction</i>.</li>
+<li><span style="color: #fce94f">&lt;NAME&gt;</span> is <i>terminal symbol</i> or
+<i>terminal</i>.</li>
+<li>First nonterminal is referred to as <i>start symbol</i>.</li>
+<li>The whole line is a <i>rule</i> or <i>production</i>.</li>
+<li>A BNF description, or grammar, is a collection of rules.</li>
+
+</ul>
+
+
+<p>
+Terminals are tokens and lexemes.
+</p>
+
+</section>
+<section id="slide-orgheadline8">
+<h4 id="orgheadline8"><span class="section-number-4">3.2.2</span> BNF Rules</h4>
+<p>
+One rule may have more than one <i>distinct</i> definitions.
+</p>
+
+<p>
+They could be written separately
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;if-stmt&gt;</span> <span style="color: #73d216;">::=</span> if ( <span style="color: #729fcf;">&lt;logic-expr&gt;</span> ) <span style="color: #729fcf;">&lt;stmt&gt;</span>
+<span style="color: #ff2929;">&lt;if-stmt&gt;</span> <span style="color: #73d216;">::=</span> if ( <span style="color: #729fcf;">&lt;logic-expr&gt;</span> ) <span style="color: #729fcf;">&lt;stmt&gt;</span> else <span style="color: #729fcf;">&lt;stmt&gt;</span>
+</pre>
+</div>
+
+<p>
+or together joined by "|", logic OR.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;if-stmt&gt;</span> <span style="color: #73d216;">::=</span> if ( <span style="color: #729fcf;">&lt;logic-expr&gt;</span> ) <span style="color: #729fcf;">&lt;stmt&gt;</span>
+            <span style="color: #fcaf3e; font-weight: bold;">|</span> if ( <span style="color: #729fcf;">&lt;logic-expr&gt;</span> ) <span style="color: #729fcf;">&lt;stmt&gt;</span> else <span style="color: #729fcf;">&lt;stmt&gt;</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline9">
+<h4 id="orgheadline9"><span class="section-number-4">3.2.3</span> BNF Ellipsis</h4>
+<p>
+How to describe list of variable lenght, like <code>1,2,...</code>?
+</p>
+
+<p>
+Use <b>recursion</b>.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;list&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #fce94f; font-weight: bold;">&lt;IDENTIFIER&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #fce94f; font-weight: bold;">&lt;IDENTIFIER&gt;</span> <span style="color: #de7fa8;">","</span> <span style="color: #729fcf;">&lt;list&gt;</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline10">
+<h4 id="orgheadline10"><span class="section-number-4">3.2.4</span> Derivation</h4>
+<p>
+A derivation is
+</p>
+<ul>
+<li>repeated application of rules,</li>
+<li>starting with the start symbol and</li>
+<li>ending with a sentence (all terminals).</li>
+
+</ul>
+
+
+<p>
+Each string in derivation is called a <i>sentential form</i>.
+</p>
+
+<p>
+BNF is a generator, so there may be infinite sentences.
+</p>
+
+
+</section>
+<section id="slide-orgheadline11">
+<h4 id="orgheadline11"><span class="section-number-4">3.2.5</span> Example Derivation</h4>
+<p>
+A grammar for a bogus language
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;integer&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;digit&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;integer&gt;</span> <span style="color: #729fcf;">&lt;digit&gt;</span>
+<span style="color: #ff2929;">&lt;digit&gt;</span>   <span style="color: #73d216;">::=</span> 0 <span style="color: #fcaf3e; font-weight: bold;">|</span> 1 <span style="color: #fcaf3e; font-weight: bold;">|</span> 2 <span style="color: #fcaf3e; font-weight: bold;">|</span> 3 <span style="color: #fcaf3e; font-weight: bold;">|</span> 4 <span style="color: #fcaf3e; font-weight: bold;">|</span> 5 <span style="color: #fcaf3e; font-weight: bold;">|</span> 6 <span style="color: #fcaf3e; font-weight: bold;">|</span> 7 <span style="color: #fcaf3e; font-weight: bold;">|</span> 8 <span style="color: #fcaf3e; font-weight: bold;">|</span> 9
+</pre>
+</div>
+
+<p>
+One possible <i>leftmost</i> derivation is
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;integer&gt;</span> &#8680; <span style="color: #729fcf;">&lt;integer&gt;</span> <span style="color: #729fcf;">&lt;digit&gt;</span> &#8680; <span style="color: #729fcf;">&lt;digit&gt;</span> <span style="color: #729fcf;">&lt;digit&gt;</span> &#8680; 3 <span style="color: #729fcf;">&lt;digit&gt;</span> &#8680; 32
+</pre>
+</div>
+
+<p>
+One possible <i>rightmost</i> derivation is
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;integer&gt;</span> &#8680; <span style="color: #729fcf;">&lt;integer&gt;</span> <span style="color: #729fcf;">&lt;digit&gt;</span> &#8680; <span style="color: #729fcf;">&lt;integer&gt;</span> 2 &#8680; <span style="color: #729fcf;">&lt;digit&gt;</span> 2 &#8680; 32
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline20">
+<h3 id="orgheadline20"><span class="section-number-3">3.3</span> Parse Tree</h3>
+<dl>
+<dt>Parse trees</dt><dd>They are trees labeled by symbols of a particular
+grammar.</dd>
+<dt>Leaves</dt><dd>Labeled by a terminal.</dd>
+<dt>Interior nodes</dt><dd>Labeled by a variable, the children of which
+are labeled by the right side of production.</dd>
+<dt>Root</dt><dd>Labeled by start symbol.</dd>
+
+</dl>
+
+</section>
+<section id="slide-orgheadline13">
+<h4 id="orgheadline13"><span class="section-number-4">3.3.1</span> Example Parse Tree</h4>
+<div class="org-src-container">
+
+<pre  class="src src-bnf">S <span style="color: #73d216;">::=</span> SS <span style="color: #fcaf3e; font-weight: bold;">|</span> (S) <span style="color: #fcaf3e; font-weight: bold;">|</span> ()
+</pre>
+</div>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/parse-tree-ex1.svg" width="500px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+<p>
+A preorder traverse of the parse tree is called the <i>yield</i> of the
+parse.
+</p>
+
+<p>
+The yield of tree on the left is <code>(())()</code>.
+</p>
+
+</section>
+<section id="slide-orgheadline14">
+<h4 id="orgheadline14"><span class="section-number-4">3.3.2</span> Ambiguous Grammars</h4>
+<p>
+A grammar is <i>ambiguous</i> if there is a string in the language that
+is the yield of more than one distict parse tree.
+</p>
+
+<p>
+In other words, if and only if it generates a sentential form that
+has two or more distinct parse trees.
+</p>
+
+<ul>
+<li>if the grammar generates a sentence with more than one leftmost
+derivation or</li>
+<li>of the grammar generates a sentence with more than one rightmost
+derivation.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline15">
+<h4 id="orgheadline15"><span class="section-number-4">3.3.3</span> Example Ambiguous Grammar</h4>
+<p>
+Given a grammar
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf">S <span style="color: #73d216;">::=</span> SS <span style="color: #fcaf3e; font-weight: bold;">|</span> (S) <span style="color: #fcaf3e; font-weight: bold;">|</span> ()
+</pre>
+</div>
+
+<p>
+For the sentence <code>()()()</code>
+</p>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/ambiguous-grammar-a.svg" width="440px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/ambiguous-grammar-b.svg" width="440px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+</section>
+<section id="slide-orgheadline16">
+<h4 id="orgheadline16"><span class="section-number-4">3.3.4</span> Who's fault?</h4>
+<p>
+Ambiguity is a <i>property</i> of grammars, NOT languages.
+</p>
+
+<p>
+For balanced parentheses language, an alternative non-ambiguous
+grammar exsits:
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;B&gt;</span> <span style="color: #73d216;">::=</span> (RB) <span style="color: #fcaf3e; font-weight: bold;">|</span> &#949;
+<span style="color: #ff2929;">&lt;R&gt;</span> <span style="color: #73d216;">::=</span> ) <span style="color: #fcaf3e; font-weight: bold;">|</span> (RR
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline17">
+<h4 id="orgheadline17"><span class="section-number-4">3.3.5</span> Inherent Ambiguity</h4>
+<p>
+Context free languages (CFL) are generated by CFG.
+</p>
+
+<p>
+Unambiguous CFLs are a proper subset of all CFLs, there are
+<i>inherently ambiguous</i> CFLs.
+</p>
+
+<p>
+Exmaple is
+</p>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/inherently-ambiguous-ex.svg" height="160px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+</section>
+<section id="slide-orgheadline18">
+<h4 id="orgheadline18"><span class="section-number-4">3.3.6</span> Operator Associativity</h4>
+<p>
+It may be expressed in grammar, if needed.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;expr&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;expr&gt;</span> <span style="color: #de7fa8;">"+"</span> <span style="color: #729fcf;">&lt;expr&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #fce94f; font-weight: bold;">&lt;ID&gt;</span> # ambiguous
+<span style="color: #ff2929;">&lt;expr&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;expr&gt;</span> <span style="color: #de7fa8;">"+"</span> <span style="color: #fce94f; font-weight: bold;">&lt;ID&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #fce94f; font-weight: bold;">&lt;ID&gt;</span>   # umambiguous
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline19">
+<h4 id="orgheadline19"><span class="section-number-4">3.3.7</span> Operator Precedence</h4>
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;assign&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;id&gt;</span> = <span style="color: #729fcf;">&lt;expr&gt;</span>
+<span style="color: #ff2929;">&lt;id&gt;</span>     <span style="color: #73d216;">::=</span> A <span style="color: #fcaf3e; font-weight: bold;">|</span> B <span style="color: #fcaf3e; font-weight: bold;">|</span> C
+<span style="color: #ff2929;">&lt;expr&gt;</span>   <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;id&gt;</span> <span style="color: #de7fa8;">"+"</span> <span style="color: #729fcf;">&lt;expr&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;id&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">*</span> <span style="color: #729fcf;">&lt;expr&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> ( <span style="color: #729fcf;">&lt;expr&gt;</span> ) <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;id&gt;</span>
+</pre>
+</div>
+
+<p>
+Can be changed to
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;assign&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;id&gt;</span> = <span style="color: #729fcf;">&lt;expr&gt;</span>
+<span style="color: #ff2929;">&lt;id&gt;</span>     <span style="color: #73d216;">::=</span> A <span style="color: #fcaf3e; font-weight: bold;">|</span> B <span style="color: #fcaf3e; font-weight: bold;">|</span> C
+<span style="color: #ff2929;">&lt;expr&gt;</span>   <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;expr&gt;</span> <span style="color: #de7fa8;">"+"</span> <span style="color: #729fcf;">&lt;term&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;term&gt;</span>
+<span style="color: #ff2929;">&lt;term&gt;</span>   <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;term&gt;</span> <span style="color: #de7fa8;">"*"</span> <span style="color: #729fcf;">&lt;factor&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;factor&gt;</span>
+<span style="color: #ff2929;">&lt;factor&gt;</span> <span style="color: #73d216;">::=</span> ( <span style="color: #729fcf;">&lt;expr&gt;</span> ) <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;id&gt;</span>
+</pre>
+</div>
+
+<p>
+Lower tokens in the parse tree always have higher <i>precedence</i>.
+</p>
+
+</section>
+<section id="slide-orgheadline23">
+<h3 id="orgheadline23"><span class="section-number-3">3.4</span> Extended BNF</h3>
+<ul>
+<li>DOES NOT enhance the descriptive power of BNF.</li>
+<li>ONLY increases its <i>readability</i> and <i>writability</i>.</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline21">
+<h4 id="orgheadline21"><span class="section-number-4">3.4.1</span> Extensions</h4>
+<dl>
+<dt><code>[]</code></dt><dd><i>Optional</i> parts are placed in brackets.</dd>
+<dt><code>()</code></dt><dd><i>Alternative</i> parts of areplaced inside parentheses and
+separated via logic OR, "|".</dd>
+<dt><code>{}</code></dt><dd>Repetitions (0 or more) are placed inside braces.</dd>
+<dt><code>{}+</code></dt><dd>Repetitions (1 or more)</dd>
+
+</dl>
+
+</section>
+<section id="slide-orgheadline22">
+<h4 id="orgheadline22"><span class="section-number-4">3.4.2</span> Example EBNF</h4>
+<p>
+The following BNF description of <code>&lt;term&gt;</code>
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;term&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;term&gt;</span> <span style="color: #de7fa8;">"*"</span> <span style="color: #729fcf;">&lt;factor&gt;</span>
+         <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;term&gt;</span> <span style="color: #de7fa8;">"/"</span> <span style="color: #729fcf;">&lt;factor&gt;</span>
+         <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;term&gt;</span> <span style="color: #de7fa8;">"%"</span> <span style="color: #729fcf;">&lt;factor&gt;</span>
+</pre>
+</div>
+
+<p>
+could be described in EBNF
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;term&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;term&gt;</span> ( <span style="color: #de7fa8;">"*"</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #de7fa8;">"/"</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #de7fa8;">"%"</span> ) <span style="color: #729fcf;">&lt;factor&gt;</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline24">
+<h3 id="orgheadline24"><span class="section-number-3">3.5</span> YACC</h3>
+<p>
+Given a CFG (a generator), the langauge recognizer can be
+consructed automatically.  One of the most famous one is Yet
+Another Compiler-Compiler (YACC).
+</p>
+
+<p>
+Demo: <a href="https://zaach.github.io/jison/demos/calc/">Jison</a>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline26">
+<h2 id="orgheadline26"><span class="section-number-2">4</span> Attribute Grammers</h2>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline27">
+<h2 id="orgheadline27"><span class="section-number-2">5</span> Describing Semantics</h2>
 </section>
 </section>
 </div>
@@ -65,7 +628,7 @@ overview: true,
 
 theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
-transitionSpeed: '100',
+transitionSpeed: 'default',
 multiplex: {
     secret: '', // null if client
     id: '', // id, obtained from socket.io server
