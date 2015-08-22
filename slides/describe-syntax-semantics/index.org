@@ -1,5 +1,7 @@
 #+TITLE: PPL -- Describing Syntax & Semantics
+#+OPTIONS: ^:nil
 #+SETUPFILE: ../setup.org
+#+MACRO: color @@html: <span style="color: $1">$2</span>@@
 
 * Introduction
 
@@ -10,3 +12,132 @@
 
 
   Syntax + Semantics = Language Definition
+
+* Problem Overview
+
+  - Sentence :: A string of characters over pre-defined alphabet.
+  - Language :: A set of sentences.
+  - Lexeme :: The lowest level syntactic unit of a language.
+  - Token :: A category of lexemes.
+
+** Example
+
+   #+BEGIN_SRC C
+index = 2 * count + 17;
+   #+END_SRC
+
+   #+ATTR_HTML: :style font-size:80%
+   | Lexemes | Tokens               |
+   |---------+----------------------|
+   | index   | identifier           |
+   | =       | equal sign, operator |
+   | 2       | integer, literal     |
+   | *       | multiply, operator   |
+   | count   | identifier           |
+   | +       | plus, operator       |
+   | 17      | integer, literal     |
+   | ;       | semicolon            |
+
+** Language Recognizer
+
+   If R, when fed any string of characters over \Sigma, accepts it
+   only if it is in L, then R is a description of L.
+
+   Pushdown Automatas (PDAs) is a recognizer.
+
+   #+ATTR_HTML: :height 210px
+   #+CAPTION: Language Recognizer/Syntax Analyzer
+   [[./img/recognizer.svg]]
+
+** Language Generator
+
+   Generator is like a box of /chocolates/ (strings).  You never know
+   what you're gonna get.
+
+   A generator provides a construction description.  Context Free
+   Grammers (CFGs) is a generator.
+
+   #+ATTR_HTML: :height 200px
+   #+CAPTION: Language Generator
+   [[./img/generator.svg]]
+
+* Describing Syntax
+
+  Grammer is a formal /language generation/ mechanisms.
+
+  For programming languages:
+  - /Context Free Grammar/ (CFG) or
+  - /Backus-Naur Form/ (BNF)
+
+** Context Free Grammar
+
+   Developed by Noam Chomsky in the mid-1950s
+
+   #+ATTR_HTML: :height 360px
+   #+CAPTION: Chomsky Hierarchy
+   [[./img/chomsky-hierarchy.svg]]
+
+** BNF
+
+   BNF is a *metalanguage*.
+
+   #+BEGIN_SRC bnf
+<syntax>     ::= <rule> | <rule> <syntax>
+<rule>       ::= <space> "<" <TEXT> ">" <space> "::=" <space> <expression> <line-end>
+<space>      ::= " " <space> | ""
+<expression> ::= <list> | <list> "|" <expression>
+<line-end>   ::= <space> <EOL> | <line-end> <line-end>
+<list>       ::= <term> | <term> <space> <list>
+<term>       ::= <literal> | "<" <rule-name> ">"
+<literal>    ::= "\"" <TEXT> "\"" | "'" <TEXT> "'"
+   #+END_SRC
+
+*** Terminology
+
+    #+BEGIN_SRC bnf
+<line-end> ::= <space> <EOL> | <line-end> <line-end>
+    #+END_SRC
+
+   - {{{color(#ff2929,&lt;NAME&gt;)}}} is /nonterminal symbol/ or
+     /nonterminal/ or an /abstraction/.
+   - {{{color(#fce94f,&lt;NAME&gt;)}}} is /terminal symbol/ or
+     /terminal/.
+   - First nonterminal is referred to as /start symbol/.
+   - The whole line is a /rule/ or /production/.
+   - A BNF description, or grammar, is a collection of rules.
+
+
+   Terminals are tokens and lexemes.
+
+*** BNF Rules
+
+    One rule may have more than one /distinct/ definitions.
+
+    They could be written separately
+
+    #+BEGIN_SRC bnf
+<if-stmt> ::= if ( <logic-expr> ) <stmt>
+<if-stmt> ::= if ( <logic-expr> ) <stmt> else <stmt>
+    #+END_SRC
+
+    or together joined by "|", logic OR.
+
+    #+BEGIN_SRC bnf
+<if-stmt> ::= if ( <logic-expr> ) <stmt>
+            | if ( <logic-expr> ) <stmt> else <stmt>
+    #+END_SRC
+
+*** BNF Ellipsis
+
+    How to describe list of variable lenght, like =1,2,...=?
+
+    Use *recursion*.
+
+    #+BEGIN_SRC bnf
+<list> ::= <IDENTIFIER> | <IDENTIFIER> "," <list>
+    #+END_SRC
+
+
+* Attribute Grammers
+
+* Describing Semantics
