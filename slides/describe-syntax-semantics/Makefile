@@ -1,7 +1,8 @@
 TEXI2PDF = texi2pdf
 IMGDIR = img
 NAME = recognizer generator chomsky-hierarchy parse-tree-ex1	\
-	ambiguous-grammar-a ambiguous-grammar-b inherently-ambiguous-ex
+	ambiguous-grammar-a ambiguous-grammar-b			\
+	inherently-ambiguous-ex cfg-def
 
 all : $(NAME) clean
 
