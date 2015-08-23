@@ -34,9 +34,8 @@
 <ul>
 <li><a href="#/slide-orgheadline1">1. Introduction</a></li>
 <li><a href="#/slide-orgheadline5">2. Problem Overview</a></li>
-<li><a href="#/slide-orgheadline25">3. Describing Syntax</a></li>
-<li><a href="#/slide-orgheadline26">4. Attribute Grammers</a></li>
-<li><a href="#/slide-orgheadline27">5. Describing Semantics</a></li>
+<li><a href="#/slide-orgheadline27">3. Describing Syntax</a></li>
+<li><a href="#/slide-orgheadline35">4. Describing Semantics</a></li>
 </ul>
 </div>
 </nav>
@@ -181,8 +180,8 @@ Sorry, your browser does not support SVG.</object>
 </section>
 </section>
 <section>
-<section id="slide-orgheadline25">
-<h2 id="orgheadline25"><span class="section-number-2">3</span> Describing Syntax</h2>
+<section id="slide-orgheadline27">
+<h2 id="orgheadline27"><span class="section-number-2">3</span> Describing Syntax</h2>
 <p>
 Grammer is a formal <i>language generation</i> mechanisms.
 </p>
@@ -212,8 +211,30 @@ Sorry, your browser does not support SVG.</object>
 </figure>
 
 </section>
-<section id="slide-orgheadline12">
-<h3 id="orgheadline12"><span class="section-number-3">3.2</span> BNF</h3>
+<section id="slide-orgheadline7">
+<h3 id="orgheadline7"><span class="section-number-3">3.2</span> Formal Definition</h3>
+<p>
+A Context-free grammar <code>G</code> is defined by a 4-tuple
+</p>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/cfg-def.svg" height="120px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+<ul>
+<li><code>V</code> is a finite set of nonterminals and variables</li>
+<li>&Sigma; is a finite set of terminals, disjoint from <code>V</code></li>
+<li><code>R</code> is rules set and</li>
+<li><code>S</code> is the start symbol.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline13">
+<h3 id="orgheadline13"><span class="section-number-3">3.3</span> BNF</h3>
 <p>
 BNF is a <b>metalanguage</b>.
 </p>
@@ -232,8 +253,8 @@ BNF is a <b>metalanguage</b>.
 </div>
 
 </section>
-<section id="slide-orgheadline7">
-<h4 id="orgheadline7"><span class="section-number-4">3.2.1</span> Terminology</h4>
+<section id="slide-orgheadline8">
+<h4 id="orgheadline8"><span class="section-number-4">3.3.1</span> Terminology</h4>
 <div class="org-src-container">
 
 <pre  class="src src-bnf"><span style="color: #ff2929;">&lt;line-end&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;space&gt;</span> <span style="color: #fce94f; font-weight: bold;">&lt;EOL&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;line-end&gt;</span> <span style="color: #729fcf;">&lt;line-end&gt;</span>
@@ -257,8 +278,8 @@ Terminals are tokens and lexemes.
 </p>
 
 </section>
-<section id="slide-orgheadline8">
-<h4 id="orgheadline8"><span class="section-number-4">3.2.2</span> BNF Rules</h4>
+<section id="slide-orgheadline9">
+<h4 id="orgheadline9"><span class="section-number-4">3.3.2</span> BNF Rules</h4>
 <p>
 One rule may have more than one <i>distinct</i> definitions.
 </p>
@@ -286,8 +307,8 @@ or together joined by "|", logic OR.
 </div>
 
 </section>
-<section id="slide-orgheadline9">
-<h4 id="orgheadline9"><span class="section-number-4">3.2.3</span> BNF Ellipsis</h4>
+<section id="slide-orgheadline10">
+<h4 id="orgheadline10"><span class="section-number-4">3.3.3</span> BNF Ellipsis</h4>
 <p>
 How to describe list of variable lenght, like <code>1,2,...</code>?
 </p>
@@ -303,8 +324,8 @@ Use <b>recursion</b>.
 </div>
 
 </section>
-<section id="slide-orgheadline10">
-<h4 id="orgheadline10"><span class="section-number-4">3.2.4</span> Derivation</h4>
+<section id="slide-orgheadline11">
+<h4 id="orgheadline11"><span class="section-number-4">3.3.4</span> Derivation</h4>
 <p>
 A derivation is
 </p>
@@ -326,8 +347,8 @@ BNF is a generator, so there may be infinite sentences.
 
 
 </section>
-<section id="slide-orgheadline11">
-<h4 id="orgheadline11"><span class="section-number-4">3.2.5</span> Example Derivation</h4>
+<section id="slide-orgheadline12">
+<h4 id="orgheadline12"><span class="section-number-4">3.3.5</span> Example Derivation</h4>
 <p>
 A grammar for a bogus language
 </p>
@@ -360,8 +381,8 @@ One possible <i>rightmost</i> derivation is
 </div>
 
 </section>
-<section id="slide-orgheadline20">
-<h3 id="orgheadline20"><span class="section-number-3">3.3</span> Parse Tree</h3>
+<section id="slide-orgheadline21">
+<h3 id="orgheadline21"><span class="section-number-3">3.4</span> Parse Tree</h3>
 <dl>
 <dt>Parse trees</dt><dd>They are trees labeled by symbols of a particular
 grammar.</dd>
@@ -373,8 +394,8 @@ are labeled by the right side of production.</dd>
 </dl>
 
 </section>
-<section id="slide-orgheadline13">
-<h4 id="orgheadline13"><span class="section-number-4">3.3.1</span> Example Parse Tree</h4>
+<section id="slide-orgheadline14">
+<h4 id="orgheadline14"><span class="section-number-4">3.4.1</span> Example Parse Tree</h4>
 <div class="org-src-container">
 
 <pre  class="src src-bnf">S <span style="color: #73d216;">::=</span> SS <span style="color: #fcaf3e; font-weight: bold;">|</span> (S) <span style="color: #fcaf3e; font-weight: bold;">|</span> ()
@@ -398,8 +419,8 @@ The yield of tree on the left is <code>(())()</code>.
 </p>
 
 </section>
-<section id="slide-orgheadline14">
-<h4 id="orgheadline14"><span class="section-number-4">3.3.2</span> Ambiguous Grammars</h4>
+<section id="slide-orgheadline15">
+<h4 id="orgheadline15"><span class="section-number-4">3.4.2</span> Ambiguous Grammars</h4>
 <p>
 A grammar is <i>ambiguous</i> if there is a string in the language that
 is the yield of more than one distict parse tree.
@@ -419,8 +440,8 @@ derivation.</li>
 </ul>
 
 </section>
-<section id="slide-orgheadline15">
-<h4 id="orgheadline15"><span class="section-number-4">3.3.3</span> Example Ambiguous Grammar</h4>
+<section id="slide-orgheadline16">
+<h4 id="orgheadline16"><span class="section-number-4">3.4.3</span> Example Ambiguous Grammar</h4>
 <p>
 Given a grammar
 </p>
@@ -450,8 +471,8 @@ Sorry, your browser does not support SVG.</object>
 </figure>
 
 </section>
-<section id="slide-orgheadline16">
-<h4 id="orgheadline16"><span class="section-number-4">3.3.4</span> Who's fault?</h4>
+<section id="slide-orgheadline17">
+<h4 id="orgheadline17"><span class="section-number-4">3.4.4</span> Who's fault?</h4>
 <p>
 Ambiguity is a <i>property</i> of grammars, NOT languages.
 </p>
@@ -469,8 +490,8 @@ grammar exsits:
 </div>
 
 </section>
-<section id="slide-orgheadline17">
-<h4 id="orgheadline17"><span class="section-number-4">3.3.5</span> Inherent Ambiguity</h4>
+<section id="slide-orgheadline18">
+<h4 id="orgheadline18"><span class="section-number-4">3.4.5</span> Inherent Ambiguity</h4>
 <p>
 Context free languages (CFL) are generated by CFG.
 </p>
@@ -492,8 +513,8 @@ Sorry, your browser does not support SVG.</object>
 </figure>
 
 </section>
-<section id="slide-orgheadline18">
-<h4 id="orgheadline18"><span class="section-number-4">3.3.6</span> Operator Associativity</h4>
+<section id="slide-orgheadline19">
+<h4 id="orgheadline19"><span class="section-number-4">3.4.6</span> Operator Associativity</h4>
 <p>
 It may be expressed in grammar, if needed.
 </p>
@@ -506,8 +527,8 @@ It may be expressed in grammar, if needed.
 </div>
 
 </section>
-<section id="slide-orgheadline19">
-<h4 id="orgheadline19"><span class="section-number-4">3.3.7</span> Operator Precedence</h4>
+<section id="slide-orgheadline20">
+<h4 id="orgheadline20"><span class="section-number-4">3.4.7</span> Operator Precedence</h4>
 <div class="org-src-container">
 
 <pre  class="src src-bnf"><span style="color: #ff2929;">&lt;assign&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;id&gt;</span> = <span style="color: #729fcf;">&lt;expr&gt;</span>
@@ -535,8 +556,8 @@ Lower tokens in the parse tree always have higher <i>precedence</i>.
 </p>
 
 </section>
-<section id="slide-orgheadline23">
-<h3 id="orgheadline23"><span class="section-number-3">3.4</span> Extended BNF</h3>
+<section id="slide-orgheadline24">
+<h3 id="orgheadline24"><span class="section-number-3">3.5</span> Extended BNF</h3>
 <ul>
 <li>DOES NOT enhance the descriptive power of BNF.</li>
 <li>ONLY increases its <i>readability</i> and <i>writability</i>.</li>
@@ -545,8 +566,8 @@ Lower tokens in the parse tree always have higher <i>precedence</i>.
 
 
 </section>
-<section id="slide-orgheadline21">
-<h4 id="orgheadline21"><span class="section-number-4">3.4.1</span> Extensions</h4>
+<section id="slide-orgheadline22">
+<h4 id="orgheadline22"><span class="section-number-4">3.5.1</span> Extensions</h4>
 <dl>
 <dt><code>[]</code></dt><dd><i>Optional</i> parts are placed in brackets.</dd>
 <dt><code>()</code></dt><dd><i>Alternative</i> parts of areplaced inside parentheses and
@@ -557,8 +578,8 @@ separated via logic OR, "|".</dd>
 </dl>
 
 </section>
-<section id="slide-orgheadline22">
-<h4 id="orgheadline22"><span class="section-number-4">3.4.2</span> Example EBNF</h4>
+<section id="slide-orgheadline23">
+<h4 id="orgheadline23"><span class="section-number-4">3.5.2</span> Example EBNF</h4>
 <p>
 The following BNF description of <code>&lt;term&gt;</code>
 </p>
@@ -582,8 +603,8 @@ could be described in EBNF
 </div>
 
 </section>
-<section id="slide-orgheadline24">
-<h3 id="orgheadline24"><span class="section-number-3">3.5</span> YACC</h3>
+<section id="slide-orgheadline25">
+<h3 id="orgheadline25"><span class="section-number-3">3.6</span> YACC</h3>
 <p>
 Given a CFG (a generator), the langauge recognizer can be
 consructed automatically.  One of the most famous one is Yet
@@ -595,16 +616,157 @@ Demo: <a href="https://zaach.github.io/jison/demos/calc/">Jison</a>
 </p>
 
 </section>
-</section>
-<section>
 <section id="slide-orgheadline26">
-<h2 id="orgheadline26"><span class="section-number-2">4</span> Attribute Grammers</h2>
+<h3 id="orgheadline26"><span class="section-number-3">3.7</span> Limitations</h3>
+<ul>
+<li>No representing semantics.  E.g.,
+<ul>
+<li>Variable must be declared before being used.</li>
+<li>Type checking: Use of variable should conform to its type.</li>
+
+</ul></li>
+<li>Only generate parse tree.
+<ul>
+<li>But I want to generate assembly code from the source.</li>
+
+</ul></li>
+
+</ul>
 
 </section>
 </section>
 <section>
-<section id="slide-orgheadline27">
-<h2 id="orgheadline27"><span class="section-number-2">5</span> Describing Semantics</h2>
+<section id="slide-orgheadline35">
+<h2 id="orgheadline35"><span class="section-number-2">4</span> Describing Semantics</h2>
+<ul>
+<li><i>Syntax</i> concerns the form of a valid program</li>
+<li><i>Semantics</i> concerns the meaning</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline28">
+<h3 id="orgheadline28"><span class="section-number-3">4.1</span> Two phases</h3>
+<dl>
+<dt>Static Semantic</dt><dd><ul>
+<li>Enforced by compiler at compile time (thus static)</li>
+<li>Implemented in semantic analysis phase</li>
+<li>CFGs is not powerful enough</li>
+<li>E.g., type checking, appropriate use of identifiers.</li>
+
+</ul></dd>
+<dt>Dynamic Semantic</dt><dd><ul>
+<li>Enforced by code generated by compiler</li>
+<li>Check occurs at run time, exception raised if fails</li>
+<li>E.g., array bounds, artihmetic error (dividing zero),
+uninitialized variables, etc.</li>
+
+</ul></dd>
+
+</dl>
+
+</section>
+<section id="slide-orgheadline34">
+<h3 id="orgheadline34"><span class="section-number-3">4.2</span> Static Semantics</h3>
+<p>
+The static semantics is
+</p>
+<ul>
+<li>indirectly related to the meaning of programs during execution.</li>
+<li>It has to do with the legal forms of programs (syntax rather than
+semantics).</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline29">
+<h4 id="orgheadline29"><span class="section-number-4">4.2.1</span> Definition</h4>
+
+<figure>
+<p><object type="image/svg+xml" data="./img/cfg-def.svg" height="60px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+<ul>
+<li>Each grammar symbol <code>X</code> is associated with a set of attributes
+<code>A(X)</code>, which consists of two disjoint sets
+<ul>
+<li><code>S(X)</code> the synthesized attributes</li>
+<li><code>I(X)</code> the inherited attributes</li>
+
+</ul></li>
+<li>Each rule has a set of functions that define certain attributes
+of the nonterminals in the rule.</li>
+<li>Each rule has a (possibly empty) set of <i>predicates</i> to check for
+attribute consistency.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline30">
+<h4 id="orgheadline30"><span class="section-number-4">4.2.2</span> Intrinsic Attributes</h4>
+<ul>
+<li>Synthesized attributes of leaf nodes</li>
+<li>values are determined outside the parse tree</li>
+<li>Like initial values or conditions</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline31">
+<h4 id="orgheadline31"><span class="section-number-4">4.2.3</span> Example Attribute Grammar</h4>
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;stmt&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;var&gt;</span> <span style="color: #de7fa8;">"="</span> <span style="color: #729fcf;">&lt;expr&gt;</span>  SR: (expr.et = var.at)
+<span style="color: #ff2929;">&lt;expr&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;var&gt;</span>1 <span style="color: #de7fa8;">"+"</span> <span style="color: #729fcf;">&lt;var&gt;</span>2 SR: (expr.at = if (var1.at = int) and
+                                               (var2.at = int)
+                                              int
+                                            else
+                                              real)
+                              P: (expr.at == expr.et)
+<span style="color: #ff2929;">&lt;expr&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;var&gt;</span>             SR: (expr.at = var.at)
+                              P: (expr.at == expr.et)
+<span style="color: #ff2929;">&lt;var&gt;</span>  <span style="color: #73d216;">::=</span> A <span style="color: #fcaf3e; font-weight: bold;">|</span> B <span style="color: #fcaf3e; font-weight: bold;">|</span> C         SR: (var.at = LOOKUP(var.string))
+</pre>
+</div>
+
+<p>
+<code>at</code> stands for <code>actual_type</code> and <code>et</code> stands for <code>expected_type</code>.
+</p>
+
+</section>
+<section id="slide-orgheadline32">
+<h4 id="orgheadline32"><span class="section-number-4">4.2.4</span> Example Parse Tree</h4>
+<p>
+Given sentence <code>A = A + B</code>.  We have a parse tree
+</p>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/parse-tree-ag-ex1.svg" width="600px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+</section>
+<section id="slide-orgheadline33">
+<h4 id="orgheadline33"><span class="section-number-4">4.2.5</span> Example Compute Attributes</h4>
+<p>
+Flow of attributes.
+</p>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/parse-tree-ag-ex2.svg" width="672px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+<p>
+Example: <a href="http://zaach.github.io/jison/demos/calc/">Jison</a>
+</p>
 </section>
 </section>
 </div>
