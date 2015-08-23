@@ -360,24 +360,6 @@ S ::= SS | (S) | ()
    - It has to do with the legal forms of programs (syntax rather than
      semantics).
 
-*** Attribute Grammar
-
-    Attribute Grammar consists two part
-
-    - the production
-
-      #+BEGIN_SRC bnf
-<exp_a> ::= <exp_b> <exp_c>
-      #+END_SRC
-
-    - and the semantics rule
-
-      #+BEGIN_SRC bnf
-exp_a.a = ...;
-exp_b.a = ...;
-exp_c.a = ...;
-      #+END_SRC
-
 *** Definition
 
     #+ATTR_HTML: :height 60px
@@ -398,16 +380,35 @@ exp_c.a = ...;
     - values are determined outside the parse tree
     - Like initial values or conditions
 
-
-*** Example Attribute Grammer
-
-    Given the attribute grammar
+*** Example Attribute Grammar
 
     #+BEGIN_SRC bnf
-<stmt> ::= <var> "=" <expr> (stmt.val = val.val = expr.val)
-<expr> ::= <var>            (expr.val = var.val | var.val + var.val)
-         | <var> "+" <var>
-<var>  ::= <bin>            (var.val = bin.val)
-<var>  ::= <bin1> <bin2>   (var.val = bin1.val * 2 + bin2.val)
-<bin>  ::= 0 | 1            (bin.val = 0 | 1)
+<stmt> ::= <var> "=" <expr>  SR: (expr.et = var.at)
+<expr> ::= <var>1 "+" <var>2 SR: (expr.at = if (var1.at = int) and
+                                               (var2.at = int)
+                                              int
+                                            else
+                                              real)
+                              P: (expr.at == expr.et)
+<expr> ::= <var>             SR: (expr.at = var.at)
+                              P: (expr.at == expr.et)
+<var>  ::= A | B | C         SR: (var.at = LOOKUP(var.string))
     #+END_SRC
+
+    =at= stands for =actual_type= and =et= stands for =expected_type=.
+
+*** Example Parse Tree
+
+    Given sentence =A = A + B=.  We have a parse tree
+
+    #+ATTR_HTML: :width 600px
+    [[./img/parse-tree-ag-ex1.svg]]
+
+*** Example Compute Attributes
+
+    Flow of attributes.
+
+    #+ATTR_HTML: :width 672px
+    [[./img/parse-tree-ag-ex2.svg]]
+
+    Example: [[http://zaach.github.io/jison/demos/calc/][Jison]]
