@@ -35,7 +35,8 @@
 <li><a href="#/slide-orgheadline1">1. Introduction</a></li>
 <li><a href="#/slide-orgheadline5">2. Problem Overview</a></li>
 <li><a href="#/slide-orgheadline27">3. Describing Syntax</a></li>
-<li><a href="#/slide-orgheadline35">4. Describing Semantics</a></li>
+<li><a href="#/slide-orgheadline55">4. Describing Semantics</a></li>
+<li><a href="#/slide-orgheadline56">5. Summary</a></li>
 </ul>
 </div>
 </nav>
@@ -636,8 +637,8 @@ Demo: <a href="https://zaach.github.io/jison/demos/calc/">Jison</a>
 </section>
 </section>
 <section>
-<section id="slide-orgheadline35">
-<h2 id="orgheadline35"><span class="section-number-2">4</span> Describing Semantics</h2>
+<section id="slide-orgheadline55">
+<h2 id="orgheadline55"><span class="section-number-2">4</span> Describing Semantics</h2>
 <ul>
 <li><i>Syntax</i> concerns the form of a valid program</li>
 <li><i>Semantics</i> concerns the meaning</li>
@@ -767,6 +768,375 @@ Sorry, your browser does not support SVG.</object>
 <p>
 Example: <a href="http://zaach.github.io/jison/demos/calc/">Jison</a>
 </p>
+
+</section>
+<section id="slide-orgheadline54">
+<h3 id="orgheadline54"><span class="section-number-3">4.3</span> Dynamic Semantics</h3>
+<p>
+NO universally accepted notation or approach has been devised for
+<i>dynamic semantics</i>.
+</p>
+
+<ul>
+<li>Programmers need to know statements meaning.</li>
+<li>Compiler writers must know exactly what language constructs mean
+to design them correctly.</li>
+<li>Correctness of proof would be possible</li>
+<li>Auto generating compilers</li>
+<li>Designers could detect ambiguities and inconsistencies</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline35">
+<h4 id="orgheadline35"><span class="section-number-4">4.3.1</span> Methods</h4>
+<ul>
+<li>Operational Semantics</li>
+<li>Denotational Semantics</li>
+<li>Axiomatic Semantics</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline36">
+<h4 id="orgheadline36"><span class="section-number-4">4.3.2</span> Operational Semantics</h4>
+<p>
+Describe the meaning of a statement or program by specifying the
+effects of running it on a machine.
+</p>
+
+<p>
+We need a "virtual computer" to interprete the intermediate code.
+</p>
+
+<ul>
+<li>Good if kept simple and informal</li>
+<li>Extremely complex if used formally</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline37">
+<h4 id="orgheadline37"><span class="section-number-4">4.3.3</span> Usage</h4>
+<ul>
+<li>Language manuals and textbooks</li>
+<li>Teaching programming languages</li>
+
+</ul>
+
+
+<ul>
+<li>Natural operational semantics</li>
+<li>Structural operational semantics</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline38">
+<h4 id="orgheadline38"><span class="section-number-4">4.3.4</span> Denotational Semantics</h4>
+<p>
+Based on recursive function theory.
+</p>
+
+<p>
+Howto:
+</p>
+
+<ul>
+<li>Define a mathematical object for each language entity</li>
+<li>Define a function that maps instances of the language entities
+onto instances of the corresponding mathematical objects.</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline39">
+<h4 id="orgheadline39"><span class="section-number-4">4.3.5</span> Mapping Function</h4>
+<dl>
+<dt>Syntactic Domain (domain)</dt><dd>Collection of values that are
+legitimate parameters to the function.</dd>
+<dt>Semantic Domain (range)</dt><dd>Collection of objects to which the
+parameters are mapped.</dd>
+
+</dl>
+
+
+</section>
+<section id="slide-orgheadline40">
+<h4 id="orgheadline40"><span class="section-number-4">4.3.6</span> Exmaple Denotational Semantics 0</h4>
+<p>
+Given the following grammar
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf"><span style="color: #ff2929;">&lt;bin&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #de7fa8;">"0"</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #de7fa8;">"1"</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;bin&gt;</span> <span style="color: #de7fa8;">"0"</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;bin&gt;</span> <span style="color: #de7fa8;">"1"</span>
+</pre>
+</div>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/parse-tree-ds-ex1.svg" width="400px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+<p>
+For the sentence <code>110</code>, we have the parse tree on the left.
+</p>
+
+</section>
+<section id="slide-orgheadline41">
+<h4 id="orgheadline41"><span class="section-number-4">4.3.7</span> Example Denotaional Semantics 2</h4>
+<dl>
+<dt>Syntactic domain</dt><dd>The set of all character string
+representations of binary numbers.</dd>
+<dt>Semantic domain</dt><dd>the set of nonnegative decimal numbers,
+symbolized by N.</dd>
+
+</dl>
+
+
+</section>
+<section id="slide-orgheadline42">
+<h4 id="orgheadline42"><span class="section-number-4">4.3.8</span> Example Denotaional Semantics 3</h4>
+<p>
+The mapping function
+</p>
+
+<ul>
+<li>F("0") = 0</li>
+<li>F("1") = 1</li>
+<li>F(&lt;bin&gt; "0") = 2 * F(&lt;bin&gt;)</li>
+<li>F(&lt;bin&gt; "1") = 2 * F(&lt;bin&gt;) + 1</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline43">
+<h4 id="orgheadline43"><span class="section-number-4">4.3.9</span> Example Denotaional Semantics 4</h4>
+<p>
+A parse tree with denoted objects for <code>110</code>.
+</p>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/parse-tree-ds-ex2.svg" width="400px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+
+</section>
+<section id="slide-orgheadline44">
+<h4 id="orgheadline44"><span class="section-number-4">4.3.10</span> Axiomatic Semantics</h4>
+<ul>
+<li>Based on math logic, predicate calculus</li>
+<li>For proof of correctness</li>
+<li>The meaning of a program is based on <i>relationships</i> among
+program variables and constants,</li>
+
+</ul>
+
+
+<pre class="example">
+{P} statement {Q}
+</pre>
+
+<p>
+<code>P</code> and <code>Q</code> are called <i>predicates</i> or <i>assertions</i>.  And <code>P</code> is
+precondition and <code>Q</code> postcondition.
+</p>
+
+</section>
+<section id="slide-orgheadline45">
+<h4 id="orgheadline45"><span class="section-number-4">4.3.11</span> Example Axiomatics Semantics</h4>
+<p>
+A assignment statement with a postcondition
+</p>
+
+<pre class="example">
+sum = 2 * x + 1 { sum &gt; 1 }
+</pre>
+
+<ul>
+<li>One possible precondition may be <code>{x &gt; 10}</code></li>
+<li>But the <b>weakest precondition</b> is <code>{x &gt; 0}</code>.</li>
+
+</ul>
+
+<p>
+It is the least restrictive precondition that will guarantee the
+validity of the associated postcondition.
+</p>
+
+</section>
+<section id="slide-orgheadline46">
+<h4 id="orgheadline46"><span class="section-number-4">4.3.12</span> Inference Rule</h4>
+<p>
+If <code>S1, S2, ..., Sn</code> are true, then the truth of <code>S</code> can be
+inferred.
+</p>
+
+<p>
+An <b>axiom</b> is a logic statment assumed to be true.  So it is an
+inference rule <i>without an antecedent</i>
+</p>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/inference-rule.svg" height="100px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+
+</section>
+<section id="slide-orgheadline47">
+<h4 id="orgheadline47"><span class="section-number-4">4.3.13</span> Example Inference Rule</h4>
+<p>
+which means that <code>P</code> is computed as <code>Q</code> with all instances of <code>x</code>
+replaced by <code>E</code> (without side effects).
+</p>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/assignment-axiom.svg" height="80px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+</section>
+<section id="slide-orgheadline48">
+<h4 id="orgheadline48"><span class="section-number-4">4.3.14</span> Example Axiomatics Semantics</h4>
+<p>
+Suppose we have the following statements
+</p>
+
+<pre class="example">
+x = x + y - 3 {x &gt; 10}
+</pre>
+
+<p>
+The weakest precondition is
+</p>
+
+<pre class="example">
+y = 13 - x
+</pre>
+
+</section>
+<section id="slide-orgheadline49">
+<h4 id="orgheadline49"><span class="section-number-4">4.3.15</span> Proof of Correctness</h4>
+
+<figure>
+<p><object type="image/svg+xml" data="./img/proof-correctness.svg" height="80px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+<pre class="example">
+{x &gt; 3} x = x - 3 {x &gt; 0}
+</pre>
+
+<p>
+Using the above axiom on
+</p>
+
+<pre class="example">
+x = x - 3 {x &gt; 0}
+</pre>
+
+<p>
+produces <code>{x &gt; 3}</code>, which is the given precondition.
+</p>
+
+</section>
+<section id="slide-orgheadline50">
+<h4 id="orgheadline50"><span class="section-number-4">4.3.16</span> Proof of Correctness</h4>
+<p>
+Suppose we have
+</p>
+
+<pre class="example">
+{x &gt; 5} x = x - 3 {x &gt; 0}
+</pre>
+
+<p>
+We need to use the <i>rule of consequence</i>
+</p>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/consequence-rule.svg" height="120px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+</section>
+<section id="slide-orgheadline51">
+<h4 id="orgheadline51"><span class="section-number-4">4.3.17</span> Sequence Inference</h4>
+
+<figure>
+<p><object type="image/svg+xml" data="./img/sequence-inference.svg" height="300px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+
+</section>
+<section id="slide-orgheadline52">
+<h4 id="orgheadline52"><span class="section-number-4">4.3.18</span> Loops</h4>
+<pre class="example">
+{P} while B do S end {Q}
+</pre>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/loop-inference.svg" height="100px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+<ul>
+<li><code>P</code> implies <code>I</code></li>
+<li><code>{I} B {I}</code></li>
+<li><code>{I AND B} S {I}</code></li>
+<li><code>{I AND (NOT B)}</code> implies Q</li>
+<li>The loop terminates</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline53">
+<h4 id="orgheadline53"><span class="section-number-4">4.3.19</span> Evaluation of Axiomatic Semantics</h4>
+<ul>
+<li>Developing axioms or inference rules for all of the statements
+is difficult</li>
+<li>Good for correctness proof</li>
+<li>Programmers and compiler writers not care</li>
+
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline56">
+<h2 id="orgheadline56"><span class="section-number-2">5</span> Summary</h2>
+<ul>
+<li>BNF and CFG</li>
+<li>Static semantics with attribute Grammar</li>
+<li>Dynamic Semantics with operational, denotational and axiomatics.</li>
+
+</ul>
 </section>
 </section>
 </div>
