@@ -82,8 +82,8 @@ std::string interprete(const std::string &src, const std::string &input = "");
 
 int main()
 {
-  std::cout << bf("+.") << std::endl;      // output: 1
-  std::cout << bf(",.", "2") << std::endl; // output: 2
+  std::cout << interprete("+.") << std::endl;      // output: 1
+  std::cout << interprete(",.", "2") << std::endl; // output: 2
 
   return 0;
 }
