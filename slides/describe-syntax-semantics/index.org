@@ -1,5 +1,5 @@
 #+TITLE: PPL -- Describing Syntax & Semantics
-#+OPTIONS: ^:nil tex:dvipng
+#+OPTIONS: ^:nil
 #+SETUPFILE: ../setup.org
 #+MACRO: color @@html: <span style="color: $1">$2</span>@@
 
@@ -412,3 +412,231 @@ S ::= SS | (S) | ()
     [[./img/parse-tree-ag-ex2.svg]]
 
     Example: [[http://zaach.github.io/jison/demos/calc/][Jison]]
+
+** Dynamic Semantics
+
+   NO universally accepted notation or approach has been devised for
+   /dynamic semantics/.
+
+   - Programmers need to know statements meaning.
+   - Compiler writers must know exactly what language constructs mean
+     to design them correctly.
+   - Correctness of proof would be possible
+   - Auto generating compilers
+   - Designers could detect ambiguities and inconsistencies
+
+
+*** Methods
+
+    - Operational Semantics
+    - Denotational Semantics
+    - Axiomatic Semantics
+
+
+*** Operational Semantics
+
+    Describe the meaning of a statement or program by specifying the
+    effects of running it on a machine.
+
+    We need a "virtual computer" to interprete the intermediate code.
+
+    - Good if kept simple and informal
+    - Extremely complex if used formally
+
+
+*** Usage
+
+    - Language manuals and textbooks
+    - Teaching programming languages
+
+
+    - Natural operational semantics
+    - Structural operational semantics
+
+
+*** Denotational Semantics
+
+    Based on recursive function theory.
+
+    Howto:
+
+    - Define a mathematical object for each language entity
+    - Define a function that maps instances of the language entities
+      onto instances of the corresponding mathematical objects.
+
+
+*** Mapping Function
+
+    - Syntactic Domain (domain) :: Collection of values that are
+         legitimate parameters to the function.
+    - Semantic Domain (range) :: Collection of objects to which the
+         parameters are mapped.
+
+
+*** Exmaple Denotational Semantics 0
+
+    Given the following grammar
+
+    #+BEGIN_SRC bnf
+<bin> ::= "0" | "1" | <bin> "0" | <bin> "1"
+    #+END_SRC
+
+    #+ATTR_HTML: :width 400px
+    [[./img/parse-tree-ds-ex1.svg]]
+
+    For the sentence =110=, we have the parse tree on the left.
+
+*** Example Denotaional Semantics 2
+
+    - Syntactic domain :: The set of all character string
+         representations of binary numbers.
+    - Semantic domain :: the set of nonnegative decimal numbers,
+         symbolized by N.
+
+
+*** Example Denotaional Semantics 3
+
+    The mapping function
+
+    - F("0") = 0
+    - F("1") = 1
+    - F(<bin> "0") = 2 * F(<bin>)
+    - F(<bin> "1") = 2 * F(<bin>) + 1
+
+
+*** Example Denotaional Semantics 4
+
+    A parse tree with denoted objects for =110=.
+
+    #+ATTR_HTML: :width 400px
+    [[./img/parse-tree-ds-ex2.svg]]
+
+
+*** Axiomatic Semantics
+
+    - Based on math logic, predicate calculus
+    - For proof of correctness
+    - The meaning of a program is based on /relationships/ among
+      program variables and constants,
+
+
+    #+BEGIN_EXAMPLE
+    {P} statement {Q}
+    #+END_EXAMPLE
+
+    =P= and =Q= are called /predicates/ or /assertions/.  And =P= is
+    precondition and =Q= postcondition.
+
+*** Example Axiomatics Semantics
+
+    A assignment statement with a postcondition
+
+    #+BEGIN_EXAMPLE
+    sum = 2 * x + 1 { sum > 1 }
+    #+END_EXAMPLE
+
+    - One possible precondition may be ={x > 10}=
+    - But the *weakest precondition* is ={x > 0}=.
+
+    It is the least restrictive precondition that will guarantee the
+    validity of the associated postcondition.
+
+*** Inference Rule
+
+    If =S1, S2, ..., Sn= are true, then the truth of =S= can be
+    inferred.
+
+    An *axiom* is a logic statment assumed to be true.  So it is an
+    inference rule /without an antecedent/
+
+    #+ATTR_HTML: :height 100px
+    [[./img/inference-rule.svg]]
+
+
+*** Example Inference Rule
+
+    which means that =P= is computed as =Q= with all instances of =x=
+    replaced by =E= (without side effects).
+
+    #+ATTR_HTML: :height 80px
+    [[./img/assignment-axiom.svg]]
+
+*** Example Axiomatics Semantics
+
+    Suppose we have the following statements
+
+    #+BEGIN_EXAMPLE
+x = x + y - 3 {x > 10}
+    #+END_EXAMPLE
+
+    The weakest precondition is
+
+    #+BEGIN_EXAMPLE
+y = 13 - x
+    #+END_EXAMPLE
+
+*** Proof of Correctness
+
+    #+ATTR_HTML: :height 80px
+    [[./img/proof-correctness.svg]]
+
+    #+BEGIN_EXAMPLE
+{x > 3} x = x - 3 {x > 0}
+    #+END_EXAMPLE
+
+    Using the above axiom on
+
+    #+BEGIN_EXAMPLE
+x = x - 3 {x > 0}
+    #+END_EXAMPLE
+
+    produces ={x > 3}=, which is the given precondition.
+
+*** Proof of Correctness
+
+    Suppose we have
+
+    #+BEGIN_EXAMPLE
+{x > 5} x = x - 3 {x > 0}
+    #+END_EXAMPLE
+
+    We need to use the /rule of consequence/
+
+    #+ATTR_HTML: :height 120px
+    [[./img/consequence-rule.svg]]
+
+*** Sequence Inference
+
+    #+ATTR_HTML: :height 300px
+    [[./img/sequence-inference.svg]]
+
+
+*** Loops
+
+    #+BEGIN_EXAMPLE
+{P} while B do S end {Q}
+    #+END_EXAMPLE
+
+    #+ATTR_HTML: :height 100px
+    [[./img/loop-inference.svg]]
+
+    - =P= implies =I=
+    - ={I} B {I}=
+    - ={I AND B} S {I}=
+    - ={I AND (NOT B)}= implies Q
+    - The loop terminates
+
+
+*** Evaluation of Axiomatic Semantics
+
+    - Developing axioms or inference rules for all of the statements
+      is difficult
+    - Good for correctness proof
+    - Programmers and compiler writers not care
+
+
+* Summary
+
+  - BNF and CFG
+  - Static semantics with attribute Grammar
+  - Dynamic Semantics with operational, denotational and axiomatics.
