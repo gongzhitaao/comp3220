@@ -50,5 +50,5 @@ from Concepts of Programming Languages (10th edition).
   - [[./preliminary][Priliminaries]] :: Overview of topics in this course.
   - [[./history][History]] :: Brief history of some programming languages.
   - [[./describe-syntax-semantics][Describe Syntax & Semantics]] :: Formally describe syntax and sematics.
-  - [[./parsing][Parsing]] :: Algorithms for syntax and lexical anaylysis.
+  - [[./lexical-syntax-analysis][Parsing]] :: Algorithms for syntax and lexical anaylysis.
   - Components :: General view of programming language elements.

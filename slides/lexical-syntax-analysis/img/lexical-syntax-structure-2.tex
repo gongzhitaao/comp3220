@@ -1,0 +1,35 @@
+\documentclass[crop,tikz,border=10px,convert=pdf2svg,multi=false]{standalone}
+\usepackage{amsfonts}
+\usepackage[defaultsans]{opensans}
+\usetikzlibrary{shapes,arrows,positioning}
+\begin{document}
+\begin{tikzpicture}[font=\sffamily,node distance=2em,remember picture,
+  decision/.style = {diamond, draw, fill=yellow!20, text width=4em,
+    text badly centered, inner sep=0},
+  block/.style = {rectangle, draw, fill=blue!20, text centered, text
+    width=4em, rounded corners, minimum height=2em},
+  cloud/.style = {rectangle, rounded corners, draw, fill=red!20, text centered, minimum
+    height=1em, inner sep=0.2em, font=\scriptsize\sffamily},
+  outer/.style = {rectangle, fill=yellow!20, text centered, rounded
+    corners},
+  title/.style = {draw=none, font=\Large\bf\sffamily, text centered},
+  line/.style = {draw, -latex', red!20, thick}]
+
+  \node [outer] (parser) {
+    \begin{tikzpicture}
+      \node [outer, fill=yellow!10] (syn) {
+        \begin{tikzpicture}
+          \node [block] (lex) {Lexical Analyzer};
+          \node [title, above right=of lex, text width=6em] {Syntax\\ Analyzer};
+        \end{tikzpicture}
+      };
+
+      \node [title, above right=of syn] {Parser};
+    \end{tikzpicture}
+  };
+
+  \node [cloud, left=of lex] (src) {Source Program};
+  \draw [line] (src) -- (lex);
+
+\end{tikzpicture}
+\end{document}

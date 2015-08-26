@@ -1,0 +1,46 @@
+#+TITLE: PPL -- Lexical & Syntax Analysis
+#+OPTIONS: ^:nil
+#+SETUPFILE: ../setup.org
+
+* Motivation
+
+  - The syntax analyzer is at the heart of compiler.
+  - It is an application of grammar.
+  - Lexical and syntax analyzer are used often
+
+
+* Introduction
+
+  Analyzing syntax is divided into two distinct parts.
+  - lexical analysis :: small-scale language constructs, such as names
+       and numeric literals.
+  - syntax analysis :: large-scale constructs, such as expressions,
+       statements, and program units.
+
+
+** Parser Structure
+
+   #+ATTR_HTML: :width 800px
+   [[./img/lexical-syntax-structure.svg]]
+
+** Parser New Structure
+
+   #+ATTR_HTML: :width 800px
+   [[./img/lexical-syntax-structure-2.svg]]
+
+
+** Reason for Separation
+
+   - Simplicity for both lexical and syntax analyzer.
+   - Efficiency with regard to compilation time.
+   - Portability.  Separate machine dependent from machine
+     independent.
+
+
+* Lexical Analysis
+
+  A lexical analyzer is essentially a pattern matcher.
+
+
+
+#  LocalWords:  PPL SETUPFILE
