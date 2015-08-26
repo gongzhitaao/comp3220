@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>PPL &#x2013; Lexical &amp; Syntax Analysis</title>
+<meta name="author" content="(Zhitao Gong)"/>
+<link rel="stylesheet" href="/comp3220/reveal.js/css/reveal.css"/>
+<link rel="stylesheet" href="/comp3220/reveal.js/css/theme/moon.css" id="theme"/>
+<link rel="stylesheet" href="/comp3220/css/style.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '/comp3220/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1 class="title">PPL &#x2013; Lexical &amp; Syntax Analysis</h1>
+<p class="author">Zhitao Gong</p>
+<p class="email"><a href="mailto:me (at) gongzhitaao (dot) org">me (at) gongzhitaao (dot) org</a></p>
+</section>
+<section id="table-of-contents">
+<nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-orgheadline1">1. Motivation</a></li>
+<li><a href="#/slide-orgheadline5">2. Introduction</a></li>
+<li><a href="#/slide-orgheadline6">3. Lexical Analysis</a></li>
+</ul>
+</div>
+</nav>
+</section>
+
+<section>
+<section id="slide-orgheadline1">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> Motivation</h2>
+<ul>
+<li>The syntax analyzer is at the heart of compiler.</li>
+<li>It is an application of grammar.</li>
+<li>Lexical and syntax analyzer are used often</li>
+
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline5">
+<h2 id="orgheadline5"><span class="section-number-2">2</span> Introduction</h2>
+<p>
+Analyzing syntax is divided into two distinct parts.
+</p>
+<dl>
+<dt>lexical analysis</dt><dd>small-scale language constructs, such as names
+and numeric literals.</dd>
+<dt>syntax analysis</dt><dd>large-scale constructs, such as expressions,
+statements, and program units.</dd>
+
+</dl>
+
+
+</section>
+<section id="slide-orgheadline2">
+<h3 id="orgheadline2"><span class="section-number-3">2.1</span> Parser Structure</h3>
+
+<figure>
+<p><object type="image/svg+xml" data="./img/lexical-syntax-structure.svg" width="800px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+</section>
+<section id="slide-orgheadline3">
+<h3 id="orgheadline3"><span class="section-number-3">2.2</span> Parser New Structure</h3>
+
+<figure>
+<p><object type="image/svg+xml" data="./img/lexical-syntax-structure-2.svg" width="800px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+
+</section>
+<section id="slide-orgheadline4">
+<h3 id="orgheadline4"><span class="section-number-3">2.3</span> Reason for Separation</h3>
+<ul>
+<li>Simplicity for both lexical and syntax analyzer.</li>
+<li>Efficiency with regard to compilation time.</li>
+<li>Portability.  Separate machine dependent from machine
+independent.</li>
+
+</ul>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline6">
+<h2 id="orgheadline6"><span class="section-number-2">3</span> Lexical Analysis</h2>
+<p>
+A lexical analyzer is essentially a pattern matcher.
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="/comp3220/reveal.js/lib/js/head.min.js"></script>
+<script src="/comp3220/reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: true,
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+});
+</script>
+</body>
+</html>
