@@ -35,8 +35,8 @@
 <li><a href="#/slide-orgheadline1">1. Introduction</a></li>
 <li><a href="#/slide-orgheadline5">2. Problem Overview</a></li>
 <li><a href="#/slide-orgheadline27">3. Describing Syntax</a></li>
-<li><a href="#/slide-orgheadline55">4. Describing Semantics</a></li>
-<li><a href="#/slide-orgheadline56">5. Summary</a></li>
+<li><a href="#/slide-orgheadline64">4. Describing Semantics</a></li>
+<li><a href="#/slide-orgheadline65">5. Summary</a></li>
 </ul>
 </div>
 </nav>
@@ -637,8 +637,8 @@ Demo: <a href="https://zaach.github.io/jison/demos/calc/">Jison</a>
 </section>
 </section>
 <section>
-<section id="slide-orgheadline55">
-<h2 id="orgheadline55"><span class="section-number-2">4</span> Describing Semantics</h2>
+<section id="slide-orgheadline64">
+<h2 id="orgheadline64"><span class="section-number-2">4</span> Describing Semantics</h2>
 <ul>
 <li><i>Syntax</i> concerns the form of a valid program</li>
 <li><i>Semantics</i> concerns the meaning</li>
@@ -770,8 +770,8 @@ Example: <a href="http://zaach.github.io/jison/demos/calc/">Jison</a>
 </p>
 
 </section>
-<section id="slide-orgheadline54">
-<h3 id="orgheadline54"><span class="section-number-3">4.3</span> Dynamic Semantics</h3>
+<section id="slide-orgheadline63">
+<h3 id="orgheadline63"><span class="section-number-3">4.3</span> Dynamic Semantics</h3>
 <p>
 NO universally accepted notation or approach has been devised for
 <i>dynamic semantics</i>.
@@ -954,6 +954,10 @@ program variables and constants,</li>
 precondition and <code>Q</code> postcondition.
 </p>
 
+<p>
+And the above is called a <i>Hoare triple</i>.
+</p>
+
 </section>
 <section id="slide-orgheadline45">
 <h4 id="orgheadline45"><span class="section-number-4">4.3.11</span> Example Axiomatics Semantics</h4>
@@ -978,7 +982,48 @@ validity of the associated postcondition.
 
 </section>
 <section id="slide-orgheadline46">
-<h4 id="orgheadline46"><span class="section-number-4">4.3.12</span> Inference Rule</h4>
+<h4 id="orgheadline46"><span class="section-number-4">4.3.12</span> Notes</h4>
+<p>
+We always follow <i>assignment axiom scheme</i>.
+</p>
+
+<ul>
+<li>precondition is the target</li>
+<li>we are given the postcondition</li>
+<li>replace all free occurences of the LHS with RHS</li>
+<li>then we get the precondition</li>
+
+</ul>
+
+
+<p>
+Nonsence example
+</p>
+
+<pre class="example">
+{ x = 5 } x := 3 { 3 = 5 }
+</pre>
+
+</section>
+<section id="slide-orgheadline47">
+<h4 id="orgheadline47"><span class="section-number-4">4.3.13</span> Uniqueness</h4>
+<p>
+A given postcondition <code>Q</code> uniquely determines the precondition
+<code>P</code>.  Inverse is <i>not</i> true.
+</p>
+
+<ul>
+<li><code>{0 ≤ y*y ∧ y*y ≤ 9}  x = y * y  {0 ≤ x ∧ x ≤ 9}</code></li>
+<li><code>{0 ≤ y*y ∧ y*y ≤ 9}  x = y * y  {0 ≤ x ∧ y*y ≤ 9}</code></li>
+<li><code>{0 ≤ y*y ∧ y*y ≤ 9}  x = y * y  {0 ≤ y*y ∧ x ≤ 9}</code></li>
+<li><code>{0 ≤ y*y ∧ y*y ≤ 9}  x = y * y  {0 ≤ y*y ∧ y*y ≤ 9}</code></li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline48">
+<h4 id="orgheadline48"><span class="section-number-4">4.3.14</span> Inference Rule</h4>
 <p>
 If <code>S1, S2, ..., Sn</code> are true, then the truth of <code>S</code> can be
 inferred.
@@ -998,8 +1043,8 @@ Sorry, your browser does not support SVG.</object>
 
 
 </section>
-<section id="slide-orgheadline47">
-<h4 id="orgheadline47"><span class="section-number-4">4.3.13</span> Example Inference Rule</h4>
+<section id="slide-orgheadline49">
+<h4 id="orgheadline49"><span class="section-number-4">4.3.15</span> Example Inference Rule</h4>
 <p>
 which means that <code>P</code> is computed as <code>Q</code> with all instances of <code>x</code>
 replaced by <code>E</code> (without side effects).
@@ -1013,8 +1058,8 @@ Sorry, your browser does not support SVG.</object>
 </figure>
 
 </section>
-<section id="slide-orgheadline48">
-<h4 id="orgheadline48"><span class="section-number-4">4.3.14</span> Example Axiomatics Semantics</h4>
+<section id="slide-orgheadline50">
+<h4 id="orgheadline50"><span class="section-number-4">4.3.16</span> Example Axiomatics Semantics</h4>
 <p>
 Suppose we have the following statements
 </p>
@@ -1032,8 +1077,8 @@ y = 13 - x
 </pre>
 
 </section>
-<section id="slide-orgheadline49">
-<h4 id="orgheadline49"><span class="section-number-4">4.3.15</span> Proof of Correctness</h4>
+<section id="slide-orgheadline51">
+<h4 id="orgheadline51"><span class="section-number-4">4.3.17</span> Proof of Correctness</h4>
 
 <figure>
 <p><object type="image/svg+xml" data="./img/proof-correctness.svg" height="80px">
@@ -1058,8 +1103,8 @@ produces <code>{x &gt; 3}</code>, which is the given precondition.
 </p>
 
 </section>
-<section id="slide-orgheadline50">
-<h4 id="orgheadline50"><span class="section-number-4">4.3.16</span> Proof of Correctness</h4>
+<section id="slide-orgheadline52">
+<h4 id="orgheadline52"><span class="section-number-4">4.3.18</span> Proof of Correctness</h4>
 <p>
 Suppose we have
 </p>
@@ -1080,8 +1125,8 @@ Sorry, your browser does not support SVG.</object>
 </figure>
 
 </section>
-<section id="slide-orgheadline51">
-<h4 id="orgheadline51"><span class="section-number-4">4.3.17</span> Sequence Inference</h4>
+<section id="slide-orgheadline53">
+<h4 id="orgheadline53"><span class="section-number-4">4.3.19</span> Sequence Inference</h4>
 
 <figure>
 <p><object type="image/svg+xml" data="./img/sequence-inference.svg" height="300px">
@@ -1091,8 +1136,8 @@ Sorry, your browser does not support SVG.</object>
 
 
 </section>
-<section id="slide-orgheadline52">
-<h4 id="orgheadline52"><span class="section-number-4">4.3.18</span> Loops</h4>
+<section id="slide-orgheadline54">
+<h4 id="orgheadline54"><span class="section-number-4">4.3.20</span> Loops</h4>
 <pre class="example">
 {P} while B do S end {Q}
 </pre>
@@ -1115,8 +1160,140 @@ Sorry, your browser does not support SVG.</object>
 
 
 </section>
-<section id="slide-orgheadline53">
-<h4 id="orgheadline53"><span class="section-number-4">4.3.19</span> Evaluation of Axiomatic Semantics</h4>
+<section id="slide-orgheadline55">
+<h4 id="orgheadline55"><span class="section-number-4">4.3.21</span> Loop Invariant</h4>
+<p>
+<i>Loop invariant</i> is a condition that is necessarily true
+immediately <b>before</b> and immediately <b>after</b> <b>each</b> iteration of
+the loop.
+</p>
+
+<p>
+We use simple <code>while</code> loop as an example.
+</p>
+
+</section>
+<section id="slide-orgheadline56">
+<h4 id="orgheadline56"><span class="section-number-4">4.3.22</span> Exmaple Loop Invariant</h4>
+<div class="org-src-container">
+
+<pre  class="src src-C++">{P} <span style="color: #729fcf; font-weight: bold;">while</span> (B) { S } {Q}
+</pre>
+</div>
+
+<p>
+Where
+</p>
+
+<ul>
+<li><code>P</code> is the precondition</li>
+<li><code>Q</code> is the postcondition, and</li>
+<li><code>I</code> denotes the loop invariant as usual.</li>
+
+</ul>
+
+<p>
+We also assume that <code>B</code> has no side effects.  In <code>while (++i) { }</code>
+where <code>B</code> is <code>++i</code> is not what we want.
+</p>
+
+</section>
+<section id="slide-orgheadline57">
+<h4 id="orgheadline57"><span class="section-number-4">4.3.23</span> Loop Invariant Critical Location</h4>
+
+<figure>
+<p><object type="image/svg+xml" data="./img/loop-invariant.svg" width="800px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+</section>
+<section id="slide-orgheadline58">
+<h4 id="orgheadline58"><span class="section-number-4">4.3.24</span> Notes on Loop Invariant</h4>
+<ul>
+<li>Invariant itself is not useful, if chosen improperly.</li>
+<li>Usually, invariant is chosen as what we want to proof.</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline59">
+<h4 id="orgheadline59"><span class="section-number-4">4.3.25</span> Example 1 Loop Invariants</h4>
+<p>
+Insertion sort algorithm from CLRS (Introduction to Algorithm).
+</p>
+
+<pre class="example">
+INSERTION-SORT(A)
+    for j = 2 to A.length
+        key = A[j]
+        // Insert A[j] into the sorted sequence A[1..j-1]
+        i = j - 1
+        while i &gt; 0 and A[i] &gt; key
+            do A[i + 1] = A[i]
+            i = i - 1
+        A[i + 1] = key
+</pre>
+
+<p>
+Loop invariant is chose as
+</p>
+
+<pre class="example">
+At the start of each iteration of the for loop of lines the subarray
+A[1..j-1] consists of the elements originally in A[1..j-1], but in
+sorted order.
+</pre>
+
+</section>
+<section id="slide-orgheadline60">
+<h4 id="orgheadline60"><span class="section-number-4">4.3.26</span> Example 2 Loop Invariants</h4>
+<p>
+Suppose we have a sum function
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">s</span> = 0;
+<span style="color: #729fcf; font-weight: bold;">for</span> (<span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">i</span> = 0; i &lt; a.size(); i++) {
+  <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">s is the sum of the first i array elements</span>
+  <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">s == a[0] + .. + a[i-1]</span>
+  s = s + a[i];
+}
+</pre>
+</div>
+
+<p>
+What might be a good loop invariant?
+</p>
+
+</section>
+<section id="slide-orgheadline61">
+<h4 id="orgheadline61"><span class="section-number-4">4.3.27</span> Example 2 Loop Invariants Cont'd</h4>
+<p>
+One possible loop invariant:
+</p>
+
+<pre class="example">
+s holds the sum of a[0..i] (inclusive and exclusive)
+</pre>
+
+<p>
+Proof:
+</p>
+
+<ul>
+<li>Initialization</li>
+<li>Maintenace</li>
+<li>Termination</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline62">
+<h4 id="orgheadline62"><span class="section-number-4">4.3.28</span> Evaluation of Axiomatic Semantics</h4>
 <ul>
 <li>Developing axioms or inference rules for all of the statements
 is difficult</li>
@@ -1125,12 +1302,11 @@ is difficult</li>
 
 </ul>
 
-
 </section>
 </section>
 <section>
-<section id="slide-orgheadline56">
-<h2 id="orgheadline56"><span class="section-number-2">5</span> Summary</h2>
+<section id="slide-orgheadline65">
+<h2 id="orgheadline65"><span class="section-number-2">5</span> Summary</h2>
 <ul>
 <li>BNF and CFG</li>
 <li>Static semantics with attribute Grammar</li>
