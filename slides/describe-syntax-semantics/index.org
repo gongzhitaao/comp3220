@@ -527,6 +527,8 @@ S ::= SS | (S) | ()
     =P= and =Q= are called /predicates/ or /assertions/.  And =P= is
     precondition and =Q= postcondition.
 
+    And the above is called a /Hoare triple/.
+
 *** Example Axiomatics Semantics
 
     A assignment statement with a postcondition
@@ -540,6 +542,33 @@ S ::= SS | (S) | ()
 
     It is the least restrictive precondition that will guarantee the
     validity of the associated postcondition.
+
+*** Notes
+
+    We always follow /assignment axiom scheme/.
+
+    - precondition is the target
+    - we are given the postcondition
+    - replace all free occurences of the LHS with RHS
+    - then we get the precondition
+
+
+    Nonsence example
+
+    #+BEGIN_EXAMPLE
+{ x = 5 } x := 3 { 3 = 5 }
+    #+END_EXAMPLE
+
+*** Uniqueness
+
+    A given postcondition =Q= uniquely determines the precondition
+    =P=.  Inverse is /not/ true.
+
+    - ={0 ≤ y*y ∧ y*y ≤ 9}  x = y * y  {0 ≤ x ∧ x ≤ 9}=
+    - ={0 ≤ y*y ∧ y*y ≤ 9}  x = y * y  {0 ≤ x ∧ y*y ≤ 9}=
+    - ={0 ≤ y*y ∧ y*y ≤ 9}  x = y * y  {0 ≤ y*y ∧ x ≤ 9}=
+    - ={0 ≤ y*y ∧ y*y ≤ 9}  x = y * y  {0 ≤ y*y ∧ y*y ≤ 9}=
+
 
 *** Inference Rule
 
@@ -627,13 +656,100 @@ x = x - 3 {x > 0}
     - The loop terminates
 
 
+*** Loop Invariant
+
+    /Loop invariant/ is a condition that is necessarily true
+    immediately *before* and immediately *after* *each* iteration of
+    the loop.
+
+    We use simple =while= loop as an example.
+
+*** Exmaple Loop Invariant
+
+    #+BEGIN_SRC C++
+{P} while (B) { S } {Q}
+    #+END_SRC
+
+    Where
+
+    - =P= is the precondition
+    - =Q= is the postcondition, and
+    - =I= denotes the loop invariant as usual.
+
+    We also assume that =B= has no side effects.  In =while (++i) { }=
+    where =B= is =++i= is not what we want.
+
+*** Loop Invariant Critical Location
+
+    #+ATTR_HTML: :width 800px
+    [[./img/loop-invariant.svg]]
+
+*** Notes on Loop Invariant
+
+    - Invariant itself is not useful, if chosen improperly.
+    - Usually, invariant is chosen as what we want to proof.
+
+
+*** Example 1 Loop Invariants
+
+    Insertion sort algorithm from CLRS (Introduction to Algorithm).
+
+    #+BEGIN_EXAMPLE
+INSERTION-SORT(A)
+    for j = 2 to A.length
+        key = A[j]
+        // Insert A[j] into the sorted sequence A[1..j-1]
+        i = j - 1
+        while i > 0 and A[i] > key
+            do A[i + 1] = A[i]
+            i = i - 1
+        A[i + 1] = key
+    #+END_EXAMPLE
+
+    Loop invariant is chose as
+
+    #+BEGIN_EXAMPLE
+At the start of each iteration of the for loop of lines the subarray
+A[1..j-1] consists of the elements originally in A[1..j-1], but in
+sorted order.
+    #+END_EXAMPLE
+
+*** Example 2 Loop Invariants
+
+    Suppose we have a sum function
+
+    #+BEGIN_SRC C++
+int s = 0;
+for (int i = 0; i < a.size(); i++) {
+  // s is the sum of the first i array elements
+  // s == a[0] + .. + a[i-1]
+  s = s + a[i];
+}
+    #+END_SRC
+
+    What might be a good loop invariant?
+
+*** Example 2 Loop Invariants Cont'd
+
+    One possible loop invariant:
+
+    #+BEGIN_EXAMPLE
+s holds the sum of a[0..i] (inclusive and exclusive)
+    #+END_EXAMPLE
+
+    Proof:
+
+    - Initialization
+    - Maintenace
+    - Termination
+
+
 *** Evaluation of Axiomatic Semantics
 
     - Developing axioms or inference rules for all of the statements
       is difficult
     - Good for correctness proof
     - Programmers and compiler writers not care
-
 
 * Summary
 

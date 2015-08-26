@@ -5,7 +5,7 @@ NAME = recognizer generator chomsky-hierarchy parse-tree-ex1	\
 	inherently-ambiguous-ex cfg-def parse-tree-ag-ex1	\
 	parse-tree-ag-ex2 parse-tree-ds-ex1 inference-rule	\
 	assignment-axiom proof-correctness consequence-rule	\
-	sequence-inference loop-inference
+	sequence-inference loop-inference loop-invariant
 
 all : $(NAME) clean
 
