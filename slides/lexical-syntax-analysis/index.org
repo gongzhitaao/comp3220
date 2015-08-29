@@ -41,6 +41,100 @@
 
   A lexical analyzer is essentially a pattern matcher.
 
+  #+ATTR_HTML: :height 200px
+  [[./img/lex-process.svg]]
+
+  - Stripping comments and spaces
+  - Insert lexemes for user-defined names (classes)
+  - Detect syntax errors
 
 
-#  LocalWords:  PPL SETUPFILE
+** How to build Lexical Analyzer
+
+   Two steps
+
+   1. Description of tokens for pattern matching
+   2. Feed the description to a program or build manually.
+
+
+   Pattern matching
+   1. RegEx
+   2. Finite State Automata (FSA)
+
+
+** Simplify FSA
+
+   Lex cares about whether it is a name or not only.  But not the name
+   itself.  So all letters can be grouped into a class.
+
+
+* Parser
+
+  Goals of parsing:
+
+  1. Detect syntax errors.  If must return to /normal state/ after an
+     error and continue with parsing
+  2. Produce a parse tree.
+
+
+  Based on the /direction/ they build parse tree
+
+  - top-down parser
+  - bottom-up parser
+
+
+** Top-Down Parser
+
+   Traces or builds a parse tree in /preorder/ beginning at the root.
+   In terms of derivation, always leftmost.
+
+   For example, xA\alpha.
+
+   - x is a terminal
+   - A is a nonterminal
+   - \alpha is a mixed string
+
+
+   Suppose A rules are A \to bB, A \to cBb, A \to a.
+
+
+** Top-Down Parsing Algorithm
+
+   LL parsing algorithms
+
+   - Left-to-right scan of input
+   - lEftmost derivation
+
+
+   Example of LL algorithms:
+
+   - Recursive-descent parser
+   - Parsing table
+
+
+** Bottom-Up Parser
+
+   Traces or builds a parse tree beginning at the leaves and
+   progressing towards the root, in a /reverse rightmost/ fashion.
+
+   For example, given right sentential form \alpha.  It needs to find
+   the handle, i.e., correct RHS, to reduce to its LHS.
+
+   Given grammar
+
+   #+BEGIN_SRC bnf
+S ::= aAc
+A ::= aA | b
+   #+END_SRC
+
+   And a derivation S \to aAc \to aaAc \to aabc.
+
+** Paring Complexity
+
+   Generally, O(n^3).  Because of the frequence /backing up/ and
+   /reparsing/.
+
+   Generality is traded for /efficiency/.  Only a subset of of
+   grammars is accepted.
+
+   Algorithms in pactice are O(n).

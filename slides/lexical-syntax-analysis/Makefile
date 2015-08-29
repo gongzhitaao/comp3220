@@ -1,6 +1,6 @@
 TEXI2PDF = texi2pdf
 IMGDIR = img
-NAME = lexical-syntax-structure lexical-syntax-structure-2
+NAME = lexical-syntax-structure lexical-syntax-structure-2 lex-process
 
 all : $(NAME) clean
 
