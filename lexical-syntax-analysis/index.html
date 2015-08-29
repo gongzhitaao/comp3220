@@ -34,7 +34,8 @@
 <ul>
 <li><a href="#/slide-orgheadline1">1. Motivation</a></li>
 <li><a href="#/slide-orgheadline5">2. Introduction</a></li>
-<li><a href="#/slide-orgheadline6">3. Lexical Analysis</a></li>
+<li><a href="#/slide-orgheadline8">3. Lexical Analysis</a></li>
+<li><a href="#/slide-orgheadline13">4. Parser</a></li>
 </ul>
 </div>
 </nav>
@@ -104,10 +105,181 @@ independent.</li>
 </section>
 </section>
 <section>
-<section id="slide-orgheadline6">
-<h2 id="orgheadline6"><span class="section-number-2">3</span> Lexical Analysis</h2>
+<section id="slide-orgheadline8">
+<h2 id="orgheadline8"><span class="section-number-2">3</span> Lexical Analysis</h2>
 <p>
 A lexical analyzer is essentially a pattern matcher.
+</p>
+
+
+<figure>
+<p><object type="image/svg+xml" data="./img/lex-process.svg" height="200px">
+Sorry, your browser does not support SVG.</object>
+</p>
+</figure>
+
+<ul>
+<li>Stripping comments and spaces</li>
+<li>Insert lexemes for user-defined names (classes)</li>
+<li>Detect syntax errors</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline6">
+<h3 id="orgheadline6"><span class="section-number-3">3.1</span> How to build Lexical Analyzer</h3>
+<p>
+Two steps
+</p>
+
+<ol>
+<li>Description of tokens for pattern matching</li>
+<li>Feed the description to a program or build manually.</li>
+
+</ol>
+
+
+<p>
+Pattern matching
+</p>
+<ol>
+<li>RegEx</li>
+<li>Finite State Automata (FSA)</li>
+
+</ol>
+
+
+</section>
+<section id="slide-orgheadline7">
+<h3 id="orgheadline7"><span class="section-number-3">3.2</span> Simplify FSA</h3>
+<p>
+Lex cares about whether it is a name or not only.  But not the name
+itself.  So all letters can be grouped into a class.
+</p>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline13">
+<h2 id="orgheadline13"><span class="section-number-2">4</span> Parser</h2>
+<p>
+Goals of parsing:
+</p>
+
+<ol>
+<li>Detect syntax errors.  If must return to <i>normal state</i> after an
+error and continue with parsing</li>
+<li>Produce a parse tree.</li>
+
+</ol>
+
+
+<p>
+Based on the <i>direction</i> they build parse tree
+</p>
+
+<ul>
+<li>top-down parser</li>
+<li>bottom-up parser</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline9">
+<h3 id="orgheadline9"><span class="section-number-3">4.1</span> Top-Down Parser</h3>
+<p>
+Traces or builds a parse tree in <i>preorder</i> beginning at the root.
+In terms of derivation, always leftmost.
+</p>
+
+<p>
+For example, xA&alpha;.
+</p>
+
+<ul>
+<li>x is a terminal</li>
+<li>A is a nonterminal</li>
+<li>&alpha; is a mixed string</li>
+
+</ul>
+
+
+<p>
+Suppose A rules are A &rarr; bB, A &rarr; cBb, A &rarr; a.
+</p>
+
+
+</section>
+<section id="slide-orgheadline10">
+<h3 id="orgheadline10"><span class="section-number-3">4.2</span> Top-Down Parsing Algorithm</h3>
+<p>
+LL parsing algorithms
+</p>
+
+<ul>
+<li>Left-to-right scan of input</li>
+<li>lEftmost derivation</li>
+
+</ul>
+
+
+<p>
+Example of LL algorithms:
+</p>
+
+<ul>
+<li>Recursive-descent parser</li>
+<li>Parsing table</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline11">
+<h3 id="orgheadline11"><span class="section-number-3">4.3</span> Bottom-Up Parser</h3>
+<p>
+Traces or builds a parse tree beginning at the leaves and
+progressing towards the root, in a <i>reverse rightmost</i> fashion.
+</p>
+
+<p>
+For example, given right sentential form &alpha;.  It needs to find
+the handle, i.e., correct RHS, to reduce to its LHS.
+</p>
+
+<p>
+Given grammar
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-bnf">S <span style="color: #73d216;">::=</span> aAc
+A <span style="color: #73d216;">::=</span> aA <span style="color: #fcaf3e; font-weight: bold;">|</span> b
+</pre>
+</div>
+
+<p>
+And a derivation S &rarr; aAc &rarr; aaAc &rarr; aabc.
+</p>
+
+</section>
+<section id="slide-orgheadline12">
+<h3 id="orgheadline12"><span class="section-number-3">4.4</span> Paring Complexity</h3>
+<p>
+Generally, O(n^3).  Because of the frequence <i>backing up</i> and
+<i>reparsing</i>.
+</p>
+
+<p>
+Generality is traded for <i>efficiency</i>.  Only a subset of of
+grammars is accepted.
+</p>
+
+<p>
+Algorithms in pactice are O(n).
 </p>
 </section>
 </section>
