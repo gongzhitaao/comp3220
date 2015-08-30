@@ -1,0 +1,1148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>PPL &#x2013; Names, Binds and Scope</title>
+<meta name="author" content="(Zhitao Gong)"/>
+<link rel="stylesheet" href="/comp3220/reveal.js/css/reveal.css"/>
+<link rel="stylesheet" href="/comp3220/reveal.js/css/theme/moon.css" id="theme"/>
+<link rel="stylesheet" href="/comp3220/css/style.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '/comp3220/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1 class="title">PPL &#x2013; Names, Binds and Scope</h1>
+<p class="author">Zhitao Gong</p>
+<p class="email"><a href="mailto:me (at) gongzhitaao (dot) org">me (at) gongzhitaao (dot) org</a></p>
+</section>
+<section id="table-of-contents">
+<nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-orgheadline1">1. Introduction</a></li>
+<li><a href="#/slide-orgheadline2">2. Overview</a></li>
+<li><a href="#/slide-orgheadline6">3. Names</a></li>
+<li><a href="#/slide-orgheadline8">4. Address</a></li>
+<li><a href="#/slide-orgheadline9">5. Type</a></li>
+<li><a href="#/slide-orgheadline10">6. Value</a></li>
+<li><a href="#/slide-orgheadline24">7. Binding</a></li>
+<li><a href="#/slide-orgheadline39">8. Scope</a></li>
+<li><a href="#/slide-orgheadline44">9. Referencing Environments</a></li>
+<li><a href="#/slide-orgheadline45">10. Named Constant</a></li>
+</ul>
+</div>
+</nav>
+</section>
+
+<section>
+<section id="slide-orgheadline1">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> Introduction</h2>
+<p>
+<i>Variables</i> are characterized by attributes.
+</p>
+
+<p>
+Topics include
+</p>
+
+<ul>
+<li>type, address, value, aliasing</li>
+<li>binding</li>
+<li>scoping, static and dynamic</li>
+<li>named constants and initialization</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> Overview</h2>
+<p>
+A program variable is an abstraction of a computer memory cell or
+collection of cells.
+</p>
+
+<p>
+The following attributes are of interest:
+</p>
+<ul>
+<li>name</li>
+<li>address</li>
+<li>value</li>
+<li>type</li>
+<li>lifetime</li>
+<li>and scope</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline6">
+<h2 id="orgheadline6"><span class="section-number-2">3</span> Names</h2>
+<p>
+<i>Most</i> have names.
+</p>
+
+<p>
+Design issues:
+</p>
+
+<ul>
+<li>Case sensitive or not?</li>
+<li>special words of the language are reserved words or keywords?</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline3">
+<h3 id="orgheadline3"><span class="section-number-3">3.1</span> Name Forms</h3>
+<ul>
+<li>Fortran95+ up to 31</li>
+<li>C99 no limit, but the first 63 are <i>significant</i>.  External names
+up to 31.</li>
+
+</ul>
+
+
+<p>
+Widely accepted names: <code>[a-zA-Z_][a-zA-Z0-9]+</code>.  Exceptions:
+</p>
+
+<ul>
+<li>PHP, all variables starts with <code>$</code>, dollar sign</li>
+<li>Perl, all varialbes starts with type indicators (<code>$</code>, <code>%</code> or
+<code>@</code>).</li>
+<li>Ruby, <code>@</code> or <code>@@</code> may add to start of variables.</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline4">
+<h3 id="orgheadline4"><span class="section-number-3">3.2</span> Case Sensitivity</h3>
+<p>
+<a href="https://en.wikipedia.org/wiki/List_of_C-family_programming_languages">C-family languages</a> are all <i>case sensitity</i>.  May be result of
+Unix.
+</p>
+
+<p>
+It may have readability and writability issues.
+</p>
+
+<p>
+Example:
+</p>
+
+<ul>
+<li><code>int count;</code> and <code>int Count</code> and <code>int cOunT;</code></li>
+<li><code>parseInt(...)</code> and <code>parseint(...)</code> and <code>ParseInt(...)</code>.</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline5">
+<h3 id="orgheadline5"><span class="section-number-3">3.3</span> Special Words</h3>
+<p>
+They are used to improve readibility and functinality of the
+languages.
+</p>
+
+<dl>
+<dt>Reserved words</dt><dd>It is a special word of a programming language that cannot be
+used as a name.</dd>
+<dt>keywords</dt><dd>It is a word of a programming language that is special only in
+certain contexts.  E.g., Fortran.</dd>
+
+</dl>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline8">
+<h2 id="orgheadline8"><span class="section-number-2">4</span> Address</h2>
+<p>
+The address of a variable is the machine memory address with which
+it is associated.
+</p>
+
+<p>
+Each variable may have different locations
+Each location may be associated with more than one variables
+(aliases)
+</p>
+
+<p>
+The address of a variable is sometimes called its <i>l-value</i>.
+</p>
+
+</section>
+<section id="slide-orgheadline7">
+<h3 id="orgheadline7"><span class="section-number-3">4.1</span> Alias Example</h3>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span> = 10;
+
+<span style="color: #fce94f; font-weight: bold;">int</span> *<span style="color: #ff2929;">b</span> = &amp;a;
+
+<span style="color: #fce94f; font-weight: bold;">int</span> &amp;<span style="color: #ff2929;">c</span> = a;
+
+<span style="color: #729fcf; font-weight: bold;">union</span> <span style="color: #fce94f; font-weight: bold;">S</span> {
+    <span style="color: #73d216;">std</span>::<span style="color: #fce94f; font-weight: bold;">int32_t</span> <span style="color: #ff2929;">n</span>;             <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">occupies 4 bytes</span>
+    <span style="color: #73d216;">std</span>::<span style="color: #fce94f; font-weight: bold;">uint16_t</span> <span style="color: #ff2929;">s</span>[2];         <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">occupies 4 bytes</span>
+    <span style="color: #73d216;">std</span>::<span style="color: #fce94f; font-weight: bold;">uint8_t</span> <span style="color: #ff2929;">c</span>;             <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">occupies 1 byte</span>
+};
+
+<span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">foo</span>(<span style="color: #729fcf; font-weight: bold;">const</span> <span style="color: #73d216;">std</span>::<span style="color: #fce94f; font-weight: bold;">string</span> &amp;<span style="color: #ff2929;">s</span>);
+</pre>
+</div>
+
+<p>
+Might be harmful or useful.  It depends.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline9">
+<h2 id="orgheadline9"><span class="section-number-2">5</span> Type</h2>
+<p>
+The <i>type</i> determines
+</p>
+
+<ul>
+<li>the range of value the variable stores</li>
+<li>how the value is stored in memory, and</li>
+<li>set of available operands</li>
+
+</ul>
+
+
+<p>
+Assuming little-endian
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">int</span>   <span style="color: #ff2929;">a</span> = 10;                     <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">00 00 01 10</span>
+<span style="color: #fce94f; font-weight: bold;">float</span> <span style="color: #ff2929;">b</span> = 10;                     <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">00 00 20 41</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline10">
+<h2 id="orgheadline10"><span class="section-number-2">6</span> Value</h2>
+<p>
+The value of a variable is the <i>contents</i> of the memory cell or
+cells associated with the variable.
+</p>
+
+<p>
+Memory cell refers to <i>abstract memory cell</i>.
+</p>
+
+<p>
+The value is called <i>r-value</i>.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">x</span> = 3;
+x++ = 3;                        <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">ERROR</span>
+++x = 4;                        <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">OK</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline24">
+<h2 id="orgheadline24"><span class="section-number-2">7</span> Binding</h2>
+<p>
+A <b>binding</b> is an association between an <i>attribute</i> and an
+<i>entity</i>.
+</p>
+
+<ul>
+<li>between variable and its type or value</li>
+<li>between an operation and a symbol.</li>
+
+</ul>
+
+
+<p>
+The <i>binding time</i> is when it takes place, including language design
+time, language implementation time, compile time, load time, link
+time, or run time.
+</p>
+
+</section>
+<section id="slide-orgheadline11">
+<h3 id="orgheadline11"><span class="section-number-3">7.1</span> Example</h3>
+<ul>
+<li><code>*</code> (times) when language is design</li>
+<li><code>int</code> at language implementation time</li>
+<li><code>int a;</code> at compile time</li>
+<li>variable bound to storage cell at load time</li>
+<li>Call to library subroutines at link time.</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline12">
+<h3 id="orgheadline12"><span class="section-number-3">7.2</span> Static or Dynamic</h3>
+<dl>
+<dt>Static</dt><dd>If it first occurs <i>before</i> run time begins and remains
+<i>unchanged</i> throughout program execution.</dd>
+<dt>Dynamic</dt><dd>If the binding first occurs <i>during</i> run time or can
+<i>change</i> in the course of program execution</dd>
+
+</dl>
+
+
+<p>
+Whether it is resolved at compile time.
+</p>
+
+
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span> = 3;
+<span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">c</span>[a] = 4;                   <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">ERROR</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline15">
+<h3 id="orgheadline15"><span class="section-number-3">7.3</span> Type Binding</h3>
+<dl>
+<dt>Explicit Declaration</dt><dd>a statement in a program that lists
+variable names and specifies that they are a particular type.</dd>
+<dt>Implicit Declaration</dt><dd>a means of associating variables with
+types through default conventions.</dd>
+
+</dl>
+
+
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span>;                          <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">C++</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-js"><span style="color: #729fcf; font-weight: bold;">var</span> <span style="color: #ff2929;">s</span> = 10;                     <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">Javascript</span>
+s = <span style="color: #de7fa8;">"String"</span>;
+s = {a: 3};
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline13">
+<h4 id="orgheadline13"><span class="section-number-4">7.3.1</span> Good or Bad?</h4>
+<p>
+It is flexible.  E.g., R, it is capable of dealing with data of
+any numeric type.  While in C, you must assume the type of the
+data.
+</p>
+
+<p>
+But,
+</p>
+
+<ul>
+<li>Not reliable, hard to debug</li>
+<li>Cost.  Type checking at run time, run-time descriptor of types</li>
+<li>Usually interpreted</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline14">
+<h4 id="orgheadline14"><span class="section-number-4">7.3.2</span> How to statically bind types?</h4>
+<ul>
+<li><p>
+Prefix with special characters, each falls in different
+namespaces.  Like in Ruby.
+</p>
+
+<table style="font-size: 80%">
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Prefix</th>
+<th scope="col" class="org-left">Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">$</td>
+<td class="org-left">scalar</td>
+</tr>
+
+<tr>
+<td class="org-left">@</td>
+<td class="org-left">array</td>
+</tr>
+
+<tr>
+<td class="org-left">%</td>
+<td class="org-left">hash table</td>
+</tr>
+</tbody>
+</table></li>
+
+<li><p>
+Use context, i.e., Type inferencing.  Like in C#.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-js"><span style="color: #729fcf; font-weight: bold;">var</span> <span style="color: #ff2929;">integer</span> = 0;
+<span style="color: #729fcf; font-weight: bold;">var</span> <span style="color: #ff2929;">a_string</span> = <span style="color: #de7fa8;">"string"</span>;
+</pre>
+</div></li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline23">
+<h3 id="orgheadline23"><span class="section-number-3">7.4</span> Storage Binding</h3>
+<dl>
+<dt>Allocation</dt><dd>A variable is bound to a memory cell.</dd>
+<dt>Deallocation</dt><dd>A variable is unbound and the memory is returned.</dd>
+<dt>Lifetime</dt><dd>When the variable is bound.</dd>
+
+</dl>
+
+
+</section>
+<section id="slide-orgheadline16">
+<h4 id="orgheadline16"><span class="section-number-4">7.4.1</span> Variable Types</h4>
+<p>
+Based on lifetime, we have four categories
+</p>
+
+<ul>
+<li>static</li>
+<li>stack-dynamic</li>
+<li>explicity heap-dynamic</li>
+<li>implicity heap-dynamic</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline17">
+<h4 id="orgheadline17"><span class="section-number-4">7.4.2</span> Static</h4>
+<ul>
+<li>Bound to memory cell at compile time</li>
+<li>Remain until program exits.</li>
+
+</ul>
+
+
+<p>
+E.g., global variables, <code>static</code> keywords.  <code>static</code> and <code>const</code>.
+<code>static</code> also means internal linkage.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #729fcf; font-weight: bold;">static</span> <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span> = 3;
+<span style="color: #729fcf; font-weight: bold;">static</span> <span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">foo</span>(<span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span>);
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline18">
+<h4 id="orgheadline18"><span class="section-number-4">7.4.3</span> Stack-Dynamic</h4>
+<p>
+Stack-dynamic variables are those
+</p>
+
+<ul>
+<li>whose storage bindings are created when their declaration
+statements are elaborated, but</li>
+<li>whose types are statically bound.</li>
+
+</ul>
+
+
+<p>
+Elaboration refers to the storage allocation and binding process
+indicated by the declaration, thus during runtime.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #fcaf3e; font-weight: bold;">main</span> () {
+  <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span>;
+  <span style="color: #729fcf; font-weight: bold;">return</span> 0;
+}
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline19">
+<h4 id="orgheadline19"><span class="section-number-4">7.4.4</span> Pros and Cons</h4>
+<ul>
+<li><p>
+Local variables.  E.g., subroutines and recursive functions.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">foo</span>() {
+  <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span>;
+}
+</pre>
+</div></li>
+
+<li>Runtime overhead of allocation and de-allocation</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline20">
+<h4 id="orgheadline20"><span class="section-number-4">7.4.5</span> Explicit Heap-Dynamic Variables</h4>
+<p>
+Nameless memory cells that are allocated and deallocated by
+explicit run-time instructions written by the programmer.
+</p>
+
+<p>
+Allocation and deallocation by operator in C++
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">int</span> *<span style="color: #ff2929;">c</span> = <span style="color: #729fcf; font-weight: bold;">new</span> <span style="color: #fce94f; font-weight: bold;">int</span>[3];
+<span style="color: #729fcf; font-weight: bold;">delete</span> c;
+</pre>
+</div>
+
+<p>
+Or subroutine in C
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-C"><span style="color: #fce94f; font-weight: bold;">int</span> *<span style="color: #ff2929;">c</span> = malloc(3 * <span style="color: #729fcf; font-weight: bold;">sizeof</span>(<span style="color: #fce94f; font-weight: bold;">int</span>));
+free(c);
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline21">
+<h4 id="orgheadline21"><span class="section-number-4">7.4.6</span> Pros and Cons</h4>
+<ul>
+<li>Flexible.  Structures may need to grow.  Variable lenght arrays,
+tree structure and etc.</li>
+<li>Difficulty of using pointers, reference cost, required storage
+management mechanism, etc.  I.e., the <i>heap management</i>.</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline22">
+<h4 id="orgheadline22"><span class="section-number-4">7.4.7</span> Implicit Heap-Dynamic Variables</h4>
+<p>
+Variables bound to heap storage only when they are assigned
+values.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-js"><span style="color: #729fcf; font-weight: bold;">var</span> <span style="color: #ff2929;">arr</span> = [74, 84, 86, 90, 71];
+arr = [<span style="color: #de7fa8;">"string"</span>];
+arr = 3;
+</pre>
+</div>
+
+<p>
+In fact, all their attributes are bound every time they are
+assigned.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline39">
+<h2 id="orgheadline39"><span class="section-number-2">8</span> Scope</h2>
+<p>
+The scope of variable is the range of statements in which the
+variable is <i>visible</i>.
+</p>
+
+<p>
+A variable is <i>visible</i> in a statement if it can be referenced in
+that statement
+</p>
+
+<p>
+It is defined by the language designer.
+</p>
+
+<p>
+It defines how
+</p>
+
+<ul>
+<li>a particular occurrence of a name is associated with a variable</li>
+<li>references to variables declared outside the currently context</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline25">
+<h3 id="orgheadline25"><span class="section-number-3">8.1</span> Static Scoping</h3>
+<p>
+Scopes can be determined before execution.  Looks for definition in
+its static ancestors.
+</p>
+
+<p>
+Tow categories:
+</p>
+
+<ol>
+<li>nested subprograms creates nested static scopes</li>
+<li>static scopes are also created by subprograms but nested scopes
+are created only by nested class definitions and blocks.</li>
+
+</ol>
+
+
+</section>
+<section id="slide-orgheadline26">
+<h3 id="orgheadline26"><span class="section-number-3">8.2</span> Example</h3>
+<div class="org-src-container">
+
+<pre  class="src src-js">(<span style="color: #729fcf; font-weight: bold;">function</span>() {
+
+  <span style="color: #729fcf; font-weight: bold;">var</span> <span style="color: #ff2929;">x</span> = -1;
+
+  <span style="color: #729fcf; font-weight: bold;">function</span> <span style="color: #fcaf3e; font-weight: bold;">sub1</span>() {
+    <span style="color: #729fcf; font-weight: bold;">var</span> <span style="color: #ff2929;">x</span> = 1;
+    sub2();
+  }
+
+  <span style="color: #729fcf; font-weight: bold;">function</span> <span style="color: #fcaf3e; font-weight: bold;">sub2</span>() {
+    <span style="color: #729fcf; font-weight: bold;">var</span> <span style="color: #ff2929;">y</span> = x;
+    console.log(y);
+  }
+
+  sub1();
+  sub2();
+
+})();
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline27">
+<h3 id="orgheadline27"><span class="section-number-3">8.3</span> Example 2</h3>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #729fcf;">#include</span> <span style="color: #de7fa8;">&lt;cstdio&gt;</span>
+
+<span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">x</span> = 0;
+
+<span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">sub2</span>() {
+  printf(<span style="color: #de7fa8;">"%d\n"</span>, x);
+}
+
+<span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">sub3</span>() {
+  <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">x</span> = 3;
+  [=] { printf(<span style="color: #de7fa8;">"%d\n"</span>, x); }();
+}
+
+<span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">sub1</span>() {
+  <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">x</span> = 1;
+  sub2();
+  sub3();
+}
+
+<span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #fcaf3e; font-weight: bold;">main</span>() {
+  sub1();
+  <span style="color: #729fcf; font-weight: bold;">return</span> 0;
+}
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline28">
+<h3 id="orgheadline28"><span class="section-number-3">8.4</span> Block Scoping</h3>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #729fcf; font-weight: bold;">for</span> (<span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">i</span> = 0; i &lt; 3; ++i) {
+  <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">tmp</span> = i;
+}
+<span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">i and tmp invisible here</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-js"><span style="color: #729fcf; font-weight: bold;">for</span> (<span style="color: #729fcf; font-weight: bold;">var</span> <span style="color: #ff2929;">i</span> = 0; i &lt; 3; ++i) {
+  <span style="color: #729fcf; font-weight: bold;">var</span> <span style="color: #ff2929;">tmp</span> = i;
+}
+
+<span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">NO non-function block scoping in javascript</span>
+console.log(tmp);
+console.log(i);
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-emacs-lisp">(<span style="color: #729fcf; font-weight: bold;">let</span> ((a 3))
+  (prin1 a))
+<span style="color: #babdb6; font-style: italic;">;; </span><span style="color: #babdb6; font-style: italic;">a invisible here</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline29">
+<h3 id="orgheadline29"><span class="section-number-3">8.5</span> Declaration Order</h3>
+<ul>
+<li>In C89, all variable declarations appear at the beginning.</li>
+<li>In C99, C++, Javascript, variable declarations may appear
+anywhere.</li>
+
+</ul>
+
+
+<p>
+In Javascript, variable scope is always the entire function.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-js">(<span style="color: #729fcf; font-weight: bold;">function</span>(){
+  console.log(x);
+  <span style="color: #729fcf; font-weight: bold;">var</span> <span style="color: #ff2929;">x</span> = 3;
+  console.log(x);
+})();
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline30">
+<h3 id="orgheadline30"><span class="section-number-3">8.6</span> Global Scope</h3>
+<p>
+In C, C++, PHP, JavaScript, Python and etc, variables can be
+declared outside functions.
+</p>
+
+<p>
+In C/C++, we separate declaration and definition.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span>;                          <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">no allocation of storage</span>
+
+<span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #fcaf3e; font-weight: bold;">main</span>() {
+  a = 3;
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">foo</span>() {
+  <span style="color: #729fcf; font-weight: bold;">extern</span> <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span>;
+  printf(<span style="color: #de7fa8;">"%d\n"</span>, a);
+}
+
+<span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span> = 3;
+</pre>
+</div>
+
+
+</section>
+<section id="slide-orgheadline31">
+<h3 id="orgheadline31"><span class="section-number-3">8.7</span> Hiding Global Variable</h3>
+<ul>
+<li>In C/C++, if local and global variables have the same name, we
+can use <code>::</code> as prefix to variable to access global variable.</li>
+<li>In Javascript, No possible ways.</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline32">
+<h3 id="orgheadline32"><span class="section-number-3">8.8</span> Limitations</h3>
+<ul>
+<li>Allows access to variables more than necessary</li>
+<li>Restructuring code may be difficult.</li>
+<li>Lead to more global variables</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline33">
+<h3 id="orgheadline33"><span class="section-number-3">8.9</span> Dynamic Scoping</h3>
+<ul>
+<li>Determined only at run time.</li>
+<li>Based on calling sequence of subprograms, rather than spatial
+relationships.</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline34">
+<h3 id="orgheadline34"><span class="section-number-3">8.10</span> Dynamic Scoping Example</h3>
+<p>
+Assume dynamic scoping
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-js">(<span style="color: #729fcf; font-weight: bold;">function</span>() {
+
+  <span style="color: #729fcf; font-weight: bold;">var</span> <span style="color: #ff2929;">x</span> = -1;
+
+  <span style="color: #729fcf; font-weight: bold;">function</span> <span style="color: #fcaf3e; font-weight: bold;">sub1</span>() {
+    <span style="color: #729fcf; font-weight: bold;">var</span> <span style="color: #ff2929;">x</span> = 1;
+    sub2();
+  }
+
+  <span style="color: #729fcf; font-weight: bold;">function</span> <span style="color: #fcaf3e; font-weight: bold;">sub2</span>() {
+    <span style="color: #729fcf; font-weight: bold;">var</span> <span style="color: #ff2929;">y</span> = x;
+    console.log(y);
+  }
+
+  sub1();
+  sub2();
+
+});
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline35">
+<h3 id="orgheadline35"><span class="section-number-3">8.11</span> Good and Bad</h3>
+<p>
+Bad
+</p>
+
+<ul>
+<li>Local variables of the subprogram are all visible to any other
+executing subprogram.  Less reliable.</li>
+<li>Inability to type check references to nonlocals statically.</li>
+<li>More difficult to read.</li>
+<li>Accessing to nonlocal variables takes longer time.</li>
+
+</ul>
+
+
+<p>
+Good
+</p>
+
+<ul>
+<li>no need to pass values to subprograms</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline36">
+<h3 id="orgheadline36"><span class="section-number-3">8.12</span> Scope and Lifetime</h3>
+<p>
+Appears to be closely related, but most of the time not.
+</p>
+
+<ul>
+<li>Scope is spatial concept</li>
+<li>lifetime is a temporal concept.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline37">
+<h3 id="orgheadline37"><span class="section-number-3">8.13</span> Example 0</h3>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">foo</span>() {
+
+  <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">...</span>
+  <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">some other tasks</span>
+
+  <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span> = 3;
+}
+</pre>
+</div>
+
+<ul>
+<li>scope is from its declaration to the end of the function</li>
+<li>lifetime is the entire function</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline38">
+<h3 id="orgheadline38"><span class="section-number-3">8.14</span> Example 1</h3>
+<p>
+Unrelated in the following examples
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">bar</span>();
+
+<span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">foo</span>() {
+  <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span> = 3;
+  bar();
+}
+
+<span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">bar</span>() {
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">foo</span>() {
+  <span style="color: #729fcf; font-weight: bold;">static</span> <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span> = 3;
+}
+</pre>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline44">
+<h2 id="orgheadline44"><span class="section-number-2">9</span> Referencing Environments</h2>
+<p>
+The referencing environment of a statement is the collection of all
+variables that are visible in the statement.
+</p>
+
+<ul>
+<li>For static scoping, variables from local and static ancestors.</li>
+<li>the locally declared variables, plus the variables of all other
+subprograms that are currently <i>active</i>.</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline40">
+<h3 id="orgheadline40"><span class="section-number-3">9.1</span> Example</h3>
+<div class="org-src-container">
+
+<pre  class="src src-python"><span style="color: #ff2929;">g</span> = 3
+
+<span style="color: #729fcf; font-weight: bold;">def</span> <span style="color: #fcaf3e; font-weight: bold;">sub1</span>():
+    <span style="color: #ff2929;">a</span> = 5
+    <span style="color: #ff2929;">b</span> = 7
+
+    <span style="color: #babdb6; font-style: italic;"># </span><span style="color: #babdb6; font-style: italic;">p1</span>
+
+    <span style="color: #729fcf; font-weight: bold;">def</span> <span style="color: #fcaf3e; font-weight: bold;">sub2</span>():
+        <span style="color: #729fcf; font-weight: bold;">global</span> g
+        <span style="color: #ff2929;">c</span> = 9
+
+        <span style="color: #babdb6; font-style: italic;"># </span><span style="color: #babdb6; font-style: italic;">p2</span>
+
+        <span style="color: #729fcf; font-weight: bold;">def</span> <span style="color: #fcaf3e; font-weight: bold;">sub3</span>():
+            <span style="color: #729fcf; font-weight: bold;">nonlocal</span> c
+            <span style="color: #ff2929;">g</span> = 11
+
+            <span style="color: #babdb6; font-style: italic;"># </span><span style="color: #babdb6; font-style: italic;">p3</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline41">
+<h3 id="orgheadline41"><span class="section-number-3">9.2</span> Example Cont'd</h3>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Position</th>
+<th scope="col" class="org-left">Reference Env</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">p1</td>
+<td class="org-left">local <code>a</code> and <code>b</code> (<code>sub1</code>), global <code>g</code> for reference not for assignment</td>
+</tr>
+
+<tr>
+<td class="org-left">p2</td>
+<td class="org-left">local <code>c</code> (<code>sub2</code>), global <code>g</code> for reference and assignment</td>
+</tr>
+
+<tr>
+<td class="org-left">p3</td>
+<td class="org-left">nonlocal <code>c</code> (<code>sub2</code>), local <code>g</code> (<code>sub3</code>)</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+<section id="slide-orgheadline42">
+<h3 id="orgheadline42"><span class="section-number-3">9.3</span> Example</h3>
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">foo</span>() {
+  <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">a</span>, <span style="color: #ff2929;">b</span>;
+
+  <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">p1</span>
+}
+
+<span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">bar</span>() {
+  <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">b</span>, <span style="color: #ff2929;">c</span>;
+
+  <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">p2</span>
+}
+
+<span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">main</span>() {
+  <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">c</span>, <span style="color: #ff2929;">d</span>;
+
+  <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">p3</span>
+
+  bar();
+}
+</pre>
+</div>
+
+
+</section>
+<section id="slide-orgheadline43">
+<h3 id="orgheadline43"><span class="section-number-3">9.4</span> Example Cont'd</h3>
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Position</th>
+<th scope="col" class="org-left">Reference Env</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">p1</td>
+<td class="org-left"><code>a</code> and <code>b</code> of <code>foo</code>, <code>c</code> of <code>bar</code>, <code>d</code> of <code>main</code>.</td>
+</tr>
+
+<tr>
+<td class="org-left">p2</td>
+<td class="org-left"><code>b</code> and <code>c</code> of <code>bar</code>, <code>d</code> of <code>main</code>.</td>
+</tr>
+
+<tr>
+<td class="org-left">p3</td>
+<td class="org-left"><code>c</code> and <code>d</code> of <code>main</code>.</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline45">
+<h2 id="orgheadline45"><span class="section-number-2">10</span> Named Constant</h2>
+<p>
+Improve readability and writability.
+</p>
+
+<p>
+A constant variable and a compile-time constant.
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #fcaf3e; font-weight: bold;">main</span>(<span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">argc</span>, <span style="color: #fce94f; font-weight: bold;">char</span> *<span style="color: #ff2929;">argv</span>[]) {
+  <span style="color: #729fcf; font-weight: bold;">const</span> <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">cnt</span> = argc;
+
+  <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">foo</span>[cnt];                 <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">ERROR!</span>
+}
+</pre>
+</div>
+</section>
+</section>
+</div>
+</div>
+<script src="/comp3220/reveal.js/lib/js/head.min.js"></script>
+<script src="/comp3220/reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: true,
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'none', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+});
+</script>
+</body>
+</html>
