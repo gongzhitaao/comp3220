@@ -1,0 +1,673 @@
+#+TITLE: PPL -- Names, Binds and Scope
+#+SETUPFILE: ../setup.org
+
+* Introduction
+
+  /Variables/ are characterized by attributes.
+
+  Topics include
+
+  - type, address, value, aliasing
+  - binding
+  - scoping, static and dynamic
+  - named constants and initialization
+
+* Overview
+
+  A program variable is an abstraction of a computer memory cell or
+  collection of cells.
+
+  The following attributes are of interest:
+  - name
+  - address
+  - value
+  - type
+  - lifetime
+  - and scope
+
+* Names
+
+  /Most/ have names.
+
+  Design issues:
+
+  - Case sensitive or not?
+  - special words of the language are reserved words or keywords?
+
+
+** Name Forms
+
+   - Fortran95+ up to 31
+   - C99 no limit, but the first 63 are /significant/.  External names
+     up to 31.
+
+
+   Widely accepted names: =[a-zA-Z_][a-zA-Z0-9]+=.  Exceptions:
+
+   - PHP, all variables starts with =$=, dollar sign
+   - Perl, all varialbes starts with type indicators (=$=, =%= or
+     =@=).
+   - Ruby, =@= or =@@= may add to start of variables.
+
+
+** Case Sensitivity
+
+   [[https://en.wikipedia.org/wiki/List_of_C-family_programming_languages][C-family languages]] are all /case sensitity/.  May be result of
+   Unix.
+
+   It may have readability and writability issues.
+
+   Example:
+
+   - =int count;= and =int Count= and =int cOunT;=
+   - =parseInt(...)= and =parseint(...)= and =ParseInt(...)=.
+
+
+** Special Words
+
+   They are used to improve readibility and functinality of the
+   languages.
+
+   - Reserved words ::
+        It is a special word of a programming language that cannot be
+        used as a name.
+   - keywords ::
+        It is a word of a programming language that is special only in
+        certain contexts.  E.g., Fortran.
+
+
+* Address
+
+  The address of a variable is the machine memory address with which
+  it is associated.
+
+  Each variable may have different locations
+  Each location may be associated with more than one variables
+  (aliases)
+
+  The address of a variable is sometimes called its /l-value/.
+
+** Alias Example
+
+   #+BEGIN_SRC C++
+int a = 10;
+
+int *b = &a;
+
+int &c = a;
+
+union S {
+    std::int32_t n;             // occupies 4 bytes
+    std::uint16_t s[2];         // occupies 4 bytes
+    std::uint8_t c;             // occupies 1 byte
+};
+
+void foo(const std::string &s);
+   #+END_SRC
+
+   Might be harmful or useful.  It depends.
+
+* Type
+
+  The /type/ determines
+
+  - the range of value the variable stores
+  - how the value is stored in memory, and
+  - set of available operands
+
+
+  Assuming little-endian
+  #+BEGIN_SRC C++
+int   a = 10;                     // 00 00 01 10
+float b = 10;                     // 00 00 20 41
+  #+END_SRC
+
+* Value
+
+  The value of a variable is the /contents/ of the memory cell or
+  cells associated with the variable.
+
+  Memory cell refers to /abstract memory cell/.
+
+  The value is called /r-value/.
+
+  #+BEGIN_SRC C++
+int x = 3;
+x++ = 3;                        // ERROR
+++x = 4;                        // OK
+  #+END_SRC
+
+* Binding
+
+  A *binding* is an association between an /attribute/ and an
+  /entity/.
+
+  - between variable and its type or value
+  - between an operation and a symbol.
+
+
+  The /binding time/ is when it takes place, including language design
+  time, language implementation time, compile time, load time, link
+  time, or run time.
+
+** Example
+
+   - =*= (times) when language is design
+   - =int= at language implementation time
+   - =int a;= at compile time
+   - variable bound to storage cell at load time
+   - Call to library subroutines at link time.
+
+
+** Static or Dynamic
+
+   - Static :: If it first occurs /before/ run time begins and remains
+        /unchanged/ throughout program execution.
+   - Dynamic :: If the binding first occurs /during/ run time or can
+        /change/ in the course of program execution
+
+
+   Whether it is resolved at compile time.
+
+
+   #+BEGIN_SRC C++
+int a = 3;
+int c[a] = 4;                   // ERROR
+   #+END_SRC
+
+** Type Binding
+
+   - Explicit Declaration :: a statement in a program that lists
+        variable names and specifies that they are a particular type.
+   - Implicit Declaration :: a means of associating variables with
+        types through default conventions.
+
+
+   #+BEGIN_SRC C++
+int a;                          // C++
+   #+END_SRC
+
+   #+BEGIN_SRC js
+var s = 10;                     // Javascript
+s = "String";
+s = {a: 3};
+   #+END_SRC
+
+*** Good or Bad?
+
+    It is flexible.  E.g., R, it is capable of dealing with data of
+    any numeric type.  While in C, you must assume the type of the
+    data.
+
+    But,
+
+    - Not reliable, hard to debug
+    - Cost.  Type checking at run time, run-time descriptor of types
+    - Usually interpreted
+
+
+*** How to statically bind types?
+
+    - Prefix with special characters, each falls in different
+      namespaces.  Like in Ruby.
+
+      #+ATTR_HTML: :style font-size: 80%
+      | Prefix | Scope      |
+      |--------+------------|
+      | $      | scalar     |
+      | @      | array      |
+      | %      | hash table |
+
+    - Use context, i.e., Type inferencing.  Like in C#.
+
+      #+BEGIN_SRC js
+var integer = 0;
+var a_string = "string";
+      #+END_SRC
+
+
+** Storage Binding
+
+   - Allocation :: A variable is bound to a memory cell.
+   - Deallocation :: A variable is unbound and the memory is returned.
+   - Lifetime :: When the variable is bound.
+
+
+*** Variable Types
+
+    Based on lifetime, we have four categories
+
+    - static
+    - stack-dynamic
+    - explicity heap-dynamic
+    - implicity heap-dynamic
+
+
+*** Static
+
+    - Bound to memory cell at compile time
+    - Remain until program exits.
+
+
+    E.g., global variables, =static= keywords.  =static= and =const=.
+    =static= also means internal linkage.
+
+    #+BEGIN_SRC C++
+static int a = 3;
+static void foo(int a);
+    #+END_SRC
+
+*** Stack-Dynamic
+
+    Stack-dynamic variables are those
+
+    - whose storage bindings are created when their declaration
+      statements are elaborated, but
+    - whose types are statically bound.
+
+
+    Elaboration refers to the storage allocation and binding process
+    indicated by the declaration, thus during runtime.
+
+    #+BEGIN_SRC C++
+int main () {
+  int a;
+  return 0;
+}
+    #+END_SRC
+
+*** Pros and Cons
+
+    - Local variables.  E.g., subroutines and recursive functions.
+
+      #+BEGIN_SRC C++
+void foo() {
+  int a;
+}
+      #+END_SRC
+
+    - Runtime overhead of allocation and de-allocation
+
+
+*** Explicit Heap-Dynamic Variables
+
+    Nameless memory cells that are allocated and deallocated by
+    explicit run-time instructions written by the programmer.
+
+    Allocation and deallocation by operator in C++
+    #+BEGIN_SRC C++
+int *c = new int[3];
+delete c;
+    #+END_SRC
+
+    Or subroutine in C
+    #+BEGIN_SRC C
+int *c = malloc(3 * sizeof(int));
+free(c);
+    #+END_SRC
+
+*** Pros and Cons
+
+    - Flexible.  Structures may need to grow.  Variable lenght arrays,
+      tree structure and etc.
+    - Difficulty of using pointers, reference cost, required storage
+      management mechanism, etc.  I.e., the /heap management/.
+
+
+*** Implicit Heap-Dynamic Variables
+
+    Variables bound to heap storage only when they are assigned
+    values.
+
+    #+BEGIN_SRC js
+var arr = [74, 84, 86, 90, 71];
+arr = ["string"];
+arr = 3;
+    #+END_SRC
+
+    In fact, all their attributes are bound every time they are
+    assigned.
+
+* Scope
+
+  The scope of variable is the range of statements in which the
+  variable is /visible/.
+
+  A variable is /visible/ in a statement if it can be referenced in
+  that statement
+
+  It is defined by the language designer.
+
+  It defines how
+
+  - a particular occurrence of a name is associated with a variable
+  - references to variables declared outside the currently context
+
+
+** Static Scoping
+
+   Scopes can be determined before execution.  Looks for definition in
+   its static ancestors.
+
+   Tow categories:
+
+   1. nested subprograms creates nested static scopes
+   2. static scopes are also created by subprograms but nested scopes
+      are created only by nested class definitions and blocks.
+
+
+** Example
+
+   #+BEGIN_SRC js
+(function() {
+
+  var x = -1;
+
+  function sub1() {
+    var x = 1;
+    sub2();
+  }
+
+  function sub2() {
+    var y = x;
+    console.log(y);
+  }
+
+  sub1();
+  sub2();
+
+})();
+   #+END_SRC
+
+** Example 2
+
+   #+BEGIN_SRC C++
+#include <cstdio>
+
+int x = 0;
+
+void sub2() {
+  printf("%d\n", x);
+}
+
+void sub3() {
+  int x = 3;
+  [=] { printf("%d\n", x); }();
+}
+
+void sub1() {
+  int x = 1;
+  sub2();
+  sub3();
+}
+
+int main() {
+  sub1();
+  return 0;
+}
+   #+END_SRC
+
+** Block Scoping
+
+   #+BEGIN_SRC C++
+for (int i = 0; i < 3; ++i) {
+  int tmp = i;
+}
+// i and tmp invisible here
+   #+END_SRC
+
+   #+BEGIN_SRC js
+for (var i = 0; i < 3; ++i) {
+  var tmp = i;
+}
+
+// NO non-function block scoping in javascript
+console.log(tmp);
+console.log(i);
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+(let ((a 3))
+  (prin1 a))
+;; a invisible here
+   #+END_SRC
+
+** Declaration Order
+
+   - In C89, all variable declarations appear at the beginning.
+   - In C99, C++, Javascript, variable declarations may appear
+     anywhere.
+
+
+   In Javascript, variable scope is always the entire function.
+
+   #+BEGIN_SRC js
+(function(){
+  console.log(x);
+  var x = 3;
+  console.log(x);
+})();
+   #+END_SRC
+
+** Global Scope
+
+   In C, C++, PHP, JavaScript, Python and etc, variables can be
+   declared outside functions.
+
+   In C/C++, we separate declaration and definition.
+
+   #+BEGIN_SRC C++
+int a;                          // no allocation of storage
+
+int main() {
+  a = 3;
+}
+   #+END_SRC
+
+   #+BEGIN_SRC C++
+void foo() {
+  extern int a;
+  printf("%d\n", a);
+}
+
+int a = 3;
+   #+END_SRC
+
+
+** Hiding Global Variable
+
+   - In C/C++, if local and global variables have the same name, we
+     can use =::= as prefix to variable to access global variable.
+   - In Javascript, No possible ways.
+
+
+** Limitations
+
+   - Allows access to variables more than necessary
+   - Restructuring code may be difficult.
+   - Lead to more global variables
+
+
+** Dynamic Scoping
+
+   - Determined only at run time.
+   - Based on calling sequence of subprograms, rather than spatial
+     relationships.
+
+
+** Dynamic Scoping Example
+
+   Assume dynamic scoping
+
+   #+BEGIN_SRC js
+(function() {
+
+  var x = -1;
+
+  function sub1() {
+    var x = 1;
+    sub2();
+  }
+
+  function sub2() {
+    var y = x;
+    console.log(y);
+  }
+
+  sub1();
+  sub2();
+
+});
+   #+END_SRC
+
+** Good and Bad
+
+   Bad
+
+   - Local variables of the subprogram are all visible to any other
+     executing subprogram.  Less reliable.
+   - Inability to type check references to nonlocals statically.
+   - More difficult to read.
+   - Accessing to nonlocal variables takes longer time.
+
+
+   Good
+
+   - no need to pass values to subprograms
+
+
+** Scope and Lifetime
+
+   Appears to be closely related, but most of the time not.
+
+   - Scope is spatial concept
+   - lifetime is a temporal concept.
+
+** Example 0
+
+   #+BEGIN_SRC C++
+void foo() {
+
+  // ...
+  // some other tasks
+
+  int a = 3;
+}
+   #+END_SRC
+
+   - scope is from its declaration to the end of the function
+   - lifetime is the entire function
+
+
+** Example 1
+
+   Unrelated in the following examples
+
+   #+BEGIN_SRC C++
+void bar();
+
+void foo() {
+  int a = 3;
+  bar();
+}
+
+void bar() {
+}
+   #+END_SRC
+
+   #+BEGIN_SRC C++
+void foo() {
+  static int a = 3;
+}
+   #+END_SRC
+
+
+* Referencing Environments
+
+  The referencing environment of a statement is the collection of all
+  variables that are visible in the statement.
+
+  - For static scoping, variables from local and static ancestors.
+  - the locally declared variables, plus the variables of all other
+    subprograms that are currently /active/.
+
+
+** Example
+
+   #+BEGIN_SRC python
+g = 3
+
+def sub1():
+    a = 5
+    b = 7
+
+    # p1
+
+    def sub2():
+        global g
+        c = 9
+
+        # p2
+
+        def sub3():
+            nonlocal c
+            g = 11
+
+            # p3
+   #+END_SRC
+
+** Example Cont'd
+
+   | Position | Reference Env                                                           |
+   |----------+-------------------------------------------------------------------------|
+   | p1       | local =a= and =b= (=sub1=), global =g= for reference not for assignment |
+   | p2       | local =c= (=sub2=), global =g= for reference and assignment             |
+   | p3       | nonlocal =c= (=sub2=), local =g= (=sub3=)                               |
+
+
+** Example
+
+   #+BEGIN_SRC C++
+void foo() {
+  int a, b;
+
+  // p1
+}
+
+void bar() {
+  int b, c;
+
+  // p2
+}
+
+void main() {
+  int c, d;
+
+  // p3
+
+  bar();
+}
+   #+END_SRC
+
+
+** Example Cont'd
+
+   | Position | Reference Env                                      |
+   |----------+----------------------------------------------------|
+   | p1       | =a= and =b= of =foo=, =c= of =bar=, =d= of =main=. |
+   | p2       | =b= and =c= of =bar=, =d= of =main=.               |
+   | p3       | =c= and =d= of =main=.                             |
+
+* Named Constant
+
+  Improve readability and writability.
+
+  A constant variable and a compile-time constant.
+
+  #+BEGIN_SRC C++
+int main(int argc, char *argv[]) {
+  const int cnt = argc;
+
+  int foo[cnt];                 // NOT WHAT YOU WANT!
+}
+  #+END_SRC

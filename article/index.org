@@ -51,4 +51,4 @@ from Concepts of Programming Languages (10th edition).
   - [[./history][History]] :: Brief history of some programming languages.
   - [[./describe-syntax-semantics][Describe Syntax & Semantics]] :: Formally describe syntax and sematics.
   - [[./lexical-syntax-analysis][Parsing]] :: Algorithms for syntax and lexical anaylysis.
-  - Components :: General view of programming language elements.
+  - [[./variable][Variable]] :: Fundamental semantic issues of variables.
