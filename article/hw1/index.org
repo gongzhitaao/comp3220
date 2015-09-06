@@ -23,3 +23,5 @@ Enter the concepts of compilation and interpretation.
 6. (*15 points*) Explain two reasons why pure interpretation is an
    acceptable implementation method for several recent scripting
    languages.
+
+-----

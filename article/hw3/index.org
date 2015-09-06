@@ -1,0 +1,68 @@
+#+TITLE: PPL -- Homework 3
+#+SETUPFILE: ../setup.org
+
+-----
+
+#+BEGIN_abstract
+We study the sementic meaning of one of the basic element: the
+variable.  Concepts of binding and scoping are especially important
+for using a language.
+#+END_abstract
+
+1. (*10 points*) Dynamic type binding is closely related to implicit
+   heap dynamic variables.  Explain this relationship.
+2. (*40 points*) Consider the following Javascript snippets.
+
+   #+BEGIN_SRC javascript
+(function() {
+
+    var x = -1;
+
+    function sub1() {
+        var x = 1;
+
+        function sub2() {
+            console.log(x);
+            sub3();
+        }
+
+        sub2();
+    }
+
+    function sub3() {
+        console.log(x);
+    }
+
+    function sub4() {
+        var x = 1;
+        sub3();
+    }
+
+    sub1();                     // call 1
+    sub3();                     // call 2
+    sub4();                     // call 3
+
+})();
+   #+END_SRC
+
+   What the output would be of =call 1=, =call 2= and =call 3=
+   respectively if
+
+   - assuming static scoping
+   - assuming dynamic scoping
+
+3. (*20 points*) For the language C++, give as precise binding times
+   as you can for the following attributes.  Explain your answer.
+
+   - the maximum of significant digits in a real number.
+   - the meaining of =char=.
+   - the size of an array variable.
+   - the size of an array parameter.
+   - the location of a local variable.
+   - the value of a constant.
+   - the location of a function.
+
+4. (*10 points*) Discuss the relative advantanges of early binding and
+   late binding.
+
+-----
