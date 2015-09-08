@@ -638,6 +638,8 @@ void bar() {
   int b, c;
 
   // p2
+
+  foo();
 }
 
 void main() {
@@ -651,6 +653,8 @@ void main() {
 
 
 ** Example Cont'd
+
+   Assume dynamic scoping
 
    | Position | Reference Env                                      |
    |----------+----------------------------------------------------|
