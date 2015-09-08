@@ -1042,6 +1042,8 @@ subprograms that are currently <i>active</i>.</li>
   <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">b</span>, <span style="color: #ff2929;">c</span>;
 
   <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">p2</span>
+
+  foo();
 }
 
 <span style="color: #fce94f; font-weight: bold;">void</span> <span style="color: #fcaf3e; font-weight: bold;">main</span>() {
@@ -1058,6 +1060,10 @@ subprograms that are currently <i>active</i>.</li>
 </section>
 <section id="slide-orgheadline43">
 <h3 id="orgheadline43"><span class="section-number-3">9.4</span> Example Cont'd</h3>
+<p>
+Assume dynamic scoping
+</p>
+
 <table>
 
 
@@ -1108,7 +1114,7 @@ A constant variable and a compile-time constant.
 <pre  class="src src-C++"><span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #fcaf3e; font-weight: bold;">main</span>(<span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">argc</span>, <span style="color: #fce94f; font-weight: bold;">char</span> *<span style="color: #ff2929;">argv</span>[]) {
   <span style="color: #729fcf; font-weight: bold;">const</span> <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">cnt</span> = argc;
 
-  <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">foo</span>[cnt];                 <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">ERROR!</span>
+  <span style="color: #fce94f; font-weight: bold;">int</span> <span style="color: #ff2929;">foo</span>[cnt];                 <span style="color: #babdb6; font-style: italic;">// </span><span style="color: #babdb6; font-style: italic;">NOT WHAT YOU WANT!</span>
 }
 </pre>
 </div>
