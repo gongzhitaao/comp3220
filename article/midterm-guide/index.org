@@ -1,0 +1,140 @@
+#+TITLE: PPL -- Midterm Guide
+#+SETUPFILE: ../setup.org
+
+-----
+
+#+BEGIN_abstract
+Midterm exams covers 1) BNF, especially rewriting grammar to eliminate
+the ambiguity, or modify the precedence and etc., 2) semantics
+description, notably the axiomatic way to proof the correctness of the
+semen-tics and 3) variables attributes related topics.
+#+END_abstract
+
+* BNF
+
+  Backus-Naur Form (BNF) is often used to describe syntax.  It is
+  conceptually equal to context-free grammar (CFG).
+
+  Consider the following grammar
+
+  #+BEGIN_SRC bnf
+<s> ::= A <s> | A <s> B <s> | ɛ
+  #+END_SRC
+
+  1. Show that the grammar is ambiguous by giving two parse tree for
+     the sentence =aab=.
+
+     #+BEGIN_EXAMPLE
+     S → aSbS → aaSbS → aabS → aab
+     S → aS   → aaSbS → aabS → aab
+     #+END_EXAMPLE
+
+     The above are all leftmost derivation.  They are of two parse
+     tree that yield the same sentence, =aab=.  The cause for this
+     ambiguity is the association of the =b= with the first or the
+     second =a=.  This is somewhat analogous to the problem of the
+     dangling =else=, where the last =else= may be associated with the
+     previous =then= or with an earlier one.
+
+  2. Rewrite the grammar or find another non-ambiguous grammar that
+     generates these strings.
+
+     Usually when the same non-terminal appears on the RHS in one
+     production, i.e., both /left/ and /right recursive/, the grammar
+     is ambiguous.  Because we got to choose between two or most
+     possible paths.  The fix is to /remove one recursion/.
+
+     Consider one possible solution
+
+     #+BEGIN_SRC bnf
+<s> ::= A <s> | <t> <s> | ɛ
+<t> ::= A <t> <t> B | ɛ
+     #+END_SRC
+
+     Note that if we remove one recursion, then we sort of introduce
+     the concepts of precedence and associativity into the grammar.
+     Left recursion enforces evaluation in left-to-right order, i.e.,
+     left associativity.  Same for the right recursion.
+
+
+  Consider the following ambiguous grammar
+
+  #+BEGIN_SRC bnf
+<e> ::= <e> "+" <e> | <e> "*" <e> | <ID>
+  #+END_SRC
+
+  It can be proved that its ambiguous.  One possible equivalent
+  non-ambiguous grammar would be
+
+  #+BEGIN_SRC bnf
+<e> ::= <e> "+" <t> | <e> "*" <t> | <t>
+<t> ::= <ID>
+  #+END_SRC
+
+  This result in the natural precedence between =+= and =*= operators.
+  Since we remove the right recursion, so operators in the above
+  grammar is left associative.  And of course associativity is no way
+  mandated by grammar, the following grammar enforces right
+  associativity, but it is still equivalent to the previous two
+  examples.
+
+  #+BEGIN_SRC bnf
+<e> ::= <t> "+" <e> | <t> "*" <e> | <t>
+<t> ::= <ID>
+  #+END_SRC
+
+  Note that in the above two grammars, =*= and =+= have the same
+  precedence.  The following grammar gives higher precedence to =*=
+  while maintaining left associativity for both operators.
+
+  #+BEGIN_SRC bnf
+<e> ::= <t> | <e> + <t>
+<t> ::= <p> | <t> * <p>
+<p> ::= <ID>
+  #+END_SRC
+
+* Proof of Correctness
+
+  When describing dynamic semantics, we use one method called
+  /axiomatic semantics/ which is based on mathematical logic, which is
+  close to /Hoare logic/.  This is usually used to proof the
+  correctness of the program.  The proof is usually constructed in two
+  steps.
+
+  1. Construct a /loop invariant/, and
+  2. Perform induction reasoning.
+
+  Consider the following algorithm which computes the square of a
+  number.
+
+  #+BEGIN_SRC python
+def sqare(n):
+    s = 0
+    i = 0
+    while i < n:
+        s = s + n
+        i = i + 1
+    return s
+  #+END_SRC
+
+  One possible loop invariant for this proof is /that after going
+  through the loop =k= times, =s = k * n= and =i = k= hold/.
+
+  Consider the following factorial algorithm.
+
+  #+BEGIN_SRC python
+def factorial(n):
+    i = 1
+    f = 1
+    while i <= n:
+        f = f * i
+        i = i + 1
+    return f
+  #+END_SRC
+
+  The loop invariant is /that after going through the loop =k= times,
+  =f = k!= and =i = k + 1= hold./
+
+
+
+-----

@@ -25,7 +25,7 @@ from Concepts of Programming Languages (10th edition).
   - Office: /Shelby 2307/
   - Office Hour: /Tue/Thu 1430 till class/
 
-  TA is TBA
+  TA is Mr. Ting Shen (tzs0033)
 
   - [[./syllabus][Syllabus]]
   - [[./calendar][Course Calendar]]
@@ -34,7 +34,7 @@ from Concepts of Programming Languages (10th edition).
   | [[http:/comp3220/hw1/][Homework 1]]    | {{{DUE(Sep 7)}}}   |
   | [[http:/comp3220/hw2][Homework 2]]    | {{{DUE(Sep 11)}}}  |
   | [[http:/comp3220/hw3][Homework 3]]    | {{{DUE(Sep 18)}}}  |
-  | Midterm Guide | {{{EXAM(Sep 24)}}} |
+  | [[http:/comp3220/midterm-guide][Midterm Guide]] | {{{EXAM(Sep 29)}}} |
   | Homework 4    | {{{DUE(Nov 3)}}}   |
   | Homework 5    | {{{DUE(Nov 10)}}}  |
   | Homework 6    | {{{DUE(Nov 17)}}}  |
