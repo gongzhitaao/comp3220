@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 2015-09-24 Thu 11:39 -->
+<meta  charset="utf-8">
+<meta  name="viewport" content="width=device-width, initial-scale=1">
+<title>PPL &#x2013; Midterm Guide</title>
+<meta  name="generator" content="Org-mode">
+<meta  name="author" content="Zhitao Gong">
+<meta name="description" content="COMP 3220 Principle of Programming Languages, Auburn University">
+<meta name="keywords" content="comp3220, principle of programming languages, auburn university">
+<link rel="stylesheet" href="/comp3220/css/normalize.css" type="text/css" />
+<link rel="stylesheet" href="/comp3220/css/font-awesome.min.css" type="text/css" />
+<link rel="stylesheet" href="https://gongzhitaao.github.io/orgcss/org.css" type="text/css" />
+</head>
+<body>
+<div id="content">
+<header>
+<h1 class="title">PPL &#x2013; Midterm Guide</h1>
+</header><hr >
+
+<div class="abstract">
+<p>
+Midterm exams covers 1) BNF, especially rewriting grammar to eliminate
+the ambiguity, or modify the precedence and etc., 2) semantics
+description, notably the axiomatic way to proof the correctness of the
+semen-tics and 3) variables attributes related topics.
+</p>
+
+</div>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> BNF</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Backus-Naur Form (BNF) is often used to describe syntax.  It is
+conceptually equal to context-free grammar (CFG).
+</p>
+
+<p>
+Consider the following grammar
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bnf"><span style="color: #ff2929;">&lt;s&gt;</span> <span style="color: #73d216;">::=</span> A <span style="color: #729fcf;">&lt;s&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> A <span style="color: #729fcf;">&lt;s&gt;</span> B <span style="color: #729fcf;">&lt;s&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> &#603;
+</pre>
+</div>
+
+<ol class="org-ol">
+<li><p>
+Show that the grammar is ambiguous by giving two parse tree for
+the sentence <code>aab</code>.
+</p>
+
+<pre class="example">
+S → aSbS → aaSbS → aabS → aab
+S → aS   → aaSbS → aabS → aab
+</pre>
+
+<p>
+The above are all leftmost derivation.  They are of two parse
+tree that yield the same sentence, <code>aab</code>.  The cause for this
+ambiguity is the association of the <code>b</code> with the first or the
+second <code>a</code>.  This is somewhat analogous to the problem of the
+dangling <code>else</code>, where the last <code>else</code> may be associated with the
+previous <code>then</code> or with an earlier one.
+</p></li>
+
+<li><p>
+Rewrite the grammar or find another non-ambiguous grammar that
+generates these strings.
+</p>
+
+<p>
+Usually when the same non-terminal appears on the RHS in one
+production, i.e., both <i>left</i> and <i>right recursive</i>, the grammar
+is ambiguous.  Because we got to choose between two or most
+possible paths.  The fix is to <i>remove one recursion</i>.
+</p>
+
+<p>
+Consider one possible solution
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bnf"><span style="color: #ff2929;">&lt;s&gt;</span> <span style="color: #73d216;">::=</span> A <span style="color: #729fcf;">&lt;s&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;t&gt;</span> <span style="color: #729fcf;">&lt;s&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> &#603;
+<span style="color: #ff2929;">&lt;t&gt;</span> <span style="color: #73d216;">::=</span> A <span style="color: #729fcf;">&lt;t&gt;</span> <span style="color: #729fcf;">&lt;t&gt;</span> B <span style="color: #fcaf3e; font-weight: bold;">|</span> &#603;
+</pre>
+</div>
+
+<p>
+Note that if we remove one recursion, then we sort of introduce
+the concepts of precedence and associativity into the grammar.
+Left recursion enforces evaluation in left-to-right order, i.e.,
+left associativity.  Same for the right recursion.
+</p></li>
+</ol>
+
+
+<p>
+Consider the following ambiguous grammar
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bnf"><span style="color: #ff2929;">&lt;e&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;e&gt;</span> <span style="color: #de7fa8;">"+"</span> <span style="color: #729fcf;">&lt;e&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;e&gt;</span> <span style="color: #de7fa8;">"*"</span> <span style="color: #729fcf;">&lt;e&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #fce94f; font-weight: bold;">&lt;ID&gt;</span>
+</pre>
+</div>
+
+<p>
+It can be proved that its ambiguous.  One possible equivalent
+non-ambiguous grammar would be
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bnf"><span style="color: #ff2929;">&lt;e&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;e&gt;</span> <span style="color: #de7fa8;">"+"</span> <span style="color: #729fcf;">&lt;t&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;e&gt;</span> <span style="color: #de7fa8;">"*"</span> <span style="color: #729fcf;">&lt;t&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;t&gt;</span>
+<span style="color: #ff2929;">&lt;t&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #fce94f; font-weight: bold;">&lt;ID&gt;</span>
+</pre>
+</div>
+
+<p>
+This result in the natural precedence between <code>+</code> and <code>*</code> operators.
+Since we remove the right recursion, so operators in the above
+grammar is left associative.  And of course associativity is no way
+mandated by grammar, the following grammar enforces right
+associativity, but it is still equivalent to the previous two
+examples.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bnf"><span style="color: #ff2929;">&lt;e&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;t&gt;</span> <span style="color: #de7fa8;">"+"</span> <span style="color: #729fcf;">&lt;e&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;t&gt;</span> <span style="color: #de7fa8;">"*"</span> <span style="color: #729fcf;">&lt;e&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;t&gt;</span>
+<span style="color: #ff2929;">&lt;t&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #fce94f; font-weight: bold;">&lt;ID&gt;</span>
+</pre>
+</div>
+
+<p>
+Note that in the above two grammars, <code>*</code> and <code>+</code> have the same
+precedence.  The following grammar gives higher precedence to <code>*</code>
+while maintaining left associativity for both operators.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bnf"><span style="color: #ff2929;">&lt;e&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;t&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;e&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">+</span> <span style="color: #729fcf;">&lt;t&gt;</span>
+<span style="color: #ff2929;">&lt;t&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #729fcf;">&lt;p&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">|</span> <span style="color: #729fcf;">&lt;t&gt;</span> <span style="color: #fcaf3e; font-weight: bold;">*</span> <span style="color: #729fcf;">&lt;p&gt;</span>
+<span style="color: #ff2929;">&lt;p&gt;</span> <span style="color: #73d216;">::=</span> <span style="color: #fce94f; font-weight: bold;">&lt;ID&gt;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> Proof of Correctness</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+When describing dynamic semantics, we use one method called
+<i>axiomatic semantics</i> which is based on mathematical logic, which is
+close to <i>Hoare logic</i>.  This is usually used to proof the
+correctness of the program.  The proof is usually constructed in two
+steps.
+</p>
+
+<ol class="org-ol">
+<li>Construct a <i>loop invariant</i>, and</li>
+<li>Perform induction reasoning.</li>
+</ol>
+
+<p>
+Consider the following algorithm which computes the square of a
+number.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #729fcf; font-weight: bold;">def</span> <span style="color: #fcaf3e; font-weight: bold;">sqare</span>(n):
+    <span style="color: #ff2929;">s</span> = 0
+    <span style="color: #ff2929;">i</span> = 0
+    <span style="color: #729fcf; font-weight: bold;">while</span> i &lt; n:
+        <span style="color: #ff2929;">s</span> = s + n
+        <span style="color: #ff2929;">i</span> = i + 1
+    <span style="color: #729fcf; font-weight: bold;">return</span> s
+</pre>
+</div>
+
+<p>
+One possible loop invariant for this proof is <i>that after going
+through the loop <code>k</code> times, <code>s = k * n</code> and <code>i = k</code> hold</i>.
+</p>
+
+<p>
+Consider the following factorial algorithm.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #729fcf; font-weight: bold;">def</span> <span style="color: #fcaf3e; font-weight: bold;">factorial</span>(n):
+    <span style="color: #ff2929;">i</span> = 1
+    <span style="color: #ff2929;">f</span> = 1
+    <span style="color: #729fcf; font-weight: bold;">while</span> i &lt;= n:
+        <span style="color: #ff2929;">f</span> = f * i
+        <span style="color: #ff2929;">i</span> = i + 1
+    <span style="color: #729fcf; font-weight: bold;">return</span> f
+</pre>
+</div>
+
+<p>
+The loop invariant is <i>that after going through the loop <code>k</code> times,
+<code>f = k!</code> and <code>i = k + 1</code> hold.</i>
+</p>
+
+
+
+<hr >
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<a class="author"
+         href="http://gongzhitaao.org">Zhitao Gong</a> / <span
+         class="date">2015-09-24 Thu 11:39</span><span class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3.1)</span>
+</div>
+</body>
+</html>
