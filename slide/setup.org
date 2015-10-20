@@ -1,0 +1,10 @@
+#+AUTHOR: Zhitao Gong
+#+EMAIL: zzg0009@auburn.edu
+#+LANGUAGE: en
+#+OPTIONS: H:2 toc:3
+#+LATEX_CLASS: beamer
+#+BEAMER_THEME: default
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{clrscode3e}
+#+LATEX_HEADER: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection,currentsubsection]\end{frame}}
+#+LATEX_HEADER: \newcommand{\tex}[1]{#1}

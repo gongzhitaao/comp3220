@@ -1,0 +1,61 @@
+#+TITLE: Principle of Programming Languages
+#+OPTIONS: num:nil
+#+AUTHOR: Zhitao Gong
+#+EMAIL: zzg0009 at TigerMail
+#+OPTIONS: toc:nil
+#+DESCRIPTION: COMP 3220 Principle of Programming Languages, Auburn University
+#+KEYWORDS: comp3220, principle of programming languages, auburn university"
+
+#+HTML_HEAD: <link rel="stylesheet" href="/comp3220/css/normalize.css" type="text/css" />
+#+HTML_HEAD: <link rel="stylesheet" href="/comp3220/css/font-awesome.min.css" type="text/css" />
+#+HTML_HEAD: <link rel="stylesheet" href="https://gongzhitaao.github.io/orgcss/org.css" type="text/css" />
+#+HTML_HEAD: <link rel="stylesheet" href="css/index.css" type="text/css" />
+
+#+MACRO: LOGO @@html: <span class="comp3220-logo">P<sup>2</sup>L</span>@@
+#+MACRO: DUE @@html: <span class="due-date">due on $1 2359</span>@@
+#+MACRO: EXAM @@html: <span class="exam-date">In class exam on $1</span>@@
+
+-----
+
+#+BEGIN_abstract
+This course introduces the programming languages in a general way
+including a formal description of grammer, lexical and syntax
+analysis, i.e., parsing, and the basic components available in almost
+all programming languages.  Many of the materials here are summary
+from Concepts of Programming Languages (10th edition).
+#+END_abstract
+
+* {{{LOGO}}} -- Fall 2015
+  :PROPERTIES:
+  :CUSTOM_ID: sec:brief
+  :END:
+
+  - Email: zzg0009 at TigerMail
+  - Office: /Shelby 2307/
+  - Office Hour: /Wed 1000-1100/
+
+  TA is Mr. Ting Shen (tzs0033)
+
+  | [[http:/comp3220/hw1/][Homework 1]]    | {{{DUE(Sep 7)}}}   |
+  | [[http:/comp3220/hw2][Homework 2]]    | {{{DUE(Sep 11)}}}  |
+  | [[http:/comp3220/hw3][Homework 3]]    | {{{DUE(Sep 18)}}}  |
+  | [[http:/comp3220/midterm-guide][Midterm Guide]] | {{{EXAM(Sep 29)}}} |
+  | [[http:homework/hw4.pdf][Homework 4]]    | {{{DUE(Nov 3)}}}   |
+  | [[http:homework/hw5.pdf][Homework 5]]    | {{{DUE(Nov 10)}}}  |
+  | Homework 6    | {{{DUE(Nov 17)}}}  |
+  | Final Guide   | {{{EXAM(Dec 3)}}}  |
+  | [[http:/comp3220/project][Term Project]]  | {{{DUE(Dec 1)}}}   |
+
+* Outline
+  :PROPERTIES:
+  :CUSTOM_ID: sec:outline
+  :END:
+
+  - [[./introduction][Introduction]] :: Brief about me and the course
+  - [[./preliminary][Priliminaries]] :: Overview of topics in this course.
+  - [[./history][History]] :: Brief history of some programming languages.
+  - [[./describe-syntax-semantics][Describe Syntax & Semantics]] :: Formally describe syntax and sematics.
+  - [[./lexical-syntax-analysis][Parsing]] :: Algorithms for syntax and lexical anaylysis.
+  - [[./variable][Variable]] :: Fundamental semantic issues of variables.
+
+-----
