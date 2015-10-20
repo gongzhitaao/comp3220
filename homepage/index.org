@@ -57,5 +57,6 @@ from Concepts of Programming Languages (10th edition).
   - [[./describe-syntax-semantics][Describe Syntax & Semantics]] :: Formally describe syntax and sematics.
   - [[./lexical-syntax-analysis][Parsing]] :: Algorithms for syntax and lexical anaylysis.
   - [[./variable][Variable]] :: Fundamental semantic issues of variables.
+  - [[http:slide/concurrency.pdf][Concurrency]] :: Concurrent programming issues.
 
 -----
