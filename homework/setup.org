@@ -1,8 +1,0 @@
-#+AUTHOR: Zhitao Gong
-#+EMAIL: zzg0009 at TigerMail
-#+OPTIONS: toc:nil
-#+DESCRIPTION: COMP 3220 Principle of Programming Languages, Auburn University
-#+KEYWORDS: comp3220, principle of programming languages, auburn university"
-
-#+MACRO: src \mintinline{$1}{$2}
-#+MACRO: src_cpp {{{src(c++,$1)}}}

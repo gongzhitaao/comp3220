@@ -1,62 +1,284 @@
-#+TITLE: Principle of Programming Languages
-#+OPTIONS: num:nil
-#+AUTHOR: Zhitao Gong
-#+EMAIL: zzg0009 at TigerMail
-#+OPTIONS: toc:nil
-#+DESCRIPTION: COMP 3220 Principle of Programming Languages, Auburn University
-#+KEYWORDS: comp3220, principle of programming languages, auburn university"
+#+TITLE: PPL -- Spring 2016
+#+SETUPFILE: ../general-setup.org
+#+OPTIONS: toc:nil num:2 H:3 ^:nil pri:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.github.io/orgcss/org.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/ppl.css"/>
 
-#+HTML_HEAD: <link rel="stylesheet" href="/comp3220/css/normalize.css" type="text/css" />
-#+HTML_HEAD: <link rel="stylesheet" href="/comp3220/css/font-awesome.min.css" type="text/css" />
-#+HTML_HEAD: <link rel="stylesheet" href="https://gongzhitaao.github.io/orgcss/org.css" type="text/css" />
-#+HTML_HEAD: <link rel="stylesheet" href="css/index.css" type="text/css" />
+#+TOC: headlines 2
+* Course Information
 
-#+MACRO: LOGO @@html: <span class="comp3220-logo">P<sup>2</sup>L</span>@@
-#+MACRO: DUE @@html: <span class="due-date">due on $1 2359</span>@@
-#+MACRO: EXAM @@html: <span class="exam-date">In class exam on $1</span>@@
+** Course Description
 
------
+   This course covers
 
-#+BEGIN_abstract
-This course introduces the programming languages in a general way
-including a formal description of grammer, lexical and syntax
-analysis, i.e., parsing, and the basic components available in almost
-all programming languages.  Many of the materials here are summary
-from Concepts of Programming Languages (10th edition).
-#+END_abstract
+   1. Three tutorials on programming languages, each in a different
+      programming paradigm.
+   2. Basic programming language concepts, e.g., data type, variable,
+      functions, user-defined types and etc.
+   3. Compiler basics, e.g., context-free grammar, automata.
 
-* {{{LOGO}}} -- Fall 2015
-  :PROPERTIES:
-  :CUSTOM_ID: sec:brief
-  :END:
 
-  - Email: zzg0009 at TigerMail
-  - Office: /Shelby 2307/
-  - Office Hour: /Wed 1000-1100/
+   - Course Number :: COMP 3220
+   - Course Title :: Principle of Programming Languages
+   - Total Credit :: 3
+   - Prerequisites :: COMP 2210
+   - Class Meeting :: 3 hours per week
+   - Course Website :: http://auburn.edu/~zzg0009/comp3220/spring2016/
 
-  TA is Mr. Ting Shen (tzs0033)
+** Instructor Information
 
-  | [[http:/comp3220/hw1/][Homework 1]]    | {{{DUE(Sep 7)}}}   |
-  | [[http:/comp3220/hw2][Homework 2]]    | {{{DUE(Sep 11)}}}  |
-  | [[http:/comp3220/hw3][Homework 3]]    | {{{DUE(Sep 18)}}}  |
-  | [[http:/comp3220/midterm-guide][Midterm Guide]] | {{{EXAM(Sep 29)}}} |
-  | [[http:homework/hw4.pdf][Homework 4]]    | {{{DUE(Nov 3)}}}   |
-  | [[http:homework/hw5.pdf][Homework 5]]    | {{{DUE(Nov 10)}}}  |
-  | Homework 6    | {{{DUE(Nov 17)}}}  |
-  | Final Guide   | {{{EXAM(Dec 3)}}}  |
-  | [[http:/comp3220/project][Term Project]]  | {{{DUE(Dec 1)}}}   |
+   - Instructor :: Zhitao Gong
+     + Office :: Shelby 2307
+     + Office Hours :: Friday Morning
+     + Email :: zzg0009@auburn.edu
 
-* Outline
-  :PROPERTIES:
-  :CUSTOM_ID: sec:outline
-  :END:
+   - Teaching Assistant :: Wenlu Wang
+     + Office :: Shelby 2307
+     + Office Hours :: Friday Morning
+     + Email :: wzw0022@auburn.edu
 
-  - [[./introduction][Introduction]] :: Brief about me and the course
-  - [[./preliminary][Priliminaries]] :: Overview of topics in this course.
-  - [[./history][History]] :: Brief history of some programming languages.
-  - [[./describe-syntax-semantics][Describe Syntax & Semantics]] :: Formally describe syntax and sematics.
-  - [[./lexical-syntax-analysis][Parsing]] :: Algorithms for syntax and lexical anaylysis.
-  - [[./variable][Variable]] :: Fundamental semantic issues of variables.
-  - [[http:slide/concurrency.pdf][Concurrency]] :: Concurrent programming issues.
 
------
+** Textbook and Course Materials
+
+*** Required Textbook
+
+    /Concepts of Programming Languages/, tenth edition by Robert
+    W. Sebesta.
+
+*** Recommended Texts
+
+    - /Essentials of Programming Languages/, Third edition by Daniel
+      P. Friedman and Mitchell Wand.
+    - /Modern Programming Languages: A Practical Introduction/, Second
+      Edition by Dr. Adam Brooks Webber[fn:1].
+    - /Formal Language: A Practical Introduction/ by Adam Brooks Webber[fn:2].
+
+* Grading Policy
+
+** Graded Course Activities
+
+   All assignments details are posted on [[https://auburn.instructure.com/][Canvas]].
+
+   #+CAPTION: Grade weight distribution
+   #+NAME: tab:grade-weight
+   | Description  | Points |
+   |--------------+--------|
+   | Assignment   |     40 |
+   | Midterm Exam |     20 |
+   | Final Exam   |     20 |
+   | Term Project |     20 |
+   |--------------+--------|
+   | Total        |    100 |
+   #+TBLFM: @6$2=vsum(@I..@II)
+
+*** Late Work Policy
+
+    Be sure to subscribe to Canvas notifications and pay close
+    attention to deadlines.  There will be *NO* make up assignments or
+    quizzes, or late work accepted without a serious and compelling
+    reason and instructor approval.
+
+** Letter Grade Assignment
+
+   Final grades assigned for this course will be based on the
+   percentage of total points earned and are assigned as shown in
+   Table [[tab:letter-grade]].  Note that your grade will be automatically
+   /rounded up/.
+
+   #+CAPTION: Letter Grade
+   #+NAME: tab:letter-grade
+   | Letter Grade | Percentage  |
+   |--------------+-------------|
+   | A            | 90% -- 100% |
+   | B            | 80% -- 89%  |
+   | C            | 70% -- 79%  |
+   | D            | 60% -- 69%  |
+   | F            | 00% -- 59%  |
+
+
+* Syllabus
+
+  #+BEGIN_SRC js :exports results :results output html
+var path = require('path');
+var fs = require('fs');
+var base = '/home/gongzhitaao/node_modules/';
+
+function req(m) {
+  return require(path.join(base, m));
+}
+
+var async = req('async');
+var jsdom = req('jsdom');
+var moment = req('moment');
+req('moment-recur');
+
+var data = JSON.parse(fs.readFileSync('schedule.json', 'utf8'));
+var recur = moment().recur(data.start, data.end);
+
+var classday = recur
+    .every(["mon", "wed", "fri"]).daysOfWeek()
+    .except("2016-01-18")
+    .except("2016-03-14")
+    .except("2016-03-15")
+    .except("2016-03-16")
+    .except("2016-03-17")
+    .except("2016-03-18")
+    .all("YYYY-MM-DD ddd");
+
+function pdflink(rel, l) {
+  return rel + '/' + l + ".pdf";
+}
+
+function ziplink(rel, l) {
+  return rel + '/' + l + ".zip";
+}
+
+function make_topic($, d, rowspan) {
+  var $lnk = $('<a>', {href: pdflink(data.rel.slide, d.link), text: d.topic});
+  var $ret = $('<td>').append($lnk);
+  if (rowspan && rowspan > 1) $ret.attr({rowspan: rowspan});
+  return $ret;
+}
+
+function make_assignment($, doc, d, rowspan) {
+  var $ret = $('<td>');
+  if (rowspan && rowspan > 1) $ret.attr({rowspan: rowspan});
+
+  var $ul = $('<ul>');
+  $ret.append($ul);
+
+  d.sort(function(a, b) { return a.type < b.type; });
+  for (var j = 0; j < d.length; ++j) {
+    var itm = d[j];
+    var $icon, $item;
+    switch (itm.type) {
+    case 'book':
+      $icon = $('<i>', {class: 'fa fa-book'});
+      $item = $(doc.createTextNode(itm.text));
+      break;
+    case 'faq':
+      $icon = $('<i>', {class: 'fa fa-pencil-square-o'});
+      $item = $('<a>', {href: pdflink(data.rel.assignment, itm.link), text: itm.text});
+      break;
+    case 'code':
+      $icon = $('<i>', {class: 'fa fa-code'});
+      $item = $('<a>', {href: pdflink(data.rel.assignment, itm.link), text: itm.text});
+      break;
+    case 'read':
+      $icon = $('<i>', {class: 'fa fa-bookmark-o'});
+      $item = $('<a>', {href: itm.link, text: itm.text});
+      break;
+    case 'hint':
+      $icon = $('<i>', {class: 'fa fa-lightbulb-o'});
+      $item = $('<a>', {href: ziplink(data.rel.assignment, itm.link), text: itm.text});
+      break;
+    case 'review':
+      $icon = $('<i>', {class: 'fa fa-history'});
+      $item = $('<a>', {href: pdflink(data.rel.review, itm.link), text: itm.text});
+      break;
+    default:
+      /* empty */
+    }
+    $ul.append($('<li>').append($icon, $item));
+  }
+
+  return $ret;
+}
+
+function make_caption($, doc) {
+  var $ret = $('<caption>');
+  $ret.append(
+    $('<ul>').append(
+      $('<li>').append(
+        $('<i>', {class: 'fa fa-book'}),
+        $(doc.createTextNode('book chapters'))),
+      $('<li>').append(
+        $('<i>', {class: 'fa fa-pencil-square-o'}),
+        $(doc.createTextNode('written assignment'))),
+      $('<li>').append(
+        $('<i>', {class: 'fa fa-code'}),
+        $(doc.createTextNode('programming assignment'))),
+      $('<li>').append(
+        $('<i>', {class: 'fa fa-bookmark-o'}),
+        $(doc.createTextNode('optional reading'))),
+      $('<li>').append(
+        $('<i>', {class: 'fa fa-lightbulb-o'}),
+        $(doc.createTextNode('hint'))),
+      $('<li>').append(
+        $('<i>', {class: 'fa fa-history'}),
+        $(doc.createTextNode('exam review')))));
+  return $ret;
+}
+
+
+var window = jsdom.jsdom().defaultView;
+
+jsdom.jQueryify(window, 'http://code.jquery.com/jquery-2.2.0.min.js', function (window) {
+  var $ = window.jQuery;
+  var doc = window.document;
+
+  var $table = $('<table>');
+
+  $table.append(make_caption($, doc));
+
+  var $thead = $('<thead>');
+  $table.append($thead);
+
+  $thead.append($('<tr>').append(
+    $('<th>', {html: "Date"}),
+    $('<th>', {html: "Topic"}),
+    $('<th>', {html: "Assignment"})));
+
+  var dat = data.data;
+  var rowspan = 1;
+  var cls = dat[0]["class"]
+  for (var i = 0, j = 0; i < classday.length; ++i) {
+    var $tr = $('<tr>', {"class": cls});
+    $table.append($tr);
+
+    var $date = $('<td>', {html: classday[i]});
+    $tr.append($date);
+
+    if (rowspan > 1) {
+      --rowspan;
+      continue;
+    }
+
+    var d = dat[j];
+    rowspan = 'span' in d ? d.span : 1;
+    cls = d["class"];
+    $tr.attr("class", cls);
+
+    var $topic, $assignment;
+    $topic = make_topic($, d, rowspan);
+    $assignment = make_assignment($, doc, d.assignment, rowspan);
+    $tr.append($topic, $assignment);
+
+    ++j;
+  }
+
+  console.log($('<div>').append($table).html());
+});
+  #+END_SRC
+
+* Credit
+
+  The =C++= version we use is =C++11= and above.  The tutorial is
+  adapted from \cite{cplusplus}\cite{stroustrup2014}.  More authority FAQ's
+  about =C++= can be found on Bjarne Stroustrup's (creator of =C++=)
+  website http://www.stroustrup.com/.
+
+  The =Scheme= version we use is R\(^{6}\)RS (The Revised\(^{6}\)
+  Report on the Algorithmic Language =Scheme=) \cite{r6rs}, which
+  could be found [[http://www.r6rs.org/]].  Tutorial on =Scheme= is
+  adpated from \cite{r6rs}\cite{sitaram2015}.  Equality predicates
+  comparison is adapted from \cite{shah2013}.  Notes about guile
+  features are from \cite{guile}.
+
+#+BIBLIOGRAPHY: ../comp3220.bib alpha option:-nobibsource limit:t option:-nokeywords
+* Footnotes
+
+[fn:1] Available online: http://www.webber-labs.com/mpl/.
+
+[fn:2] Available online: http://www.webber-labs.com/fl/

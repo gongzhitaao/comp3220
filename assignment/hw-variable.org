@@ -1,0 +1,11 @@
+#+TITLE: =C++= Excercise
+#+SETUPFILE: ../general-setup.org
+
+* General Design Issue
+
+  1. In what way are reserved words better than keywords?
+
+* Show Me You Code
+
+  1. Show me an alias in =C++= code.  What is the potential problem
+     with alias?

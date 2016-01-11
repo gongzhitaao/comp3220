@@ -1,0 +1,288 @@
+#+TITLE: Introduction
+#+SETUPFILE: ../slide-setup.org
+
+* Course Information
+
+** Contacts
+
+   - Instructor Zhitao Gong
+     - Tigermail :: zzg0009
+     - Office :: Shelby 2307
+     - Office Hour :: Friday 0800 -- 1100
+   - TA Wenlu Wang
+     - Tigermail :: wzw0022
+     - Office :: Shelby 2307
+   - Course Website http://auburn.edu/~zzg0009/comp3220/2016spring/
+
+
+** Course Materials
+
+   - Textbook is /Concepts of Programming Languages/, tenth edition by
+     Robert W. Sebesta.
+   - Other Reference materials is provided on course website.
+
+
+** Grading Policy
+
+   All assignments are submitted electronically on Canvas.  /NO LATE
+   SUBMISSION IS ACCEPTED/.
+
+   #+CAPTION: Grade weight distribution
+   #+NAME: tab:grade-weight
+   | Description  | Points |
+   |--------------+--------|
+   | Assignment   |     40 |
+   | Midterm Exam |     20 |
+   | Final Exam   |     20 |
+   | Term Project |     20 |
+   |--------------+--------|
+   | Total        |    100 |
+   #+TBLFM: @6$2=vsum(@I..@II)
+
+** Topics
+
+   - Tutorial :: Three PL tutorials are included, imperiative PL
+        =C++=, functional PL =Scheme= and logic PL =Prolog=.
+   - Compiler :: Formal languages, regular expression (RE), BNF,
+        context-free grammars, parsing.
+   - PL basics :: Names, types, binding, memory management, procedure
+        and data abstraction, parameter passing.
+   - Concurrency :: Concurrency basic concepts, semaphore, monitors,
+        message passing.
+
+
+** Course Goals
+
+   - Learn basic structures in most PL.
+
+     E.g., variables, data types, control structures, procedure
+     abstraction and etc.  So that it is easier to learn a new one.
+
+   - Study different language paradigms.
+
+     Imperative, functional and logic PL so that you have more choise.
+
+* Introduction to Programming Language
+
+** What is Programming Language (PL)?
+
+   #+BEGIN_QUOTE
+   A language intended for use by a person to express a process by
+   which a computer can solve a problem
+
+   -- Hope and Jipping
+   #+END_QUOTE
+
+   #+BEGIN_QUOTE
+   A set of conventions for communicating an algorithm
+
+   -- E. Horowitz
+   #+END_QUOTE
+
+   #+BEGIN_QUOTE
+   The art of programming is the art of organizing complexity
+
+   -- Dijkstra
+   #+END_QUOTE
+
+   #+BEGIN_QUOTE
+   It is just a string of characters.
+
+   -- Compiler LOL
+   #+END_QUOTE
+
+** PL Design Consideration
+
+   - Readable :: Comments, names, syntax.  E.g., =C++=, =Python= vs
+        =BrainFuck=, =Whitespace=.
+   - Learning Curve :: Small number of core concepts combine regularly
+        and systematically.  E.g., =C=, =Lua= vs =Haskell=.
+   - Portable :: Language standardization and platform support.  E.g.,
+        =Java=, =C++=.
+   - Abstraction :: Control and data structures that hide details.
+        E.g., floating numbers.
+   - Efficient :: E.g., =C++= vs =Python=.
+   - Purpose :: General programming, scientific computing, string
+        manipulating, etc.  E.g., =Python=, =R= and =Matlab=, =awk=,
+        etc.
+
+
+** Why Learn More than One PL?
+
+   - Choose the right language for a given problem.  E.g., =Ruby= and
+     =Python= vs =C++= for web development, =Matlab= and =R= vs =C=
+     for scientific computing.
+
+     #+BEGIN_QUOTE
+     If all you have is a hammer,
+
+     every problem looks like a nail.
+     #+END_QUOTE
+
+   - Learn new languages more easily later.  PL's are ever changing.
+     Different jobs may require different PL's.
+   - Learn thinking about problems in different ways, or /paradigms/.
+
+
+** What is Paradigm?
+
+   Paradigm is the way of thinking about problems.
+
+   PL's can be /loosely/ classified into two categories.
+   - Imperative :: Program consists of commands describing /how/ to
+        get solution.  E.g., =C=, =Pascal=, =Assembler=.
+   - Declarative :: Program consists of expressions describing /what/
+        is the solution.  Key concept is /referential transparency/.
+     + Functional PL like =Lisp=, =Haskell= and =Erlang=.
+     + Logic PL like =Prolog=.
+
+   There are languages that are /multi-paradigm/, e.g., =C++=,
+   =Javascript=, =Python=, etc.
+
+
+** Imperative Paradigm
+
+   Imperative PL follow the model of computation described in the
+   /Turing Machine/ -- they maintain the fundamental notion of a
+   /state/.
+
+   - State of program are values stored in the memory and register.
+   - Program issues to the machine orders to change the state of the
+     machine.
+   - Fits closely Von Neumann architecture.
+
+
+   Key commands
+   - Assignment :: Changes the state of the machine.
+   - Branch :: Changes the state of the program.
+   - Sequence :: Used to chain commands together.
+
+
+** Imperative Example
+
+   The program is like a recipe in which essential states and
+   necessary steps to manipulate them are defined and ordered.
+
+   #+BEGIN_SRC c
+int fact(int n) {
+  int f = 1;
+  while (n > 1) {
+    f = f * n;
+    n = n - 1;
+  }
+  return f;
+}
+   #+END_SRC
+
+** Functional Paradigm
+
+   Functional PL is based on /\(\lambda\)-calculus/, informally,
+   composition of operations on data.
+
+   Key commands
+   - \(\lambda\)-abstract :: \(\lambda x.t\) is a definition of an
+        anonymous function that is capable of taking a single input
+        \(x\) and substituting it into the expression \(t\).  E.g.,
+        \(\lambda x.x^2\) is an lambda abstraction for function \(f(x)
+        = x^2\).
+   - Application :: \(ts\) represents the application of a function
+        \(t\) to an input \(s\).  E.g., calling the function \(t\) and
+        produce \(t(s)\).
+
+
+** Functional Example
+
+   Functions have no state, and data are immutable.
+
+   #+BEGIN_SRC emacs-lisp
+(defun fact (n)
+  (if (= n 1)
+      1
+    (* n (fact (- n 1)))))  ; referential transparent
+
+(fact 4)
+   #+END_SRC
+
+** Logic Paradigm
+
+   Logic PL is based on /Horn Clauses/, describing problems as axioms
+   and derivation rules.
+
+   Key commands
+   - Unification :: The algorithmic process of solving equations
+        between symbolic expressions.
+   - Non-deterministic Search :: Based on first-order predicate logic.
+
+
+** Logic Example 1
+
+   Prolog is most well known logic PL.
+
+   #+BEGIN_SRC prolog
+fact(0,1).
+fact(N,F) :-
+    N > 0, N1 is N - 1,
+    fact(N1,F1), F is N * F1.
+   #+END_SRC
+
+** Logic Example 2
+
+   We will talk about about /syllogism/ and =Prolog= in later
+   chapters.
+
+   First we state some facts and predicates.
+
+   #+BEGIN_SRC prolog
+%% Prolog               Syllogism
+man(socrates).        % socrates is a man.
+mortal(X) :- man(X).  % All men are mortal.
+   #+END_SRC
+
+   Now we are asking questions
+
+   #+BEGIN_SRC prolog
+%% Is socrates mortal?
+mortal(socrates).
+   #+END_SRC
+
+** PL Translation
+
+   PL is translated in two ways.
+
+   - Compilation :: PL is compiled /in whole/ by a compiler into a
+        platform-dependent executable.  E.g., =C/C++=.
+   - Interpretation :: PL is interpreted /one statement at a time/ by
+        a virtual machine called interpreter.  E.g., =Javascript=.
+
+
+   Some languages are the mixture of both, e.g., =Python=, =Java=.
+
+** Translation Overview
+
+   Compilers are programs, and generally very large programs.  They
+   almost always have a structure based on the /analysis-synthesis/
+   model of translation.
+
+   #+CAPTION: Every non-trivial translation requires analysis and synthesis.
+   #+NAME: fig:translation
+   [[file:img/translation.pdf]]
+
+** Compiler Components
+
+   [[file:img/compiler.pdf]]
+
+** Comiler Components 2
+
+   - Scanner :: It converts the stream of characters into a stream of
+        tokens, removing whitespace, removing comments and expanding
+        macros along the way.
+   - Parser :: The parser turns the token sequence into an abstract
+        syntax tree (AST).
+   - Semantic Analysis :: Checks legality rules and tie up the pieces
+        of the syntax tree (by resolving identifier references,
+        inserting cast operations for implicit coercions, etc.) to
+        form a semantic graph.
+
+#  LocalWords:  SETUPFILE Jipping LOL BrainFuck Whitespace Lua Matlab
+#  LocalWords:  Haskell awk PL's Erlang Prolog multi Javascript Von
+#  LocalWords:  Neumann SRC emacs defun prolog socrates

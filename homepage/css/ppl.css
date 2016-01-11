@@ -1,0 +1,25 @@
+td > ul {
+    list-style:none
+}
+
+i {
+    margin-right:5px
+}
+
+caption > ul {
+    column-count: 2;
+    text-align: left;
+    list-style: none;
+}
+
+.exam {
+    background-color: rgba(255,0,0,0.2);
+}
+
+.tutorial {
+    background-color: rgba(0,255,0,0.1);
+}
+
+.language-concept {
+    background-color: rgba(255,255,0,0.2);
+}

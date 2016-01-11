@@ -1,0 +1,9 @@
+#+TITLE: =C++= Excercise
+#+SETUPFILE: ../general-setup.org
+
+* Show Me Your Code
+
+1. Please write a short =C++= program to investigate how the floating
+   numbers are stored in memory.  /hint: we used the =union= to
+   discuss how integer is stored/.
+2. Finish the =Complex= class

@@ -1,0 +1,764 @@
+#+TITLE: Tutorial -- Scheme
+#+SETUPFILE: ../slide-setup.org
+#+LATEX_HEADER: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Content}\tableofcontents[currentsection]\end{frame}}
+
+* Get Started
+
+** Hello World!
+
+   Enter the following code with your favorite editor (Emacs for me)
+   and save to a file called ~hello.scm~.
+
+   #+BEGIN_SRC scheme :tangle src/hello.scm
+;; Hello World!
+(begin
+  (display "Hello World!")
+  (newline))
+   #+END_SRC
+
+   1. The first line is a comment.  Scheme ignores everything
+      following a semicolon.
+   2. =begin= /form/ is =Scheme='s way of introducing sequential
+      /subforms/, i.e., sequential statements.
+   3. =display= procedure outputs its argument ("Hello World!") to the
+      standard output, i.e., the console.
+   4. =newline= procedure outputs a carriage return.
+
+** Environment
+
+   There are lots of =Scheme= implementations, GNU guile, mit-scheme,
+   CHICKEN scheme, Racket and etc.  I'm using GNU guile.
+
+   To run the above program
+
+   #+BEGIN_EXAMPLE
+   $ guile
+   $ scheme@(guile-user)> (load "hello.scm")
+   #+END_EXAMPLE
+
+   - The first line invokes the GNU guile interpreter.
+   - Entering into the guile environment, you will see prompt
+     =scheme@(guile-user)>=.  Just type in any =Scheme= forms.
+   - =(load "hello.scm")= loads and runs the file ~hello.scm~.
+
+** Setup =Scheme=
+
+   Various options to setup =Scheme= environment.
+
+   - Linux machines in Computer Lab and Davis Hall 123 have mit-scheme
+     installed.
+   - You may install guile yourself.
+     - Compile and install /locally/ on Computer Lab or Davis Hall
+       123, which requires some knowledge of Linux, or
+     - Install with package manager if you have Linux installed on
+       your laptop.
+
+
+   Most of the code snippets adheres to R^{6}RS and should be working
+   with all compatible =Scheme= implementations, except those
+   commented with "guile".
+
+   #+BEGIN_SRC scheme
+(inf? 3)                                ; => #f, guile
+   #+END_SRC
+
+** Hello World! Cont'd
+
+   Entering into the guile interactive environment, you may type in
+   your programs directly
+
+   - Type in the form at =Scheme= prompt, you will see =Hello World!=.
+
+     #+BEGIN_SRC scheme
+(begin (display "Hello World!")
+       (newline))
+     #+END_SRC
+
+   - Or you could directly type in the form.
+
+     #+BEGIN_SRC scheme
+"Hello World!"
+     #+END_SRC
+
+     which gives you back the string =​"Hello World"​=.
+
+** Hello World! Cont'd
+
+   Difference between the previous two approaches
+
+   - Trivial difference: the first gives you =Hello World!= without
+     double quote.
+   - Important difference: the first form /evaluates/ to /nothing/,
+     =Hello World!= is only a *side effect* of =display=.  ~=>~
+     is "/evaluates to/".
+
+     #+BEGIN_SRC scheme
+(begin (display "Hello World!")
+       (newline))
+=>
+     #+END_SRC
+
+     The second evaluates to =​"Hello World!"​=.
+
+     #+BEGIN_SRC scheme
+"Hello World!"
+=> "Hello World"
+     #+END_SRC
+
+* Overview
+
+** Overview
+
+   =Scheme= features are summarized as follows.
+
+   - Statically scoped PL with lexical binding.
+   - /Latent/ as opposed to /manifest/ type.
+   - Type associated with objects rather than variables.
+   - One of the first PL to support procedures as objects.
+   - /Continuations/ is "first-class".
+   - Arguments are evaluated /before/ procedure call.
+   - Distinguishes /exact/ and /inexact/ number objects.
+
+** Expression
+
+   Expressions can be evaluated, producing a value.
+
+   - Literal expressions.
+
+     #+BEGIN_SRC scheme
+#t                                      ; => #t
+23                                      ; => 23
+     #+END_SRC
+
+   - Compound expression.  Enclosing subexpressions with parenthesis,
+     where The first subexpression is an operation and the remainings
+     are operands to the operation
+
+     #+BEGIN_SRC scheme
+(+ 1 1)                                 ; => 2
+(+ 1 (* 1 1))                           ; => 2
+     #+END_SRC
+
+
+   Whitespace (including line endings) is not significant when it
+   separates subexpressions of an expression.
+
+** Form
+
+   - Form :: The general name for a syntactic part of a =Scheme=
+        program.
+
+
+   #+BEGIN_SRC scheme
+(define x 3)                            ; definition
+(+ 3 4)                                 ; expression
+   #+END_SRC
+
+   - Both are forms, their distinction depends on the bindings for
+     =define= and =+=.
+   - In particular, 23 is a /subform/ of the form =(define x 23)=.
+
+* Data Types
+
+** Boolean
+
+   =Scheme= uses =#t= for true and =#f= for false.  The =boolean?=
+   predicate procedure (usually ends with a =?=) checks whether its
+   argument is Boolean.
+
+   #+BEGIN_SRC scheme
+(boolean? #t)                           ; => #t
+(boolean? #f)                           ; => #t
+(boolean? "Hello World!")               ; => #f
+   #+END_SRC
+
+** Numeric
+
+   =Scheme= numeric data types include integer (32, 10), rational
+   (22/7, /no space/ around the slash), real (3.1416) and complex
+   (2+3i, /no space/ in between).
+
+   #+BEGIN_SRC scheme
+(integer? 32)                           ; => #t
+(rational? 32)                          ; => #t
+(real? 32)                              ; => #t
+(complex? 32)                           ; => #t
+(number? 32)                            ; => #t
+(number? #t)                            ; => #f
+(complex? 3+2i)                         ; => #t
+(rational? 22/7)                        ; => #t
+   #+END_SRC
+
+** Real and Rational in Guile
+
+   Mathematically, we have
+
+   \[\text{Integer }\in\text{ Rational }\in\text{ Real }\in\text{
+   Complex}
+   \]
+
+   - Guile can represent both /exact/ and /inexact/ rational numbers.
+     - Exact rational is represented by storing the numerator and
+       denominator as two exact integers.
+     - Inexact rational is represented as foaling numbers.
+   - It /cannot/ represent precise finite irrational numbers.
+   - =rational?= and =real?= predicates are /equivalent/.
+
+** Non-Numbers in Guile
+
+   - Dividing by /exact/ zero leads to an error message.
+   - Dividing by /inexact/ zero produces positive or negative
+     infinite.
+   - Dividing /inexact/ zeros produces NaN.
+
+   #+BEGIN_SRC scheme
+(/ 1 0)                                 ; ERROR
+(/ 1 0.0)                               ; => +inf.0
+(/ 1 -0.)                               ; => -inf.0
+(/ 0. 0.)                               ; => +nan.0
+(nan? (/ 0. 0.))                        ; => #t, guile
+(inf? (/ 1 -0.))                        ; => #t, guile
+   #+END_SRC
+
+** Integer in =Scheme=
+
+   =Scheme= natively supports binary, hex and octal integer format.
+
+   - =#b= prefix for binary format
+   - =#o= prefix for octal format
+   - =#d= /optional/ prefix for decimal format
+   - =#x= prefix for hex format
+
+   #+BEGIN_SRC scheme
+(= #b11 3)                              ; => #t
+(= #o3 3)                               ; => #t
+(= #x3 3)                               ; => #t
+(= #d3 3)                               ; => #t
+   #+END_SRC
+
+** Number Comparison
+
+   /Number comparison/ includes ~=~, ~<~, ~<=~, ~>~ and ~>=~.
+
+   #+BEGIN_SRC scheme
+(= 42 42)                               ; => #t
+(= 42 42.0)                             ; => #t
+(= 42.2 #f)                             ; ERROR
+(< 3 3.5)                               ; => #t
+(>= 3 3.5)                              ; => #f
+   #+END_SRC
+
+** Arithmetic Procedures
+
+   Common arithmetic procedures include =+=, =-=, =*=, =/=.
+
+   - =+=, =-= and =*= may take more than two arguments.
+   - For single argument, =-= serves as negation and =/= reciprocal.
+
+
+   #+BEGIN_SRC scheme
+(+ 1 2 3)                               ; =>  6
+(- 5.3 2)                               ; =>  3.3
+(- 5 2 1)                               ; =>  2
+(* 1 2 3)                               ; =>  6
+(/ 6 3)                                 ; =>  2
+(/ 22 7)                                ; =>  22/7
+(- 4)                                   ; =>  -4
+(/ 4)                                   ; =>  1/4
+   #+END_SRC
+
+
+** Equality Predicate
+
+   - ~=~ :: Whether two /numbers/ are equal.
+   - =eq?= :: Whether two parameters represent the /same object/ in
+        memory.
+   - =eqv?= :: Same as the =eq?= predicate, except that it will always
+        return =#t= for same primitive values.
+   - =equal?= :: Element-wise version for =eqv?=.
+
+** Predicate ~=~
+
+   Use the ~=~ predicate when you want to compare two numbers.
+
+   #+BEGIN_SRC scheme
+(= 2 3)                                 ; => #f
+(= 2.5 2.5)                             ; => #t
+(= '() '())                             ; ERROR!
+   #+END_SRC
+
+** Predicate =eq?=
+
+   Do not use the =eq?= predicate unless you know what you're doing.
+
+   #+BEGIN_SRC scheme
+(define x '(2 3))
+(define y '(2 3))
+(eq? x y)                               ; => #f
+(define y x)
+(eq? x y)                               ; => #t
+   #+END_SRC
+
+   Note however that there's only one empty list =​'()= in memory.
+
+   #+BEGIN_SRC scheme
+(define x '())
+(define y '())
+(eq? x y)                               ; => #t
+   #+END_SRC
+
+** Predicate =eqv?=
+
+   The effect of =eq?= on primitive types are undefined and
+   implementation dependent.  That what =eqv?= is for.
+
+   #+BEGIN_SRC scheme
+(eq? 2 2)                               ; implementation dependent
+(eq? "a" "a")                           ; implementation dependent
+(eqv? 2 2)                              ; => #t
+(eqv? "a" "a")                          ; => #t
+   #+END_SRC
+
+   So generally, \(\text{\texttt{eq?} }\in\text{\texttt{eqv?}}\),
+   i.e., =eqv?= is a superset of =eq?=.
+
+** Predicate =equal?=
+
+   Use the =equal?= predicate when you wish to test whether two lists,
+   vectors, etc. are /element-wise/ equivalent.
+
+   #+BEGIN_SRC scheme
+(define x '(2 3))
+(define y '(2 3))
+(equal? x y)                            ; => #t
+(eqv? x y)                              ; => #f
+   #+END_SRC
+
+** Character
+
+   =Scheme= character data are represented by prefixing the character
+   with =#\=.
+
+   - The predicate =char?= checks whether it is a character.
+   - Some non-graphic characters have more descriptive names.
+
+   #+BEGIN_SRC scheme
+(char? #\c)                             ; => #t
+(char? 1)                               ; => #f
+(char? #\;)                             ; => #t
+(char? #\newline)                       ; => #t
+(char? #\tab)                           ; => #t
+(eqv? #\  #\space)                      ; => #t, TWO SPACES!!
+   #+END_SRC
+
+** Character Operations
+
+   The character has a set of comparison predicates: ~char=?~,
+   ~char<?~, ~char<=?~, ~char>?~, ~char>=?~.
+
+   #+BEGIN_SRC scheme
+(char=? #\a #\a)                        ; => #t
+(char>=? #\a #\B)                       ; => #f
+   #+END_SRC
+
+   Use =char-ci= to make the comparison /case-sensitive/.
+
+   #+BEGIN_SRC scheme
+(char-ci=? #\a #\A)                     ; => #t
+(char-ci<? #\a #\B)                     ; => #t
+   #+END_SRC
+
+   Case conversion procedures are =char-downcase= and =char-upcase=.
+
+   #+BEGIN_SRC scheme
+(char-downcase #\A)                     ; => #\a
+(char-upcase #\a)                       ; => #\A
+   #+END_SRC
+
+** Symbol
+
+   The above primitives are /self-evaluating/.
+
+   #+BEGIN_SRC scheme
+#t                                      ; => #t
+32                                      ; => 32
+#\c                                     ; => #\c
+   #+END_SRC
+
+   Symbols are not.  They are treated as /identifiers/, thus evaluated
+   to the value they hold. To specify a symbol, =quote= it.  Predicate
+   =symbol?= checks for symbol type.
+
+   #+BEGIN_SRC scheme
+(quote var)                             ; => var
+'var                                    ; => var
+(symbol? 'var)                          ; => #t
+(symbol? '<=>)                          ; => #t
+(symbol? '$!#*)                         ; => #t
+(symbol? '#t)                           ; => #f
+   #+END_SRC
+
+** Symbol Cont'd
+
+   Symbols are /case-insensitive/.  In Guile symbols are case
+   sensitive.
+
+   #+BEGIN_SRC scheme
+(eqv? 'Calorie 'calorie)                ; => #t, (#f in guile)
+   #+END_SRC
+
+   Use =define= To define a symbol with value and =set!= to change the
+   value of a symbol.
+
+   #+BEGIN_SRC scheme
+(define var 9)
+var                                     ; => 9
+(set! var #\c)
+var                                     ; #\c
+   #+END_SRC
+
+* Compound Data Types
+
+** String
+
+   - Double-quoted character produces string.
+
+     #+BEGIN_SRC scheme
+"Hello World!"                          ; => "Hello World!"
+     #+END_SRC
+
+   - Procedure =string= constructs string from /characters/.
+
+     #+BEGIN_SRC scheme
+(string #\h #\e #\l #\l #\o)            ; => "hello"
+     #+END_SRC
+
+   - Procedure =make-string= constructs an empty string (string with
+     null character '\0x00') with given length.
+
+     #+BEGIN_SRC scheme
+(make-string 3)                         ; => "\x00\x00\x00"
+     #+END_SRC
+
+   String type are checked with =string?= predicate.
+
+** String Operations
+
+   The characters in a string could be individually accessed with
+   procedure =string-ref=.  Characters are 0-base indexed.
+
+   #+BEGIN_SRC scheme
+(define greeting "Hello World")
+(string-ref greeting 0)                 ; => #\H
+   #+END_SRC
+
+   Strings may be appended together.
+
+   #+BEGIN_SRC scheme
+(string-append "Hello " "World" "!")    ; => "Hello World!"
+   #+END_SRC
+
+   Strings are mutable.  The procedure =string-set!= replaces the
+   character at a given index.
+
+   #+BEGIN_SRC scheme
+(define hello "hello")
+(string-set! hello 0 #\H)
+hello                                   ; => "Hello"
+   #+END_SRC
+
+** Vector
+
+   Vectors are sequences with their elements being /anything/.
+
+   #+BEGIN_SRC scheme
+(vector 1 2 3 4)                        ; => #(1 2 3 4)
+(vector #\a #\b)                        ; => #(#\a #\b)
+(vector 1 "e" 'var)                     ; => #(1 "e" var)
+   #+END_SRC
+
+   Similar to string type, vector also has =make-vector=, =vector-ref=
+   and =vector-set!= procedures.  And as expected, vector is checked
+   by predicate =vector?=.
+
+** Pair
+
+   - Pair :: An /ordered/ pair of arbitrary data, with the first
+        element and second element referred to as /car/ and /cdr/
+        respectively.
+
+
+   It is constructed by =cons= procedure or =quote= (note the dot in
+   between), tested with predicate =pair?=
+
+   #+BEGIN_SRC scheme
+(cons 1 #t)                             ; => (1 . #t)
+'(#\h . 3.14)                           ; => (#\h . 3.14)
+(pair? (cons 1 #t))                     ; => #t
+   #+END_SRC
+
+   Dotted pair must be quoted when used as data value since it is not
+   self-evaluating.
+
+** Pair Operation
+
+   Pair supports =car=, =cdr= access operation
+
+   #+BEGIN_SRC scheme
+(define x (cons 1 #\c))
+x                                       ; => (1 . #\c)
+(car x)                                 ; => 1
+(cdr x)                                 ; => #\c
+(define x (1 #\c))                      ; ERROR
+   #+END_SRC
+
+   Mutator procedures include =set-car!= and =set-cdr!=.
+
+   #+BEGIN_SRC scheme
+(define x (cons 1 2))
+x                                       ; => (1 . 2)
+(set-car! x #\h)
+x                                       ; => (#\h . 2)
+(set-cdr! x 3.2)
+x                                       ; => (#\h . 3.2)
+   #+END_SRC
+
+** Nested Pair
+
+   Pair may contain other pairs.
+
+   #+BEGIN_SRC scheme
+(define x (cons (cons 1 2) 3))
+x                                       ; => ((1 . 2) . 3)
+   #+END_SRC
+
+   =Scheme= provides syntax sugar for /car of car/ and /cdr of car/.
+
+   #+BEGIN_SRC scheme
+(define y (cons (cons 1 2) 3))
+(= (car (car y)) (caar y))              ; => #t
+(= (cdr (car y)) (cdar y))              ; => #t
+   #+END_SRC
+
+   c\(\dots\)r-style for up to four cascades are guaranteed to exist.
+
+** Tail Nested Pair
+
+   When "tail recursion", i.e., nested along the second element,
+   =Scheme= has a simplified form.
+
+   #+BEGIN_SRC scheme
+(cons 1 (cons 2 (cons 3 4)))            ; (1 2 3 . 4)
+(equal? '(1 2 3 . 4)
+        (cons 1 (cons 2 (cons 3 4))))   ; => #t
+   #+END_SRC
+
+** List
+
+   - List :: Tail-nested pair with the very last element being an
+        empty list, i.e., =​'()= (note that empty list is not
+        self-evaluating).
+
+
+   Constructed using recursive pair notation, =list= procedure or
+   =quote=, tested with =list?= predicate.
+
+   #+BEGIN_SRC scheme
+(equal? (cons 1 (cons 2 (cons 3 (cons 4 '()))))
+        '(1 2 3 4))                     ; => #t
+(equal? (list 1 2 3 4) '(1 2 3 4))      ; => #t
+(equal? '(1 2 3 4) '(1 2 3 4 . ()))     ; => #t
+(equal? '(1 . ()) (cons 1 '()))         ; => #t
+   #+END_SRC
+
+** List Operation
+
+   Like vector, list may be accessed by 0-based index.
+
+   #+BEGIN_SRC scheme
+(define x '(1 2 3 4))
+(list-ref x 0)                          ; => 1
+   #+END_SRC
+
+   You may retrieve tail of list given starting position.
+
+   #+BEGIN_SRC scheme
+(define x '(1 2 3 4))
+(list-tail x 2)                         ; => (3 4)
+   #+END_SRC
+
+   Most implementations include =list-head= procedure, but it is not
+   specified in R6RS.
+
+** List and Pair
+
+   List and Pair are not equivalent.
+
+   #+BEGIN_SRC scheme
+(pair? '(1 . 2))                        ; => #t
+(list? '(1 . 2))                        ; => #f
+(pair? '(1 2))                          ; => #t
+(list? '(1 2))                          ; => #t
+(pair? '())                             ; => #f
+(list? '())                             ; => #t
+(null? '())                             ; => #t
+   #+END_SRC
+
+** Procedure
+
+   Built-in procedure may be found in R^{6}RS specification.
+
+   Anonymous procedure is defined with =lambda=.  E.g., The following
+   form defines an anonymous procedure that adds 2 to the input.
+
+   #+BEGIN_SRC scheme
+(lambda (x) (+ x 2))
+   #+END_SRC
+
+   - The first subform, e.g., =(x)=, is the argument list
+   - the rest subform, e.g., =(+ x 2)=, is the body of the procedure.
+
+
+   To use this anonymous procedure
+
+   #+BEGIN_SRC scheme
+((lambda (x) (+ x 1) (+ x 1)) 3)        ; => 5
+   #+END_SRC
+
+** Procedure Cont'd
+
+   To avoid repeated redefining the procedure.  We may bind a symbol
+   to this procedure value.
+
+   #+BEGIN_SRC scheme
+(define add2 (lambda (x) (+ x 2)))
+(add2 3)                                ; => 5
+   #+END_SRC
+
+   The =lambda= may be omitted.
+
+   #+BEGIN_SRC scheme
+(define (add2 x) (+ x 2))
+(add2 3)                                ; => 5
+   #+END_SRC
+
+   Procedure is /first-class citizen/.
+
+   #+BEGIN_SRC scheme
+(define (f x) (+ x 1))
+(define (g op x) (op x))
+(g f 0)                                 ; => 1
+   #+END_SRC
+
+** Port
+
+   - Port :: The conduit through which input and output is performed.
+        Ports are usually associated with files and consoles.
+
+
+   The =display= procedure takes a optional second argument of port.
+
+   #+BEGIN_SRC scheme
+(display "Hello World" (current-output-port))
+   #+END_SRC
+
+* Variable Binding
+
+** Local Variable
+
+   The =let= is a binding structure.  It binds =x= to 3 and =y= to 4.
+   The rest subforms evaluate sequentially and the value of the last
+   form is returned, e.g., 7 in this case.
+
+   #+BEGIN_SRC scheme
+(let ((x 3)
+      (y 4))
+  (+ x y))                              ; => 7
+x                                       ; ERROR
+   #+END_SRC
+
+   Note that evaluating =x= outside =(let ...)= results in error.  So
+   =x= is visible only inside the =let= enviroment.
+
+** Gobal Variable
+
+   To create a top-level (in the body of a top-level program or
+   library) binding for identifiers (similar to global variable), use
+   =define=.
+
+   #+BEGIN_SRC scheme
+(define x 3)
+(define y 4)
+(+ x y)                                 ; => 7
+   #+END_SRC
+
+   Top-level binding may be /shaded/ by local bindings.
+
+   #+BEGIN_SRC scheme
+(define x 1)
+(define y 2)
+
+(let ((y 200)) (+ x y))                 ; => 201
+
+(let ((y 200))
+  (let ((y 300)) (+ x y)))              ; => 301
+   #+END_SRC
+
+** Closure
+
+   #+ATTR_LaTeX: :options linenos,mathescape
+   #+BEGIN_SRC scheme
+(define (addn n)                        ; addn $\label{addn}$
+  (lambda (b)
+    (+ n b)))
+
+(define add3 (addn 3))                  ; add3 $\label{add3}$
+
+(add3 1)
+(add3 2)
+   #+END_SRC
+
+   - Line \ref{addn} defines a procedure =addn=.  The procedure takes
+     1 argument, =n=, and returns a /lambda function/.
+
+   - Line \ref{add3} binds the lambda function returned by =(addn 3)=,
+     to =add3=, which is now a function that takes one argument, =b=,
+     with =n= bound to 3.
+
+** Closure Cont'd
+
+   #+BEGIN_SRC scheme
+(define (make-counter)
+  (let ((count 0))
+    (lambda ()
+      (set! count (+ 1 count))
+      count)))
+
+(define counter (make-counter))
+
+(list (counter) (counter) (counter))    ; => (1 2 3)
+(list (counter) (counter) (counter))    ; => (4 5 6)
+
+(set! counter (make-counter))
+(list (counter) (counter) (counter))    ; => (1 2 3)
+   #+END_SRC
+
+   Every procedure call of =counter= adds 1 to a "hidden" value
+   somehow remembered by =counter=.  The /hidden/ value is /closure/.
+
+** Macro
+
+
+
+* COMMENT DUMMY
+
+  #+BEGIN_SRC emacs-lisp :results silent
+(org-babel-do-load-languages 'org-babel-load-languages
+                             '((emacs-lisp . t)
+                               (scheme . t)))
+  #+END_SRC
+
+#  LocalWords:  SETUPFILE AtBeginSection beamer frametitle scm SRC eq
+#  LocalWords:  tableofcontents currentsection src subforms mit emacs
+#  LocalWords:  Cont'd NaN nan natively eqv boolean texttt ci cdr
+#  LocalWords:  superset downcase upcase Mutator caar cdar subform

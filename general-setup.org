@@ -1,0 +1,14 @@
+#+SUBTITLE: COMP3220 -- Principle of Programming Languages
+#+DATE: 2016 Spring
+#+AUTHOR: Zhitao Gong
+#+EMAIL: zzg0009@auburn.edu
+#+LANGUAGE: en
+#+CREATOR: Emacs 24.5.1 (Org mode 8.3.2)
+#+OPTIONS: ^:{}
+#+LATEX_HEADER: \usepackage{svg}
+#+LATEX_HEADER: \usepackage[backend=biber,style=alphabetic]{biblatex}
+#+LATEX_HEADER: \fvset{fontsize=\footnotesize}
+#+LATEX_HEADER: \fvset{frame=lines}
+#+LATEX_HEADER: \fvset{framesep=5pt}
+#+LATEX_HEADER: \DeclareUnicodeCharacter{200B}{}
+#+LATEX_HEADER: \addbibresource{~/Documents/comp3220/master/comp3220.bib}

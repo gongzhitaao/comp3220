@@ -1,0 +1,158 @@
+#+TITLE: PPL Spring 2016 -- Term Project
+#+AUTHOR:
+#+DATE: Due on Apr 30, 2016
+#+SUBTITLE: COMP 3220 Principle of Programming Languages
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage{cleveref}
+#+LATEX_HEADER: \usepackage[backend=bibtex]{biblatex}
+#+LATEX_HEADER: \addbibresource{ref.bib}
+#+LATEX_HEADER: \newcommand{\tex}[1]{#1}
+#+MACRO: BF Brainfuck
+
+#+BEGIN_abstract
+Choose one of the programming language, i.e., =C++=, =Python= or
+=Javascript= and implement an /interpreter function/ for {{{BF}}}.
+#+END_abstract
+
+* Introduction
+
+  #+BEGIN_QUOTE
+  {{{BF}}}, the ungodly creation of Urban Müller, whose goal was to
+  create a Turing-complete language for which he could write the
+  smallest compiler ever, for the Amiga OS 2.0 \autocite{raiter2011}.
+  #+END_QUOTE
+
+  {{{BF}}} may be the most famous [[https://esolangs.org/wiki/Esoteric_programming_language][esoteric programming language]], most
+  of which are /useless/ but /fun/.  So is {{{BF}}}.
+
+** The Original {{{BF}}}
+
+   The Brainfuck programming language /ignores/ all characters other
+   than "=+-.,<>[]=", i.e., plus/minus sign, dot and comma, and
+   angle/square bracket, totally eight ASCII characters.  Their
+   effects are summarized in \autoref{tab:bf}.
+
+   #+CAPTION: The {{{BF}}} Programming Languages
+   #+NAME: tab:bf
+   |------------+-------------------------------------+------------------------|
+   | Cmd        | Effect                              | Equivalent in =C=      |
+   |------------+-------------------------------------+------------------------|
+   | =+=        | Increases element under pointer     | =array[p]++=           |
+   | =-=        | Decreases element under pointer     | =array[p]--=           |
+   | =>=        | Increases pointer                   | =p++=                  |
+   | =<=        | Decreases pointer                   | =p--=                  |
+   | =[=        | Starts loop, counter under pointer  | =while(array[p]) {=    |
+   | =]=        | End of loop                         | =}=                    |
+   | =.=        | Outputs ASCII code under pointer    | =putchar(array[p])=    |
+   | \texttt{,} | Reads char and stores under pointer | =array[p] = getchar()= |
+   |------------+-------------------------------------+------------------------|
+
+   A {{{BF}}} program is basically a /collection of operations/ on /an
+   array/ and /a pointer/.  The array is *30000* bytes, all
+   initialized to zero.  And the pointer, which is free to move around
+   within the array, is used to indicate which array cell to perform
+   operation on.  The pointer is initialized to point to the beginning
+   of the array.
+
+   For example, one version of the "Hello, World!" program in {{{BF}}}
+
+   #+BEGIN_EXAMPLE
+++++++++++[>+++++++>++++++++++>+++>+<<<<-]
+>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.
++++.------.--------.>+.>.
+   #+END_EXAMPLE
+
+** The Modified {{{BF}}}
+
+   There are some undefined behaviors in the original specification.
+   What if
+   - an array cell overflows/underflows?
+   - the pointer goes out of bound?
+   - the character is non-printable?[fn:1]
+   - the loop indicators, i.e., =[= and =]=, are unbalanced?
+   - and etc.
+
+
+   And more importantly, how can the TA test your implementation in
+   batch?  Based on the above considerations, I modified the {{{BF}}}
+   as shown in \autoref{tab:modified-bf}.  Note that only the modified
+   commands are shown in \autoref{tab:modified-bf}, all other commands
+   remain the same.
+
+
+   #+CAPTION: The Modified {{{BF}}} Programming Language
+   #+NAME: tab:modified-bf
+   |------------+----------------------------------------------------------|
+   | Cmd        | Effect                                                   |
+   |------------+----------------------------------------------------------|
+   | =+=        | Increases element under pointer, ignore overflow bit     |
+   | =-=        | Decreases element under pointer, ignore underflow bit    |
+   | =>=        | Increases pointer, wrapped around if out of bound        |
+   | =<=        | Decreases pointer, wrapped around if out of bound        |
+   | =.=        | Outputs ASCII code under pointer /to a byte stream/      |
+   | \texttt{,} | Reads char /from a byte stream/ and stores under pointer |
+   |------------+----------------------------------------------------------|
+
+   The modifications are explained in details.
+   - Overflow/Underflow :: They are ignored.  One (unsigned) byte can
+        represent 0 through 255.  If the byte is 0xFF, adding one with
+        result in 0x00, i.e., the overflow bit is discarded.  On the
+        other hand, if the byte holds 0x00, subtracting 1 will result
+        in 0xFF.
+   - Out of Bound :: Pointer is wrapped around if out of bound.  If it
+        points to the end of the array, after being increased by 1, it
+        will point to the beginning of the array.  Similar for
+        decreasing the pointer.
+   - Input/Output :: The interpreter reads from and writes to byte
+        streams, instead of standard input/output stream (=stdin= and
+        =stdout=).  See the start-up code for more details.
+   - Unbalanced Loop :: In case of unbalanced loop indicators, print
+        out a warning message and your interpreter function should
+        return false.
+
+
+* Requirement
+
+  - Accepted languages ::
+       Choose one from =C++=, =Python= and =Javascript=.  For each
+       accepted programming language, I provide start-up code and
+       example test code.  You should modify the start-up code and fill
+       out your implementation.
+  - Deliverable ::
+       Zip the modified start-up code in a file, named
+       *=your_auburn_username.zip=*, e.g., =zzg0009.zip=.
+  - Submission ::
+       This is a individual project.  Please submit on Canvas before
+       the deadline (*Apr 30, 2016*).  /LATE SUBMISSION IS NOT
+       ACCEPTED/.
+
+
+* Grading
+
+  You will find a couple of test cases in the start-up code.  Your
+  grade depends on the number of tests your code passes.  The score
+  \(S\) for term project is calculated as
+
+  \[
+  S = 100 - 60\times\frac{M}{N}
+  \]
+
+  Where \(N\) is the total number of test cases, and \(M\) is the
+  number of tests your code successfully passes.
+
+
+
+\printbibliography
+
+* Footnotes
+
+[fn:1] Actually according to the author of {{{BF}}}, the dot command
+=.= should output the ASCII code under pointer. However his
+implementation used =putchar= which prints the character itself rather
+than its ASCII code.
+
+#  LocalWords:  PPL toc usepackage cleveref backend bibtex biblatex
+#  LocalWords:  addbibresource newcommand tex Brainfuck Javascript fn
+#  LocalWords:  Müller autocite raiter autoref Cmd putchar texttt xFF
+#  LocalWords:  getchar underflows stdin stdout username zzg
+#  LocalWords:  printbibliography

@@ -1,0 +1,43 @@
+\documentclass[crop]{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+
+\pgfplotstableread[header=false, col sep=comma]{
+  UTF-8        , 86.0
+  ISO-8859-1   , 6.9
+  Windows-1251 , 1.9
+  Shift-JIS    , 1.1
+  Windows-1252 , 1.0
+  GB2312       , 0.9
+  EUC-KR       , 0.4
+  EUC-JP       , 0.3
+  GBK          , 0.3
+  ISO-8859-2   , 0.3
+  ISO-8859-15  , 0.2
+  Windows-1250 , 0.2
+  Windows-1256 , 0.2
+  ISO-8859-9   , 0.1
+  Big5         , 0.1
+  Windows-1254 , 0.1
+  Windows-874  , 0.1
+}\mydata
+
+\begin{document}
+\begin{tikzpicture}
+  \begin{axis}[
+    xbar, xmin=0,
+    width=12cm,
+    bar width=2ex, y=3ex, % Set the y unit vector, that way, the plot will stretch to accommodate all bars
+    enlarge y limits={abs=0.75},
+    ytick=data,
+    nodes near coords, nodes near coords align={horizontal},
+    yticklabels from table={\mydata}{0}
+    ]
+
+    \addplot table [y expr=-\coordindex, % Use negative coordinate index as y coordinate
+    x index=1 % Use first column as x coordinate
+    ] {\mydata};
+  \end{axis}
+\end{tikzpicture}
+\end{document}

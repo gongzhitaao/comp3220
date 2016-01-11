@@ -1,3 +1,6 @@
 *.html
 auto
 *.svg
+*.pdf
+build
+_minted-data-type
