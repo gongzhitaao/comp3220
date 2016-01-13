@@ -8,19 +8,18 @@
    - Instructor Zhitao Gong
      - Tigermail :: zzg0009
      - Office :: Shelby 2307
-     - Office Hour :: Friday 0800 -- 1100
+     - Office Hour :: Friday 1000 -- 1100
    - TA Wenlu Wang
      - Tigermail :: wzw0022
-     - Office :: Shelby 2307
-   - Course Website http://auburn.edu/~zzg0009/comp3220/2016spring/
-
+     - Office :: Shelby 2319
+     - Office Hour :: Wednsday 1500 -- 1600
+   - Course Website http://auburn.edu/~zzg0009/comp3220/spring2016/
 
 ** Course Materials
 
    - Textbook is /Concepts of Programming Languages/, tenth edition by
      Robert W. Sebesta.
    - Other Reference materials is provided on course website.
-
 
 ** Grading Policy
 
@@ -41,15 +40,12 @@
 
 ** Topics
 
-   - Tutorial :: Three PL tutorials are included, imperiative PL
+   - Tutorial :: Three PL tutorials are included, imperative PL
         =C++=, functional PL =Scheme= and logic PL =Prolog=.
    - Compiler :: Formal languages, regular expression (RE), BNF,
         context-free grammars, parsing.
    - PL basics :: Names, types, binding, memory management, procedure
         and data abstraction, parameter passing.
-   - Concurrency :: Concurrency basic concepts, semaphore, monitors,
-        message passing.
-
 
 ** Course Goals
 
@@ -60,7 +56,7 @@
 
    - Study different language paradigms.
 
-     Imperative, functional and logic PL so that you have more choise.
+     Imperative, functional and logic PL so that you have more choice.
 
 * Introduction to Programming Language
 
@@ -106,7 +102,6 @@
         manipulating, etc.  E.g., =Python=, =R= and =Matlab=, =awk=,
         etc.
 
-
 ** Why Learn More than One PL?
 
    - Choose the right language for a given problem.  E.g., =Ruby= and
@@ -123,7 +118,6 @@
      Different jobs may require different PL's.
    - Learn thinking about problems in different ways, or /paradigms/.
 
-
 ** What is Paradigm?
 
    Paradigm is the way of thinking about problems.
@@ -138,7 +132,6 @@
 
    There are languages that are /multi-paradigm/, e.g., =C++=,
    =Javascript=, =Python=, etc.
-
 
 ** Imperative Paradigm
 
@@ -156,7 +149,6 @@
    - Assignment :: Changes the state of the machine.
    - Branch :: Changes the state of the program.
    - Sequence :: Used to chain commands together.
-
 
 ** Imperative Example
 
@@ -189,7 +181,6 @@ int fact(int n) {
         \(t\) to an input \(s\).  E.g., calling the function \(t\) and
         produce \(t(s)\).
 
-
 ** Functional Example
 
    Functions have no state, and data are immutable.
@@ -212,7 +203,6 @@ int fact(int n) {
    - Unification :: The algorithmic process of solving equations
         between symbolic expressions.
    - Non-deterministic Search :: Based on first-order predicate logic.
-
 
 ** Logic Example 1
 
@@ -271,7 +261,7 @@ mortal(socrates).
 
    [[file:img/compiler.pdf]]
 
-** Comiler Components 2
+** Compiler Components 2
 
    - Scanner :: It converts the stream of characters into a stream of
         tokens, removing whitespace, removing comments and expanding
@@ -280,9 +270,13 @@ mortal(socrates).
         syntax tree (AST).
    - Semantic Analysis :: Checks legality rules and tie up the pieces
         of the syntax tree (by resolving identifier references,
-        inserting cast operations for implicit coercions, etc.) to
+        inserting cast operations for implicit coercion, etc.) to
         form a semantic graph.
+
+* COMMENT Dummy
 
 #  LocalWords:  SETUPFILE Jipping LOL BrainFuck Whitespace Lua Matlab
 #  LocalWords:  Haskell awk PL's Erlang Prolog multi Javascript Von
-#  LocalWords:  Neumann SRC emacs defun prolog socrates
+#  LocalWords:  Neumann SRC emacs defun prolog socrates Zhitao zzg
+#  LocalWords:  Tigermail Wenlu wzw Sebesta TBLFM vsum BNF whitespace
+#  LocalWords:  AST

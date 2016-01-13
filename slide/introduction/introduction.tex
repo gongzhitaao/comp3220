@@ -1,0 +1,372 @@
+% Created 2016-01-13 Wed 12:37
+\documentclass[presentation]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+\usepackage{minted}
+\usepackage{svg}
+\usepackage[backend=biber,style=alphabetic]{biblatex}
+\fvset{fontsize=\footnotesize}
+\fvset{frame=lines}
+\fvset{framesep=5pt}
+\DeclareUnicodeCharacter{200B}{}
+\addbibresource{~/Documents/comp3220/master/comp3220.bib}
+\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Content}\tableofcontents[currentsection]\end{frame}}
+\usetheme{default}
+\author{Zhitao Gong}
+\date{2016 Spring}
+\title{Introduction}
+\subtitle{COMP3220 -- Principle of Programming Languages}
+\hypersetup{
+      pdfauthor={Zhitao Gong},
+      pdftitle={Introduction},
+      pdfkeywords={},
+      pdfsubject={},
+      pdfcreator={Emacs 24.5.1 (Org mode 8.3.2)},
+      pdflang={English},
+      bookmarks=true,
+      unicode=true,
+      pdftoolbar=true,
+      pdfmenubar=true,
+      pdffitwindow=false,
+      pdfstartview={FitW},
+      pdfnewwindow=true,
+      colorlinks=true,
+      linkcolor=red,
+      citecolor=green,
+      filecolor=magenta,
+      urlcolor=cyan}
+\begin{document}
+
+\maketitle
+\begin{frame}{Outline}
+\setcounter{tocdepth}{2}
+\tableofcontents
+\end{frame}
+
+
+\section{Course Information}
+\label{sec:orgheadline6}
+
+\begin{frame}[label={sec:orgheadline1}]{Contacts}
+\begin{itemize}
+\item Instructor Zhitao Gong
+\begin{description}
+\item[{Tigermail}] zzg0009
+\item[{Office}] Shelby 2307
+\item[{Office Hour}] Friday 1000 -- 1100
+\end{description}
+\item TA Wenlu Wang
+\begin{description}
+\item[{Tigermail}] wzw0022
+\item[{Office}] Shelby 2319
+\item[{Office Hour}] Wednsday 1500 -- 1600
+\end{description}
+\item Course Website \url{http://auburn.edu/~zzg0009/comp3220/spring2016/}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:orgheadline2}]{Course Materials}
+\begin{itemize}
+\item Textbook is \emph{Concepts of Programming Languages}, tenth edition by
+Robert W. Sebesta.
+\item Other Reference materials is provided on course website.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:orgheadline3}]{Grading Policy}
+All assignments are submitted electronically on Canvas.  \emph{NO LATE
+SUBMISSION IS ACCEPTED}.
+
+\begin{table}[htb]
+\caption{\label{tab:grade-weight}
+Grade weight distribution}
+\centering
+\begin{tabular}{lr}
+Description & Points\\
+\hline
+Assignment & 40\\
+Midterm Exam & 20\\
+Final Exam & 20\\
+Term Project & 20\\
+\hline
+Total & 100\\
+\end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline4}]{Topics}
+ \begin{description}
+\item[{Tutorial}] Three PL tutorials are included, imperative PL
+\texttt{C++}, functional PL \texttt{Scheme} and logic PL \texttt{Prolog}.
+\item[{Compiler}] Formal languages, regular expression (RE), BNF,
+context-free grammars, parsing.
+\item[{PL basics}] Names, types, binding, memory management, procedure
+and data abstraction, parameter passing.
+\end{description}
+\end{frame}
+
+\begin{frame}[label={sec:orgheadline5}]{Course Goals}
+\begin{itemize}
+\item Learn basic structures in most PL.
+
+E.g., variables, data types, control structures, procedure
+abstraction and etc.  So that it is easier to learn a new one.
+
+\item Study different language paradigms.
+
+Imperative, functional and logic PL so that you have more choice.
+\end{itemize}
+\end{frame}
+
+\section{Introduction to Programming Language}
+\label{sec:orgheadline22}
+
+\begin{frame}[label={sec:orgheadline7}]{What is Programming Language (PL)?}
+\begin{quote}
+A language intended for use by a person to express a process by
+which a computer can solve a problem
+
+-- Hope and Jipping
+\end{quote}
+
+\begin{quote}
+A set of conventions for communicating an algorithm
+
+-- E. Horowitz
+\end{quote}
+
+\begin{quote}
+The art of programming is the art of organizing complexity
+
+-- Dijkstra
+\end{quote}
+
+\begin{quote}
+It is just a string of characters.
+
+-- Compiler LOL
+\end{quote}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline8}]{PL Design Consideration}
+ \begin{description}
+\item[{Readable}] Comments, names, syntax.  E.g., \texttt{C++}, \texttt{Python} vs
+\texttt{BrainFuck}, \texttt{Whitespace}.
+\item[{Learning Curve}] Small number of core concepts combine regularly
+and systematically.  E.g., \texttt{C}, \texttt{Lua} vs \texttt{Haskell}.
+\item[{Portable}] Language standardization and platform support.  E.g.,
+\texttt{Java}, \texttt{C++}.
+\item[{Abstraction}] Control and data structures that hide details.
+E.g., floating numbers.
+\item[{Efficient}] E.g., \texttt{C++} vs \texttt{Python}.
+\item[{Purpose}] General programming, scientific computing, string
+manipulating, etc.  E.g., \texttt{Python}, \texttt{R} and \texttt{Matlab}, \texttt{awk},
+etc.
+\end{description}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline9}]{Why Learn More than One PL?}
+ \begin{itemize}
+\item Choose the right language for a given problem.  E.g., \texttt{Ruby} and
+\texttt{Python} vs \texttt{C++} for web development, \texttt{Matlab} and \texttt{R} vs \texttt{C}
+for scientific computing.
+
+\begin{quote}
+If all you have is a hammer,
+
+every problem looks like a nail.
+\end{quote}
+
+\item Learn new languages more easily later.  PL's are ever changing.
+Different jobs may require different PL's.
+\item Learn thinking about problems in different ways, or \emph{paradigms}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline10}]{What is Paradigm?}
+ Paradigm is the way of thinking about problems.
+
+PL's can be \emph{loosely} classified into two categories.
+\begin{description}
+\item[{Imperative}] Program consists of commands describing \emph{how} to
+get solution.  E.g., \texttt{C}, \texttt{Pascal}, \texttt{Assembler}.
+\item[{Declarative}] Program consists of expressions describing \emph{what}
+        is the solution.  Key concept is \emph{referential transparency}.
+\begin{itemize}
+\item Functional PL like \texttt{Lisp}, \texttt{Haskell} and \texttt{Erlang}.
+\item Logic PL like \texttt{Prolog}.
+\end{itemize}
+\end{description}
+
+There are languages that are \emph{multi-paradigm}, e.g., \texttt{C++},
+\texttt{Javascript}, \texttt{Python}, etc.
+\end{frame}
+
+\begin{frame}[label={sec:orgheadline11}]{Imperative Paradigm}
+Imperative PL follow the model of computation described in the
+\emph{Turing Machine} -- they maintain the fundamental notion of a
+\emph{state}.
+
+\begin{itemize}
+\item State of program are values stored in the memory and register.
+\item Program issues to the machine orders to change the state of the
+machine.
+\item Fits closely Von Neumann architecture.
+\end{itemize}
+
+
+Key commands
+\begin{description}
+\item[{Assignment}] Changes the state of the machine.
+\item[{Branch}] Changes the state of the program.
+\item[{Sequence}] Used to chain commands together.
+\end{description}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline12}]{Imperative Example}
+ The program is like a recipe in which essential states and
+necessary steps to manipulate them are defined and ordered.
+
+\begin{minted}[]{c}
+int fact(int n) {
+  int f = 1;
+  while (n > 1) {
+    f = f * n;
+    n = n - 1;
+  }
+  return f;
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[label={sec:orgheadline13}]{Functional Paradigm}
+Functional PL is based on \emph{\(\lambda\)-calculus}, informally,
+composition of operations on data.
+
+Key commands
+\begin{description}
+\item[{\(\lambda\)-abstract}] \(\lambda x.t\) is a definition of an
+anonymous function that is capable of taking a single input
+\(x\) and substituting it into the expression \(t\).  E.g.,
+\(\lambda x.x^2\) is an lambda abstraction for function \(f(x)
+        = x^2\).
+\item[{Application}] \(ts\) represents the application of a function
+\(t\) to an input \(s\).  E.g., calling the function \(t\) and
+produce \(t(s)\).
+\end{description}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline14}]{Functional Example}
+ Functions have no state, and data are immutable.
+
+\begin{minted}[]{common-lisp}
+(defun fact (n)
+  (if (= n 1)
+      1
+    (* n (fact (- n 1)))))  ; referential transparent
+
+(fact 4)
+\end{minted}
+\end{frame}
+
+\begin{frame}[label={sec:orgheadline15}]{Logic Paradigm}
+Logic PL is based on \emph{Horn Clauses}, describing problems as axioms
+and derivation rules.
+
+Key commands
+\begin{description}
+\item[{Unification}] The algorithmic process of solving equations
+between symbolic expressions.
+\item[{Non-deterministic Search}] Based on first-order predicate logic.
+\end{description}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline16}]{Logic Example 1}
+ Prolog is most well known logic PL.
+
+\begin{minted}[]{prolog}
+fact(0,1).
+fact(N,F) :-
+    N > 0, N1 is N - 1,
+    fact(N1,F1), F is N * F1.
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline17}]{Logic Example 2}
+ We will talk about about \emph{syllogism} and \texttt{Prolog} in later
+chapters.
+
+First we state some facts and predicates.
+
+\begin{minted}[]{prolog}
+%% Prolog               Syllogism
+man(socrates).        % socrates is a man.
+mortal(X) :- man(X).  % All men are mortal.
+\end{minted}
+
+Now we are asking questions
+
+\begin{minted}[]{prolog}
+%% Is socrates mortal?
+mortal(socrates).
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline18}]{PL Translation}
+ PL is translated in two ways.
+
+\begin{description}
+\item[{Compilation}] PL is compiled \emph{in whole} by a compiler into a
+platform-dependent executable.  E.g., \texttt{C/C++}.
+\item[{Interpretation}] PL is interpreted \emph{one statement at a time} by
+a virtual machine called interpreter.  E.g., \texttt{Javascript}.
+\end{description}
+
+
+Some languages are the mixture of both, e.g., \texttt{Python}, \texttt{Java}.
+\end{frame}
+
+\begin{frame}[label={sec:orgheadline19}]{Translation Overview}
+Compilers are programs, and generally very large programs.  They
+almost always have a structure based on the \emph{analysis-synthesis}
+model of translation.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=.9\linewidth]{img/translation.pdf}
+\caption{\label{fig:translation}
+Every non-trivial translation requires analysis and synthesis.}
+\end{figure}
+\end{frame}
+
+\begin{frame}[label={sec:orgheadline20}]{Compiler Components}
+\includegraphics[width=.9\linewidth]{img/compiler.pdf}
+\end{frame}
+
+\begin{frame}[label={sec:orgheadline21}]{Compiler Components 2}
+\begin{description}
+\item[{Scanner}] It converts the stream of characters into a stream of
+tokens, removing whitespace, removing comments and expanding
+macros along the way.
+\item[{Parser}] The parser turns the token sequence into an abstract
+syntax tree (AST).
+\item[{Semantic Analysis}] Checks legality rules and tie up the pieces
+of the syntax tree (by resolving identifier references,
+inserting cast operations for implicit coercion, etc.) to
+form a semantic graph.
+\end{description}
+\end{frame}
+\end{document}

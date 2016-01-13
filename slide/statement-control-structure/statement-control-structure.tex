@@ -1,0 +1,396 @@
+% Created 2016-01-13 Wed 15:10
+\documentclass[presentation]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+\usepackage{minted}
+\usepackage{svg}
+\usepackage[backend=biber,style=alphabetic]{biblatex}
+\fvset{fontsize=\footnotesize}
+\fvset{frame=lines}
+\fvset{framesep=5pt}
+\DeclareUnicodeCharacter{200B}{}
+\addbibresource{~/Documents/comp3220/master/comp3220.bib}
+\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Content}\tableofcontents[currentsection]\end{frame}}
+\usetheme{default}
+\author{Zhitao Gong}
+\date{2016 Spring}
+\title{Statement and Control Structure}
+\subtitle{COMP3220 -- Principle of Programming Languages}
+\hypersetup{
+      pdfauthor={Zhitao Gong},
+      pdftitle={Statement and Control Structure},
+      pdfkeywords={},
+      pdfsubject={},
+      pdfcreator={Emacs 24.5.1 (Org mode 8.3.2)},
+      pdflang={English},
+      bookmarks=true,
+      unicode=true,
+      pdftoolbar=true,
+      pdfmenubar=true,
+      pdffitwindow=false,
+      pdfstartview={FitW},
+      pdfnewwindow=true,
+      colorlinks=true,
+      linkcolor=red,
+      citecolor=green,
+      filecolor=magenta,
+      urlcolor=cyan}
+\begin{document}
+
+\maketitle
+\begin{frame}{Outline}
+\setcounter{tocdepth}{2}
+\tableofcontents
+\end{frame}
+
+
+\section{Arithmetic Expression}
+\label{sec:orgheadline18}
+
+\begin{frame}[fragile,label={sec:orgheadline1}]{Expression}
+ \begin{description}
+\item[{Expression}] A combination of values, variables, and operators.
+The purpose is to \emph{have values}.
+\item[{Statement}] A complete line of code that performs some action.
+The purpose is their \emph{side-effects}.
+\end{description}
+
+
+\begin{minted}[]{cpp}
+int main() {
+  int a = 3;
+  a + 4;
+  ++a;
+}
+\end{minted}
+
+The distinction is important only for theorist.
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline2}]{Basics}
+ In PL's, arithmetic expressions consist of operators, operands,
+parentheses, and function calls.  Operators are special functions.
+
+\begin{minted}[]{cpp}
+int main() {
+  int a = 1 + 2;
+  int b = operator+(1, 2);  // DOES NOT COMPILE
+}
+\end{minted}
+
+\begin{description}
+\item[{Unary function}] takes single operand, e.g., negative sign \texttt{-}.
+\item[{Binary function}] takes two operands, e.g., plus, minus.
+\item[{Ternary function}] takes three operands., e.g., \texttt{a ? b : c}.
+\end{description}
+\end{frame}
+
+\begin{frame}[label={sec:orgheadline3}]{Notation}
+\begin{description}
+\item[{Infix}] Operators are between operands.  Parentheses surrounding
+groups of operands and operators are necessary.  More
+difficult to parse albeit more natural.  E.g., \(2 + 2\),
+\(3\times3\), \((2 + 2) \times 3\).
+\item[{Prefix}] Operators are before operands.  Fancy name: normal
+Polish notation (NPN).  If the arity of the operators is
+fixed, the result is a syntax lacking parentheses or other
+brackets that can still be parsed without ambiguity.  E.g.,
+\(+ \ 2\ 2\), \(\times +2\ 2\ 3\)
+\item[{Postfix}] Operators are places after operands.  Fancy name:
+reverse Polish notation (RPN).  No parentheses are needed
+either.  E.g., \(n!\), \(3\ 2\ 2+\times\), \(2\ 2 + 3\times\).
+Shunting-yard algorithm converts infix to postfix notation.
+\end{description}
+\end{frame}
+
+\begin{frame}[label={sec:orgheadline4}]{Operator Evaluation Order}
+In NPN or RPN, operator evaluation is always \emph{unambiguous}.  Not so
+for infix notation.
+
+To solve Infix notation ambiguity, two rules in PL are needed
+\begin{itemize}
+\item operator \emph{precedence} and
+\item operator \emph{associativity}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label={sec:orgheadline5}]{Operator Precedence}
+Given the following expression
+
+\[3 + 4 \times 5\]
+
+\begin{itemize}
+\item Evaluated from left to right, i.e., \(+\) first, the result
+is 35.
+\item Evaluated from right to left, i.e., \(\times\) first, the result
+is 23.
+\end{itemize}
+
+
+Mathematicians place operators in a \emph{hierarchy of evaluation
+priorities} and base the evaluation order of expressions partly on
+this hierarchy.
+
+\begin{description}
+\item[{Operator Precedence Rule}] Partially defines the order in which
+the operators of different precedence levels are evaluated.
+The operator precedence rules for expressions are based on the
+hierarchy of operator priorities.
+\end{description}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline6}]{\texttt{C++} Operator Precedence}
+ \url{http://en.cppreference.com/w/cpp/language/operator_precedence}
+
+Operator with higher precedence is evaluated first.  What if they
+are of same precedence?  E.g., \(2 + 3 + 4\).
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline7}]{Operator Associativity}
+ \begin{description}
+\item[{Operator Associativity Rule}] Partially defines the order in
+which the operators of the same precedence levels are
+evaluated.  This rule is based on \emph{convention}.
+\end{description}
+
+
+Two possible associativity
+\begin{itemize}
+\item Left to right.  E.g., \(2 + 3 + 4\) in \texttt{C++} is equivalent to
+\((2 + 3) + 4\).
+\item Right to left.  E.g., \(2 ** 2 ** 3\) in \texttt{Python} is equivalent
+to \(2 ** (2 ** 3)\).
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline8}]{Associativity in Real World}
+ Floating point math is \emph{not associative} due to accuracy.  E.g. the
+non-representability of 0.1 and 0.01 in binary means that \(0.1^2\)
+is neither 0.01 nor the closet representable number.  In single
+precision, 0.1 is represented as
+
+\begin{verbatim}
+0.100000001490116119384765625 exactly
+\end{verbatim}
+
+Squaring it with single-precision floating-point hardware gives
+
+\begin{verbatim}
+0.010000000707805156707763671875 exactly
+\end{verbatim}
+
+But the representable number closest to 0.01 is
+
+\begin{verbatim}
+0.009999999776482582092285156250 exactly
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[label={sec:orgheadline9}]{Non-associativity Example}
+Using 7-digit significand decimal arithmetic.
+
+Given \(a = 1234.567\), \(b = 45.67834\), \(c = 0.0004\).
+The symbol \(\rightarrow\) denotes rounding.
+
+\begin{columns}
+\begin{column}{0.5\columnwidth}
+\begin{block}{\((a + b) + c\)}
+\[\begin{array}{lrcll}
+    & 1234 & . & 567 & a\\ + & 45 & . & 67834 & b\\ \hline & 1280
+    & . & 24534 & a + b\\ \rightarrow & 1280 & . & 245\\ + & 0 & . &
+    0004 & c\\ \hline & 1280 & . & 2454 & \\ \rightarrow
+    & 1280 & . & 245 & \end{array}
+    \]
+\end{block}
+\end{column}
+
+
+\begin{column}{0.5\columnwidth}
+\begin{block}{\(a + (b + c)\)}
+\[\begin{array}{lrcll} & 45 & . & 67834 & b\\ + & 0 & . & 0004 & c
+    \\\hline & 45 & . & 67874 & b + c\\\rightarrow & 45 & . & 67874
+    &\\ + & 1234 & . & 567 & a\\\hline & 1280 & . & 24574 &
+    \\\rightarrow & 1280 & . & 246 & \end{array}\]
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline10}]{Optimization Based on Associativity}
+ Compiler may \emph{reassociate expressions} if possible.
+
+In GCC, left linearization (switch on by \texttt{-O3}) is used.  E.g.,
+\[a + b + c + d + e \rightarrow ((((a + b) + c) + d) + e)\]
+
+In LLVM, it uses the flag \texttt{-reassociate}.  This pass reassociates
+commutative expressions in an order that is designed to promote
+better constant propagation, GCSE, LICM, PRE, etc.
+
+\[4 + (x + 5) \rightarrow x + (4 + 5)\]
+
+\begin{itemize}
+\item Constants has rank 0
+\item function parameters rank 1 and
+\item other values ranked corresponding to the reverse post-order
+traversal of current function (starting at 2) which effectively
+gives values in deep loops higher rank than values not in loops.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline11}]{Operand Evaluation Order}
+ Mathematically, it does not matter.  For programs, it does.
+
+\begin{minted}[]{cpp}
+int foo(int &a) { return a++; }
+int main() {
+  int a = 3;
+  int b = a + a;           // DOES IT MATTER?
+  int c = foo(a) + foo(a); // DOES IT MATTER?
+}
+\end{minted}
+
+More precisely, it matters only when the evaluation of an operand
+has \emph{side effects}.
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline12}]{Side Effect}
+ \begin{description}
+\item[{Side Effect}] The function (e.g., operator) changes either one
+of its parameters or a global variable.
+\end{description}
+
+
+\begin{minted}[]{cpp}
+int a = 0;
+
+int fun() {
+  a = 100;
+  return 10;
+}
+
+int main() {
+  b = a + fun();  // 10 or 110?
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline13}]{\texttt{C++} Evaluation Order}
+ \emph{Almost} all operands, including function parameters are
+\alert{unspecified}.
+
+There are two kinds of \emph{optional} evaluations performed by the
+compiler:
+
+\begin{itemize}
+\item value computation, e.g., calculation of the value that is
+returned by the expression.
+\item side effect, e.g., access (read or write) an object designated by
+a volatile glvalue, and etc.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline14}]{Order}
+ Since \texttt{C++11}, \emph{sequenced-before} rules are used instead of
+\emph{sequence point} rules in \texttt{C++0x}.
+
+"sequenced-before", denote as \(\prec\) (precede), is an
+asymmetric, transitive, pair-wise relationship between evaluations
+within the same thread.
+
+\begin{itemize}
+\item If \(A\prec B\), then evaluation of \(A\) will be complete before
+evaluation of \(B\) begins and vice versa.
+\item If \(A\nprec B\) and \(B\nprec A\), then two possibilities exist:
+\begin{itemize}
+\item evaluations of A and B are unsequenced
+\item they may be performed in any order but may not overlap
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline15}]{Undefined Behavior}
+ \begin{minted}[]{cpp}
+#include <iostream>
+using namespace std;
+
+void f(int a, int b) { }
+int main() {
+  int i = 0;
+  i = ++i + i++;     // undefined behavior
+  i = i++ + 1;       // undefined behavior
+  i = ++i + 1;       // well-defined in C++11
+  ++ ++i;            // well-defined in C++11
+  f(++i, ++i);       // undefined behavior
+  f(i = -1, i = -2); // undefined behavior
+  cout << i << i++;
+  int a[3];
+  a[i] = i++;
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline16}]{Referential Transparency}
+ \begin{description}
+\item[{Referential Transparency}] If any two expressions in the program
+that have the same value can be substituted for one another
+anywhere in the program, without affecting the action of the
+program, the program is said to have referential transparency.
+\end{description}
+
+
+\begin{minted}[]{cpp}
+int foo() {
+  return 10;
+}
+
+int bar(int a, int b) {
+  return a + b;
+}
+
+int main() {
+  int a = foo() * SIZE;
+  bar(++a, ++a);
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline17}]{Operator Overloading}
+ Consider the following example
+
+\begin{minted}[]{cpp}
+int main() {
+  int a = 1, b = 2;
+  if (a & b) {  }
+  if (& b) { }
+}
+\end{minted}
+
+How about the following example
+
+\begin{minted}[]{cpp}
+class Mat { };
+
+int main() {
+  Mat a, b, c;
+  MatAdd(MatAdd(a, b), c);
+  a + b + c;
+}
+\end{minted}
+\end{frame}
+
+\section{Control Structure}
+\label{sec:orgheadline19}
+\end{document}

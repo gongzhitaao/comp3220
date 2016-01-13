@@ -1,14 +1,19 @@
 #+TITLE: PPL -- Spring 2016
 #+SETUPFILE: ../general-setup.org
-#+OPTIONS: toc:nil num:2 H:3 ^:nil pri:t
+#+OPTIONS: toc:2 num:2 H:3 ^:nil pri:t
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.github.io/orgcss/org.css"/>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/ppl.css"/>
 
-#+TOC: headlines 2
 * Course Information
+  :PROPERTIES:
+  :CUSTOM_ID: sec:course-information
+  :END:
 
 ** Course Description
+   :PROPERTIES:
+   :CUSTOM_ID: sec:course-description
+   :END:
 
    This course covers
 
@@ -27,19 +32,24 @@
    - Course Website :: http://auburn.edu/~zzg0009/comp3220/spring2016/
 
 ** Instructor Information
+   :PROPERTIES:
+   :CUSTOM_ID: sec:instructor-information
+   :END:
 
    - Instructor :: Zhitao Gong
      + Office :: Shelby 2307
-     + Office Hours :: Friday Morning
-     + Email :: zzg0009@auburn.edu
+     + Office Hours :: Friday 1000 -- 1100
+     + Email :: zzg0009 at TigerMail
 
    - Teaching Assistant :: Wenlu Wang
-     + Office :: Shelby 2307
-     + Office Hours :: Friday Morning
-     + Email :: wzw0022@auburn.edu
+     + Office :: Shelby 2319
+     + Office Hours :: Wednsday 1500 -- 1600
+     + Email :: wzw0022 at TigerMail
 
-
-** Textbook and Course Materials
+** Course Materials
+   :PROPERTIES:
+   :CUSTOM_ID: sec:course-materials
+   :END:
 
 *** Required Textbook
 
@@ -48,6 +58,9 @@
 
 *** Recommended Texts
 
+    You may find a complete list of the auxiliary materials in the
+    Section [[#sec:syllabus]]
+
     - /Essentials of Programming Languages/, Third edition by Daniel
       P. Friedman and Mitchell Wand.
     - /Modern Programming Languages: A Practical Introduction/, Second
@@ -55,8 +68,14 @@
     - /Formal Language: A Practical Introduction/ by Adam Brooks Webber[fn:2].
 
 * Grading Policy
+  :PROPERTIES:
+  :CUSTOM_ID: sec:grading-policy
+  :END:
 
 ** Graded Course Activities
+   :PROPERTIES:
+   :CUSTOM_ID: sec:graded-course-activities
+   :END:
 
    All assignments details are posted on [[https://auburn.instructure.com/][Canvas]].
 
@@ -72,14 +91,20 @@
    | Total        |    100 |
    #+TBLFM: @6$2=vsum(@I..@II)
 
-*** Late Work Policy
+** Late Work Policy
+   :PROPERTIES:
+   :CUSTOM_ID: sec:late-work-policy
+   :END:
 
-    Be sure to subscribe to Canvas notifications and pay close
-    attention to deadlines.  There will be *NO* make up assignments or
-    quizzes, or late work accepted without a serious and compelling
-    reason and instructor approval.
+   Be sure to subscribe to Canvas notifications and pay close
+   attention to deadlines.  There will be *NO* make up assignments or
+   quizzes, or late work accepted without a serious and compelling
+   reason and instructor approval.
 
-** Letter Grade Assignment
+** Letter Grade
+   :PROPERTIES:
+   :CUSTOM_ID: sec:letter-grade
+   :END:
 
    Final grades assigned for this course will be based on the
    percentage of total points earned and are assigned as shown in
@@ -96,8 +121,10 @@
    | D            | 60% -- 69%  |
    | F            | 00% -- 59%  |
 
-
 * Syllabus
+  :PROPERTIES:
+  :CUSTOM_ID: sec:syllabus
+  :END:
 
   #+BEGIN_SRC js :exports results :results output html
 var path = require('path');
@@ -263,6 +290,13 @@ jsdom.jQueryify(window, 'http://code.jquery.com/jquery-2.2.0.min.js', function (
   #+END_SRC
 
 * Credit
+  :PROPERTIES:
+  :CUSTOM_ID: sec:credit
+  :END:
+
+  Notes on operator notations are from https://en.wikipedia.org.
+  Notes on Compiler optimization on associativity is adpated from
+  \cite{kliger2015}\cite{dair2015}.
 
   The =C++= version we use is =C++11= and above.  The tutorial is
   adapted from \cite{cplusplus}\cite{stroustrup2014}.  More authority FAQ's
@@ -277,6 +311,7 @@ jsdom.jQueryify(window, 'http://code.jquery.com/jquery-2.2.0.min.js', function (
   features are from \cite{guile}.
 
 #+BIBLIOGRAPHY: ../comp3220.bib alpha option:-nobibsource limit:t option:-nokeywords
+
 * Footnotes
 
 [fn:1] Available online: http://www.webber-labs.com/mpl/.

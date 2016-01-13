@@ -1,0 +1,855 @@
+% Created 2016-01-04 Mon 16:04
+\documentclass[presentation]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+\usepackage{minted}
+\usepackage{svg}
+\usepackage[backend=biber,style=alphabetic]{biblatex}
+\fvset{fontsize=\footnotesize}
+\fvset{frame=lines}
+\fvset{framesep=5pt}
+\DeclareUnicodeCharacter{200B}{}
+\addbibresource{~/Documents/comp3220/master/comp3220.bib}
+\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Content}\tableofcontents[currentsection]\end{frame}}
+\usetheme{default}
+\author{Zhitao Gong}
+\date{2016 Spring}
+\title{Tutorial -- Scheme}
+\subtitle{COMP3220 -- Principle of Programming Languages}
+\hypersetup{
+      pdfauthor={Zhitao Gong},
+      pdftitle={Tutorial -- Scheme},
+      pdfkeywords={},
+      pdfsubject={},
+      pdfcreator={Emacs 24.5.1 (Org mode 8.3.2)},
+      pdflang={English},
+      bookmarks=true,
+      unicode=true,
+      pdftoolbar=true,
+      pdfmenubar=true,
+      pdffitwindow=false,
+      pdfstartview={FitW},
+      pdfnewwindow=true,
+      colorlinks=true,
+      linkcolor=red,
+      citecolor=green,
+      filecolor=magenta,
+      urlcolor=cyan}
+\begin{document}
+
+\maketitle
+\begin{frame}{Outline}
+\setcounter{tocdepth}{2}
+\tableofcontents
+\end{frame}
+
+
+\section{Get Started}
+\label{sec:orgheadline6}
+
+\begin{frame}[fragile,label={sec:orgheadline1}]{Hello World!}
+ Enter the following code with your favorite editor (Emacs for me)
+and save to a file called \texttt{hello.scm}.
+
+\begin{minted}[]{scheme}
+;; Hello World!
+(begin
+  (display "Hello World!")
+  (newline))
+\end{minted}
+
+\begin{enumerate}
+\item The first line is a comment.  Scheme ignores everything
+following a semicolon.
+\item \texttt{begin} \emph{form} is \texttt{Scheme}'s way of introducing sequential
+\emph{subforms}, i.e., sequential statements.
+\item \texttt{display} procedure outputs its argument ("Hello World!") to the
+standard output, i.e., the console.
+\item \texttt{newline} procedure outputs a carriage return.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline2}]{Environment}
+ There are lots of \texttt{Scheme} implementations, GNU guile, mit-scheme,
+CHICKEN scheme, Racket and etc.  I'm using GNU guile.
+
+To run the above program
+
+\begin{verbatim}
+$ guile
+$ scheme@(guile-user)> (load "hello.scm")
+\end{verbatim}
+
+\begin{itemize}
+\item The first line invokes the GNU guile interpreter.
+\item Entering into the guile environment, you will see prompt
+\texttt{scheme@(guile-user)>}.  Just type in any \texttt{Scheme} forms.
+\item \texttt{(load "hello.scm")} loads and runs the file \texttt{hello.scm}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline3}]{Setup \texttt{Scheme}}
+ Various options to setup \texttt{Scheme} environment.
+
+\begin{itemize}
+\item Linux machines in Computer Lab and Davis Hall 123 have mit-scheme
+installed.
+\item You may install guile yourself.
+\begin{itemize}
+\item Compile and install \emph{locally} on Computer Lab or Davis Hall
+123, which requires some knowledge of Linux, or
+\item Install with package manager if you have Linux installed on
+your laptop.
+\end{itemize}
+\end{itemize}
+
+
+Most of the code snippets adheres to R\(^{\text{6}}\)RS and should be working
+with all compatible \texttt{Scheme} implementations, except those
+commented with "guile".
+
+\begin{minted}[]{scheme}
+(inf? 3)                                ; => #f, guile
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline4}]{Hello World! Cont'd}
+ Entering into the guile interactive environment, you may type in
+your programs directly
+
+\begin{itemize}
+\item Type in the form at \texttt{Scheme} prompt, you will see \texttt{Hello World!}.
+
+\begin{minted}[]{scheme}
+(begin (display "Hello World!")
+       (newline))
+\end{minted}
+
+\item Or you could directly type in the form.
+
+\begin{minted}[]{scheme}
+"Hello World!"
+\end{minted}
+
+which gives you back the string \texttt{​"Hello World"​}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline5}]{Hello World! Cont'd}
+ Difference between the previous two approaches
+
+\begin{itemize}
+\item Trivial difference: the first gives you \texttt{Hello World!} without
+double quote.
+\item Important difference: the first form \emph{evaluates} to \emph{nothing},
+\texttt{Hello World!} is only a \alert{side effect} of \texttt{display}.  \texttt{=>}
+is "\emph{evaluates to}".
+
+\begin{minted}[]{scheme}
+(begin (display "Hello World!")
+       (newline))
+=>
+\end{minted}
+
+The second evaluates to \texttt{​"Hello World!"​}.
+
+\begin{minted}[]{scheme}
+"Hello World!"
+=> "Hello World"
+\end{minted}
+\end{itemize}
+\end{frame}
+
+\section{Overview}
+\label{sec:orgheadline10}
+
+\begin{frame}[fragile,label={sec:orgheadline7}]{Overview}
+ \texttt{Scheme} features are summarized as follows.
+
+\begin{itemize}
+\item Statically scoped PL with lexical binding.
+\item \emph{Latent} as opposed to \emph{manifest} type.
+\item Type associated with objects rather than variables.
+\item One of the first PL to support procedures as objects.
+\item \emph{Continuations} is "first-class".
+\item Arguments are evaluated \emph{before} procedure call.
+\item Distinguishes \emph{exact} and \emph{inexact} number objects.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline8}]{Expression}
+ Expressions can be evaluated, producing a value.
+
+\begin{itemize}
+\item Literal expressions.
+
+\begin{minted}[]{scheme}
+#t                                      ; => #t
+23                                      ; => 23
+\end{minted}
+
+\item Compound expression.  Enclosing subexpressions with parenthesis,
+where The first subexpression is an operation and the remainings
+are operands to the operation
+
+\begin{minted}[]{scheme}
+(+ 1 1)                                 ; => 2
+(+ 1 (* 1 1))                           ; => 2
+\end{minted}
+\end{itemize}
+
+
+Whitespace (including line endings) is not significant when it
+separates subexpressions of an expression.
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline9}]{Form}
+ \begin{description}
+\item[{Form}] The general name for a syntactic part of a \texttt{Scheme}
+        program.
+\end{description}
+
+
+\begin{minted}[]{scheme}
+(define x 3)                            ; definition
+(+ 3 4)                                 ; expression
+\end{minted}
+
+\begin{itemize}
+\item Both are forms, their distinction depends on the bindings for
+\texttt{define} and \texttt{+}.
+\item In particular, 23 is a \emph{subform} of the form \texttt{(define x 23)}.
+\end{itemize}
+\end{frame}
+
+\section{Data Types}
+\label{sec:orgheadline27}
+
+\begin{frame}[fragile,label={sec:orgheadline11}]{Boolean}
+ \texttt{Scheme} uses \texttt{\#t} for true and \texttt{\#f} for false.  The \texttt{boolean?}
+predicate procedure (usually ends with a \texttt{?}) checks whether its
+argument is Boolean.
+
+\begin{minted}[]{scheme}
+(boolean? #t)                           ; => #t
+(boolean? #f)                           ; => #t
+(boolean? "Hello World!")               ; => #f
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline12}]{Numeric}
+ \texttt{Scheme} numeric data types include integer (32, 10), rational
+(22/7, \emph{no space} around the slash), real (3.1416) and complex
+(2+3i, \emph{no space} in between).
+
+\begin{minted}[]{scheme}
+(integer? 32)                           ; => #t
+(rational? 32)                          ; => #t
+(real? 32)                              ; => #t
+(complex? 32)                           ; => #t
+(number? 32)                            ; => #t
+(number? #t)                            ; => #f
+(complex? 3+2i)                         ; => #t
+(rational? 22/7)                        ; => #t
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline13}]{Real and Rational in Guile}
+ Mathematically, we have
+
+\[\text{Integer }\in\text{ Rational }\in\text{ Real }\in\text{
+   Complex}
+   \]
+
+\begin{itemize}
+\item Guile can represent both \emph{exact} and \emph{inexact} rational numbers.
+\begin{itemize}
+\item Exact rational is represented by storing the numerator and
+denominator as two exact integers.
+\item Inexact rational is represented as foaling numbers.
+\end{itemize}
+\item It \emph{cannot} represent precise finite irrational numbers.
+\item \texttt{rational?} and \texttt{real?} predicates are \emph{equivalent}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline14}]{Non-Numbers in Guile}
+ \begin{itemize}
+\item Dividing by \emph{exact} zero leads to an error message.
+\item Dividing by \emph{inexact} zero produces positive or negative
+infinite.
+\item Dividing \emph{inexact} zeros produces NaN.
+\end{itemize}
+
+\begin{minted}[]{scheme}
+(/ 1 0)                                 ; ERROR
+(/ 1 0.0)                               ; => +inf.0
+(/ 1 -0.)                               ; => -inf.0
+(/ 0. 0.)                               ; => +nan.0
+(nan? (/ 0. 0.))                        ; => #t, guile
+(inf? (/ 1 -0.))                        ; => #t, guile
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline15}]{Integer in \texttt{Scheme}}
+ \texttt{Scheme} natively supports binary, hex and octal integer format.
+
+\begin{itemize}
+\item \texttt{\#b} prefix for binary format
+\item \texttt{\#o} prefix for octal format
+\item \texttt{\#d} \emph{optional} prefix for decimal format
+\item \texttt{\#x} prefix for hex format
+\end{itemize}
+
+\begin{minted}[]{scheme}
+(= #b11 3)                              ; => #t
+(= #o3 3)                               ; => #t
+(= #x3 3)                               ; => #t
+(= #d3 3)                               ; => #t
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline16}]{Number Comparison}
+ \emph{Number comparison} includes \texttt{=}, \texttt{<}, \texttt{<=}, \texttt{>} and \texttt{>=}.
+
+\begin{minted}[]{scheme}
+(= 42 42)                               ; => #t
+(= 42 42.0)                             ; => #t
+(= 42.2 #f)                             ; ERROR
+(< 3 3.5)                               ; => #t
+(>= 3 3.5)                              ; => #f
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline17}]{Arithmetic Procedures}
+ Common arithmetic procedures include \texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}.
+
+\begin{itemize}
+\item \texttt{+}, \texttt{-} and \texttt{*} may take more than two arguments.
+\item For single argument, \texttt{-} serves as negation and \texttt{/} reciprocal.
+\end{itemize}
+
+
+\begin{minted}[]{scheme}
+(+ 1 2 3)                               ; =>  6
+(- 5.3 2)                               ; =>  3.3
+(- 5 2 1)                               ; =>  2
+(* 1 2 3)                               ; =>  6
+(/ 6 3)                                 ; =>  2
+(/ 22 7)                                ; =>  22/7
+(- 4)                                   ; =>  -4
+(/ 4)                                   ; =>  1/4
+\end{minted}
+\end{frame}
+
+
+\begin{frame}[fragile,label={sec:orgheadline18}]{Equality Predicate}
+ \begin{description}
+\item[{\texttt{=}}] Whether two \emph{numbers} are equal.
+\item[{\texttt{eq?}}] Whether two parameters represent the \emph{same object} in
+memory.
+\item[{\texttt{eqv?}}] Same as the \texttt{eq?} predicate, except that it will always
+return \texttt{\#t} for same primitive values.
+\item[{\texttt{equal?}}] Element-wise version for \texttt{eqv?}.
+\end{description}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline19}]{Predicate \texttt{=}}
+ Use the \texttt{=} predicate when you want to compare two numbers.
+
+\begin{minted}[]{scheme}
+(= 2 3)                                 ; => #f
+(= 2.5 2.5)                             ; => #t
+(= '() '())                             ; ERROR!
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline20}]{Predicate \texttt{eq?}}
+ Do not use the \texttt{eq?} predicate unless you know what you're doing.
+
+\begin{minted}[]{scheme}
+(define x '(2 3))
+(define y '(2 3))
+(eq? x y)                               ; => #f
+(define y x)
+(eq? x y)                               ; => #t
+\end{minted}
+
+Note however that there's only one empty list \texttt{​'()} in memory.
+
+\begin{minted}[]{scheme}
+(define x '())
+(define y '())
+(eq? x y)                               ; => #t
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline21}]{Predicate \texttt{eqv?}}
+ The effect of \texttt{eq?} on primitive types are undefined and
+implementation dependent.  That what \texttt{eqv?} is for.
+
+\begin{minted}[]{scheme}
+(eq? 2 2)                               ; implementation dependent
+(eq? "a" "a")                           ; implementation dependent
+(eqv? 2 2)                              ; => #t
+(eqv? "a" "a")                          ; => #t
+\end{minted}
+
+So generally, \(\text{\texttt{eq?} }\in\text{\texttt{eqv?}}\),
+i.e., \texttt{eqv?} is a superset of \texttt{eq?}.
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline22}]{Predicate \texttt{equal?}}
+ Use the \texttt{equal?} predicate when you wish to test whether two lists,
+vectors, etc. are \emph{element-wise} equivalent.
+
+\begin{minted}[]{scheme}
+(define x '(2 3))
+(define y '(2 3))
+(equal? x y)                            ; => #t
+(eqv? x y)                              ; => #f
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline23}]{Character}
+ \texttt{Scheme} character data are represented by prefixing the character
+with \texttt{\#\textbackslash{}}.
+
+\begin{itemize}
+\item The predicate \texttt{char?} checks whether it is a character.
+\item Some non-graphic characters have more descriptive names.
+\end{itemize}
+
+\begin{minted}[]{scheme}
+(char? #\c)                             ; => #t
+(char? 1)                               ; => #f
+(char? #\;)                             ; => #t
+(char? #\newline)                       ; => #t
+(char? #\tab)                           ; => #t
+(eqv? #\  #\space)                      ; => #t, TWO SPACES!!
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline24}]{Character Operations}
+ The character has a set of comparison predicates: \texttt{char=?},
+\texttt{char<?}, \texttt{char<=?}, \texttt{char>?}, \texttt{char>=?}.
+
+\begin{minted}[]{scheme}
+(char=? #\a #\a)                        ; => #t
+(char>=? #\a #\B)                       ; => #f
+\end{minted}
+
+Use \texttt{char-ci} to make the comparison \emph{case-sensitive}.
+
+\begin{minted}[]{scheme}
+(char-ci=? #\a #\A)                     ; => #t
+(char-ci<? #\a #\B)                     ; => #t
+\end{minted}
+
+Case conversion procedures are \texttt{char-downcase} and \texttt{char-upcase}.
+
+\begin{minted}[]{scheme}
+(char-downcase #\A)                     ; => #\a
+(char-upcase #\a)                       ; => #\A
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline25}]{Symbol}
+ The above primitives are \emph{self-evaluating}.
+
+\begin{minted}[]{scheme}
+#t                                      ; => #t
+32                                      ; => 32
+#\c                                     ; => #\c
+\end{minted}
+
+Symbols are not.  They are treated as \emph{identifiers}, thus evaluated
+to the value they hold. To specify a symbol, \texttt{quote} it.  Predicate
+\texttt{symbol?} checks for symbol type.
+
+\begin{minted}[]{scheme}
+(quote var)                             ; => var
+'var                                    ; => var
+(symbol? 'var)                          ; => #t
+(symbol? '<=>)                          ; => #t
+(symbol? '$!#*)                         ; => #t
+(symbol? '#t)                           ; => #f
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline26}]{Symbol Cont'd}
+ Symbols are \emph{case-insensitive}.  In Guile symbols are case
+sensitive.
+
+\begin{minted}[]{scheme}
+(eqv? 'Calorie 'calorie)                ; => #t, (#f in guile)
+\end{minted}
+
+Use \texttt{define} To define a symbol with value and \texttt{set!} to change the
+value of a symbol.
+
+\begin{minted}[]{scheme}
+(define var 9)
+var                                     ; => 9
+(set! var #\c)
+var                                     ; #\c
+\end{minted}
+\end{frame}
+
+\section{Compound Data Types}
+\label{sec:orgheadline41}
+
+\begin{frame}[fragile,label={sec:orgheadline28}]{String}
+ \begin{itemize}
+\item Double-quoted character produces string.
+
+\begin{minted}[]{scheme}
+"Hello World!"                          ; => "Hello World!"
+\end{minted}
+
+\item Procedure \texttt{string} constructs string from \emph{characters}.
+
+\begin{minted}[]{scheme}
+(string #\h #\e #\l #\l #\o)            ; => "hello"
+\end{minted}
+
+\item Procedure \texttt{make-string} constructs an empty string (string with
+null character '$\backslash$0x00') with given length.
+
+\begin{minted}[]{scheme}
+(make-string 3)                         ; => "\x00\x00\x00"
+\end{minted}
+\end{itemize}
+
+String type are checked with \texttt{string?} predicate.
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline29}]{String Operations}
+ The characters in a string could be individually accessed with
+procedure \texttt{string-ref}.  Characters are 0-base indexed.
+
+\begin{minted}[]{scheme}
+(define greeting "Hello World")
+(string-ref greeting 0)                 ; => #\H
+\end{minted}
+
+Strings may be appended together.
+
+\begin{minted}[]{scheme}
+(string-append "Hello " "World" "!")    ; => "Hello World!"
+\end{minted}
+
+Strings are mutable.  The procedure \texttt{string-set!} replaces the
+character at a given index.
+
+\begin{minted}[]{scheme}
+(define hello "hello")
+(string-set! hello 0 #\H)
+hello                                   ; => "Hello"
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline30}]{Vector}
+ Vectors are sequences with their elements being \emph{anything}.
+
+\begin{minted}[]{scheme}
+(vector 1 2 3 4)                        ; => #(1 2 3 4)
+(vector #\a #\b)                        ; => #(#\a #\b)
+(vector 1 "e" 'var)                     ; => #(1 "e" var)
+\end{minted}
+
+Similar to string type, vector also has \texttt{make-vector}, \texttt{vector-ref}
+and \texttt{vector-set!} procedures.  And as expected, vector is checked
+by predicate \texttt{vector?}.
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline31}]{Pair}
+ \begin{description}
+\item[{Pair}] An \emph{ordered} pair of arbitrary data, with the first
+element and second element referred to as \emph{car} and \emph{cdr}
+respectively.
+\end{description}
+
+
+It is constructed by \texttt{cons} procedure or \texttt{quote} (note the dot in
+between), tested with predicate \texttt{pair?}
+
+\begin{minted}[]{scheme}
+(cons 1 #t)                             ; => (1 . #t)
+'(#\h . 3.14)                           ; => (#\h . 3.14)
+(pair? (cons 1 #t))                     ; => #t
+\end{minted}
+
+Dotted pair must be quoted when used as data value since it is not
+self-evaluating.
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline32}]{Pair Operation}
+ Pair supports \texttt{car}, \texttt{cdr} access operation
+
+\begin{minted}[]{scheme}
+(define x (cons 1 #\c))
+x                                       ; => (1 . #\c)
+(car x)                                 ; => 1
+(cdr x)                                 ; => #\c
+(define x (1 #\c))                      ; ERROR
+\end{minted}
+
+Mutator procedures include \texttt{set-car!} and \texttt{set-cdr!}.
+
+\begin{minted}[]{scheme}
+(define x (cons 1 2))
+x                                       ; => (1 . 2)
+(set-car! x #\h)
+x                                       ; => (#\h . 2)
+(set-cdr! x 3.2)
+x                                       ; => (#\h . 3.2)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline33}]{Nested Pair}
+ Pair may contain other pairs.
+
+\begin{minted}[]{scheme}
+(define x (cons (cons 1 2) 3))
+x                                       ; => ((1 . 2) . 3)
+\end{minted}
+
+\texttt{Scheme} provides syntax sugar for \emph{car of car} and \emph{cdr of car}.
+
+\begin{minted}[]{scheme}
+(define y (cons (cons 1 2) 3))
+(= (car (car y)) (caar y))              ; => #t
+(= (cdr (car y)) (cdar y))              ; => #t
+\end{minted}
+
+c\(\dots\)r-style for up to four cascades are guaranteed to exist.
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline34}]{Tail Nested Pair}
+ When "tail recursion", i.e., nested along the second element,
+\texttt{Scheme} has a simplified form.
+
+\begin{minted}[]{scheme}
+(cons 1 (cons 2 (cons 3 4)))            ; (1 2 3 . 4)
+(equal? '(1 2 3 . 4)
+        (cons 1 (cons 2 (cons 3 4))))   ; => #t
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline35}]{List}
+ \begin{description}
+\item[{List}] Tail-nested pair with the very last element being an
+empty list, i.e., \texttt{​'()} (note that empty list is not
+self-evaluating).
+\end{description}
+
+
+Constructed using recursive pair notation, \texttt{list} procedure or
+\texttt{quote}, tested with \texttt{list?} predicate.
+
+\begin{minted}[]{scheme}
+(equal? (cons 1 (cons 2 (cons 3 (cons 4 '()))))
+        '(1 2 3 4))                     ; => #t
+(equal? (list 1 2 3 4) '(1 2 3 4))      ; => #t
+(equal? '(1 2 3 4) '(1 2 3 4 . ()))     ; => #t
+(equal? '(1 . ()) (cons 1 '()))         ; => #t
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline36}]{List Operation}
+ Like vector, list may be accessed by 0-based index.
+
+\begin{minted}[]{scheme}
+(define x '(1 2 3 4))
+(list-ref x 0)                          ; => 1
+\end{minted}
+
+You may retrieve tail of list given starting position.
+
+\begin{minted}[]{scheme}
+(define x '(1 2 3 4))
+(list-tail x 2)                         ; => (3 4)
+\end{minted}
+
+Most implementations include \texttt{list-head} procedure, but it is not
+specified in R6RS.
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline37}]{List and Pair}
+ List and Pair are not equivalent.
+
+\begin{minted}[]{scheme}
+(pair? '(1 . 2))                        ; => #t
+(list? '(1 . 2))                        ; => #f
+(pair? '(1 2))                          ; => #t
+(list? '(1 2))                          ; => #t
+(pair? '())                             ; => #f
+(list? '())                             ; => #t
+(null? '())                             ; => #t
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline38}]{Procedure}
+ Built-in procedure may be found in R\(^{\text{6}}\)RS specification.
+
+Anonymous procedure is defined with \texttt{lambda}.  E.g., The following
+form defines an anonymous procedure that adds 2 to the input.
+
+\begin{minted}[]{scheme}
+(lambda (x) (+ x 2))
+\end{minted}
+
+\begin{itemize}
+\item The first subform, e.g., \texttt{(x)}, is the argument list
+\item the rest subform, e.g., \texttt{(+ x 2)}, is the body of the procedure.
+\end{itemize}
+
+
+To use this anonymous procedure
+
+\begin{minted}[]{scheme}
+((lambda (x) (+ x 1) (+ x 1)) 3)        ; => 5
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline39}]{Procedure Cont'd}
+ To avoid repeated redefining the procedure.  We may bind a symbol
+to this procedure value.
+
+\begin{minted}[]{scheme}
+(define add2 (lambda (x) (+ x 2)))
+(add2 3)                                ; => 5
+\end{minted}
+
+The \texttt{lambda} may be omitted.
+
+\begin{minted}[]{scheme}
+(define (add2 x) (+ x 2))
+(add2 3)                                ; => 5
+\end{minted}
+
+Procedure is \emph{first-class citizen}.
+
+\begin{minted}[]{scheme}
+(define (f x) (+ x 1))
+(define (g op x) (op x))
+(g f 0)                                 ; => 1
+\end{minted}
+\end{frame}
+
+
+
+\begin{frame}[fragile,label={sec:orgheadline40}]{Port}
+ \begin{description}
+\item[{Port}] The conduit through which input and output is performed.
+Ports are usually associated with files and consoles.
+\end{description}
+
+
+The \texttt{display} procedure takes a optional second argument of port.
+
+\begin{minted}[]{scheme}
+(display "Hello World" (current-output-port))
+\end{minted}
+\end{frame}
+
+\section{Variable Binding}
+\label{sec:orgheadline46}
+
+\begin{frame}[fragile,label={sec:orgheadline42}]{Local Variable}
+ The \texttt{let} is a binding structure.  It binds \texttt{x} to 3 and \texttt{y} to 4.
+The rest subforms evaluate sequentially and the value of the last
+form is returned, e.g., 7 in this case.
+
+\begin{minted}[]{scheme}
+(let ((x 3)
+      (y 4))
+  (+ x y))                              ; => 7
+x                                       ; ERROR
+\end{minted}
+
+Note that evaluating \texttt{x} outside \texttt{(let ...)} results in error.  So
+\texttt{x} is visible only inside the \texttt{let} enviroment.
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline43}]{Gobal Variable}
+ To create a top-level (in the body of a top-level program or
+library) binding for identifiers (similar to global variable), use
+\texttt{define}.
+
+\begin{minted}[]{scheme}
+(define x 3)
+(define y 4)
+(+ x y)                                 ; => 7
+\end{minted}
+
+Top-level binding may be \emph{shaded} by local bindings.
+
+\begin{minted}[]{scheme}
+(define x 1)
+(define y 2)
+
+(let ((y 200)) (+ x y))                 ; => 201
+
+(let ((y 200))
+  (let ((y 300)) (+ x y)))              ; => 301
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline44}]{Closure}
+ \begin{minted}[,linenos,mathescape]{scheme}
+(define (addn n)                        ; addn $\label{addn}$
+  (lambda (b)
+    (+ n b)))
+
+(define add3 (addn 3))                  ; add3 $\label{add3}$
+
+(add3 1)
+(add3 2)
+\end{minted}
+
+\begin{itemize}
+\item Line \ref{addn} defines a procedure \texttt{addn}.  The procedure takes
+1 argument, \texttt{n}, and returns a \emph{lambda function}.
+
+\item Line \ref{add3} binds the lambda function returned by \texttt{(addn 3)},
+to \texttt{add3}, which is now a function that takes one argument, \texttt{b},
+with \texttt{n} bound to 3.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile,label={sec:orgheadline45}]{Closure Cont'd}
+ \begin{minted}[]{scheme}
+(define (make-counter)
+  (let ((count 0))
+    (lambda ()
+      (set! count (+ 1 count))
+      count)))
+
+(define counter (make-counter))
+
+(list (counter) (counter) (counter))    ; => (1 2 3)
+(list (counter) (counter) (counter))    ; => (4 5 6)
+
+(set! counter (make-counter))
+(list (counter) (counter) (counter))    ; => (1 2 3)
+\end{minted}
+
+Every procedure call of \texttt{counter} adds 1 to a "hidden" value
+somehow remembered by \texttt{counter}.  The \emph{hidden} value is \emph{closure}.
+\end{frame}
+\end{document}
