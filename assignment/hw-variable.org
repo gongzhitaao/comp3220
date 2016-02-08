@@ -1,11 +1,119 @@
-#+TITLE: =C++= Excercise
-#+SETUPFILE: ../general-setup.org
+#+TITLE: Variable Review
+#+SETUPFILE: assignment-setup.org
 
 * General Design Issue
 
   1. In what way are reserved words better than keywords?
+  2. Consider the following code snippet.
+     #+BEGIN_SRC cpp
+int a = 3;
 
-* Show Me You Code
+void foo(int a) {
+  // [1]
+  int b = 3;
+  // [2]
+}
 
-  1. Show me an alias in =C++= code.  What is the potential problem
-     with alias?
+int main() {
+  // [3]
+  int c = 3;
+  foo(c);
+  // [4]
+}
+     #+END_SRC
+     What is the referencing environment for each of the four
+     positions in the program?
+  3. Consider the following code snippet.
+     #+BEGIN_SRC js
+function fun1() {
+  var v0 = 0;
+
+  // [1]
+  function fun2() {
+    var v0 = 1;
+    // [2]
+    fun3();
+  }
+
+  function fun3() {
+    int v1 = 2;
+    // [3]
+  }
+}
+     #+END_SRC
+     What is the referencing environment for each of the three
+     positions in the program
+     - if static scoping is used?
+     - if dynamic scoping is used?
+  4. Consider the following code snippet.
+     #+BEGIN_SRC js
+function fun1() {
+  var v1 = 0;
+
+  function fun2() {
+    var v1 = 1;
+    fun3();
+  }
+
+  function fun3() {
+    console.log(v1);            // output v1
+  }
+
+  fun2();
+}
+
+fun1();
+     #+END_SRC
+     - Assume static/lexical scoping, what is the output?
+     - Assume dynamic scoping, what is the output?
+  5. Consider the following code snippet.
+     #+BEGIN_SRC js
+function fun1() {
+  var v1 = 0;
+
+  function fun2() {
+    var v1 = 1;
+
+    function fun3() {
+      console.log(v1);            // output v1
+    }
+
+    fun3();
+  }
+
+  fun2();
+}
+
+fun1();
+
+     #+END_SRC
+     - Assume static/lexical scoping, what is the output?
+     - Assume dynamic scoping, what is the output?
+  6. Consider the following code snippet.
+     #+BEGIN_SRC cpp
+int a = 0;
+
+int foo(int e) {
+  static int b = 3;
+  int c = 4;
+}
+
+int main() {
+  {
+    int d = 0;
+  }
+  foo();
+}
+     #+END_SRC
+     What is the lifetime and scope of ~a~, ~b~, ~c~, ~d~ and ~e~?
+
+* Show Me Your Code
+
+  1. Show me an alias in =C++= code.  What are the potential problems
+     with alias in =C++=?
+
+# Local Variables:
+# eval: (add-to-list 'org-latex-text-markup-alist '(verbatim . "\\cpp/%s/"))
+# End:
+
+#  LocalWords:  SETUPFILE SRC cpp js eval alist

@@ -10,8 +10,7 @@
 #+MACRO: BF Brainfuck
 
 #+BEGIN_abstract
-Choose one of the programming language, i.e., =C++=, =Python= or
-=Javascript= and implement an /interpreter function/ for {{{BF}}}.
+Implement an /interpreter function/ for {{{BF}}} in =C++=.
 #+END_abstract
 
 * Introduction
@@ -28,9 +27,9 @@ Choose one of the programming language, i.e., =C++=, =Python= or
 ** The Original {{{BF}}}
 
    The Brainfuck programming language /ignores/ all characters other
-   than "=+-.,<>[]=", i.e., plus/minus sign, dot and comma, and
-   angle/square bracket, totally eight ASCII characters.  Their
-   effects are summarized in \autoref{tab:bf}.
+   than eight characters: "=+-.,<>[]=", i.e., plus/minus sign, dot and
+   comma, and angle/square bracket.  Their effects are summarized in
+   \autoref{tab:bf}.
 
    #+CAPTION: The {{{BF}}} Programming Languages
    #+NAME: tab:bf
@@ -113,16 +112,11 @@ Choose one of the programming language, i.e., =C++=, =Python= or
 
 * Requirement
 
-  - Accepted languages ::
-       Choose one from =C++=, =Python= and =Javascript=.  For each
-       accepted programming language, I provide start-up code and
-       example test code.  You should modify the start-up code and fill
-       out your implementation.
   - Deliverable ::
        Zip the modified start-up code in a file, named
        *=your_auburn_username.zip=*, e.g., =zzg0009.zip=.
   - Submission ::
-       This is a individual project.  Please submit on Canvas before
+       This is an individual project.  Please submit on Canvas before
        the deadline (*Apr 30, 2016*).  /LATE SUBMISSION IS NOT
        ACCEPTED/.
 
@@ -134,20 +128,21 @@ Choose one of the programming language, i.e., =C++=, =Python= or
   \(S\) for term project is calculated as
 
   \[
-  S = 100 - 60\times\frac{M}{N}
+  S = 30 + 70\times\frac{M}{N}
   \]
 
   Where \(N\) is the total number of test cases, and \(M\) is the
-  number of tests your code successfully passes.
-
-
+  number of tests your code successfully passes.  So long as you
+  submit your code, you get at least 30 points.  If you, however,
+  intentionally submit an unfinished code or even empty project, you
+  get ZERO.
 
 \printbibliography
 
 * Footnotes
 
 [fn:1] Actually according to the author of {{{BF}}}, the dot command
-=.= should output the ASCII code under pointer. However his
+=.= should output the ASCII code under pointer.  However his
 implementation used =putchar= which prints the character itself rather
 than its ASCII code.
 

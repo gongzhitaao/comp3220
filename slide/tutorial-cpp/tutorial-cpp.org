@@ -184,7 +184,6 @@ cout << "Hello World!" << endl;
      The standard-library components are perfectly ordinary =C++= code
      provided by /every/ =C++= implementation.
 
-
 * =C++= Basics
 
 ** Variable

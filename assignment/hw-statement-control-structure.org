@@ -1,0 +1,43 @@
+#+TITLE: Review Statement and Control Structure
+#+SETUPFILE: ../general-setup.org
+#+LATEX_HEADER: \usepackage{algorithm2e}
+
+* Control Structure
+
+  1. Re-implement the following loops with only =if= and =goto=.
+
+     #+BEGIN_LaTeX
+     \begin{algorithm}
+       \While{\(i > 0\)}{
+         \(\cdots\)\;
+         \(i\leftarrow i - 1\)\;
+       }
+     \end{algorithm}
+     #+END_LaTeX
+
+     #+BEGIN_LaTeX
+     \begin{algorithm}
+       \For{\(i\leftarrow 0\) \KwTo \(10\)}{
+         \(\cdots\)\;
+       }
+     \end{algorithm}
+     #+END_LaTeX
+
+  2. Rewrite the following program without =goto=.
+
+     #+BEGIN_SRC cpp
+#include <random>
+#include <iostream>
+int main() {
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution<> dis(0, 1);
+  int sum = 0;
+  int i = 5;
+  if (dis(gen) > 0.5) goto loop;
+  for (i = 0; i < 10; ++i) {
+ loop:
+    sum += i;
+  }
+}
+     #+END_SRC
