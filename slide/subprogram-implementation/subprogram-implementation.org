@@ -1,0 +1,360 @@
+#+TITLE: Subprogram Implementation
+#+SETUPFILE: ../slide-setup.org
+
+* Introduction
+
+** Linkage
+
+   - Subprogram Linkage :: The subprogram call and return operations.
+
+** Call Semantics
+
+   - Parameter passing.  Pass parameter values or access path.
+   - Storage Allocation.  Allocate space for non static local
+     variables and bind these variables to the storage.
+   - Save the caller's execution status, i.e., register values, CPU
+     status bits, and the environment pointer (EP).
+   - Make sure control is transferred to the callee when entering and
+     back to the caller when exiting.
+   - Access to non local variable in case of nested subprograms.
+
+** Return Semantics
+
+   - In case of out mode parameters implemented by /copy/, move the
+     values of associated formal parameters to the actual parameters.
+   - Return values.
+   - Deallocate the storage for local variables.
+   - Restore the execution status of the caller.
+   - Transfer control back to caller.
+
+** Runtime Stack
+
+   The /call/ and /return/ semantics specify that the subprogram last
+   called is the first to complete, i.e., First-In Last-Out (FILO).
+   So it natural to use /STACK/.
+
+** Activation Record
+
+   Subprogram consists of two separate parts:
+   1. the actual code of the subprogram, which is fixed, and
+   2. the non-code, e.g., local variables and data, which may change
+      when the subprogram is executed.
+
+
+   - Activation Record :: Specifies the format, or layout, of the
+        non code part of a subprogram.  The form of an activation
+        record is /static/.
+
+
+** Activation Record Instance
+
+   - Activation Record Instance (ARI) :: A concrete example of an
+        activation record.  During activation, whether recursive or
+        non-recursive, a /new/ instance of an activation record is
+        created on the /stack/, including a separate copy of
+     - the parameters
+     - local variables, and
+     - return address.
+
+
+* Implement with Static Local Variables
+
+** /Simple/ Subprogram
+
+   - Subprogram cannot be nested. and
+   - all local variables are /static/.
+
+** Call Semantics
+
+   - Save the execution status of the caller.
+   - Parameter Passing. Compute and pass the parameters.
+   - +Space allocation+.
+   - Pass the return address to the callee.  The return address
+     usually consists of a pointer to the instruction following the
+     call in the code segment of the calling program unit.
+   - Transfer control to the callee.
+
+** Return Semantics
+
+   - Pass values to out mode actual parameters.
+   - Make return values accessible to caller.
+   - +Deallocation+.
+   - Restore caller's execution status.
+   - Transfer control back to caller.
+
+** Who Does What -- Call
+
+*** Action                                                            :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :END:
+
+    - Save the execution status of the caller.
+    - Parameter Passing.
+    - Pass the return address to the callee.
+    - Transfer control to the callee.
+
+
+    \pause
+
+*** Doer                                                              :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.3
+    :END:
+
+    - Either one
+    - Caller
+    - Caller
+    - Caller
+
+** Who Does What -- Return
+
+*** Action                                                            :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :END:
+
+    - Pass values to out mode parameters.
+    - Make return values accessible to caller.
+    - Restore caller's execution status.
+    - Transfer control back to caller.
+
+
+    \pause
+
+*** Doer                                                              :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.3
+    :END:
+
+    - Callee
+    - Callee
+    - Either one
+    - Callee
+
+** Linkage Bookkeeping
+
+   We need storage for
+
+   - Status information about the caller
+   - Parameters
+   - Return address
+   - Return value, if any
+   - Local variables
+
+** Activation Record
+
+*** Dummy                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.4
+    :END:
+
+    [[file:img/simple-act-record.pdf]]
+
+    #+BEGIN_SRC cpp
+void f1(int f1a) {
+ static int f1b;
+}
+void f2(int f2a) {
+  static int f2b;
+}
+int main() {
+  static int m;
+  f1(0);
+  f2(0);
+}
+    #+END_SRC
+
+*** Realization                                                       :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.6
+    :END:
+
+    Gathered by /linker/, a.k.a. loader, link editor.
+
+    [[file:img/simple-inst.pdf]]
+
+* Implement with Stack-Dynamic Local Variables
+
+** Non-Simple Subprogram
+
+   - Subprogram can +not+ be nested. and
+   - all local variables are +static+ /stack-dynamic/.
+
+
+   So what?
+
+   \pause
+
+   - The compiler must generate code to cause the implicit allocation
+     and deallocation of local variables.
+   - In case of recursion, there can be more than one instance and
+     each activation requires its activation record instance
+
+** Activation Record
+
+   The /dynamic link/ is a pointer to the base of the activation
+   record instance of the caller.
+
+*** Dummy                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.3
+    :END:
+
+    [[file:img/complex-act-record.pdf]]
+
+*** Dummy                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :END:
+
+    1. In static scoping, this link is used to provide traceback
+       information when a run-time error occurs.
+    2. In dynamic scoping, the dynamic link is used to access non
+       local variables.
+
+** ~EP~ Pointer
+
+   ~EP~, a.k.a. /E/-xtreme stack /P/-ointer, points at the base, or
+   first address of the activation record instance of the main
+   program.
+
+   1. When a subprogram is called, the current EP is saved in the new
+      activation record instance as the /dynamic link/.
+   2. When a subprogram returns,
+      - the stack top is set to the \(\text{EP} - 1\) and
+      - the EP is set to the dynamic link.
+
+** Call Semantics
+
+   By Caller
+
+   - /Create an activation record instance/.
+   - Save the execution status of the current program unit.
+   - Compute and pass the parameters.
+   - Pass the return address to the called.
+   - Transfer control to the called.
+
+
+   \pause By Callee
+
+   - Save the old EP in the stack as the dynamic link and create the
+     new value.
+   - Allocate local variables.
+
+** Return Semantics
+
+   By Callee
+
+   - Copy value back if necessary.
+   - Make return value, if any, accessible to the caller.
+   - Set EP to the correct value.
+   - Restore the execution status of the caller.
+   - Transfer control back to the caller.
+
+** Example -- Non-Recursive Calls 1
+
+*** Code                                                              :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.35
+    :END:
+
+    #+BEGIN_SRC c
+void fun1(float v) {
+  int a, b;
+  /* [1] */
+  fun2(a);
+}
+void fun2(int x) {
+  int y;
+  fun3(y);
+}
+void fun3(int a) {
+}
+void main() {
+  float p;
+  fun1(p);
+}
+    #+END_SRC
+
+*** Stack Content                                                     :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.65
+    :END:
+
+    [[file:img/ex-non-rec-1.pdf]]
+
+** Example -- Non-Recursive Calls 2
+
+*** Code                                                              :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.35
+    :END:
+
+    #+BEGIN_SRC c
+void fun1(float v) {
+  int a, b;
+  fun2(a);
+}
+void fun2(int x) {
+  int y;
+  /* [2] */
+  fun3(y);
+}
+void fun3(int a) {
+}
+void main() {
+  float p;
+  fun1(p);
+}
+    #+END_SRC
+
+*** Stack Content                                                     :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.65
+    :END:
+
+    [[file:img/ex-non-rec-2.pdf]]
+
+** Example -- Non-Recursive Calls 3
+
+*** Code                                                              :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.35
+    :END:
+
+    #+BEGIN_SRC c
+void fun1(float v) {
+  int a, b;
+  fun2(a);
+}
+void fun2(int x) {
+  int y;
+  fun3(y);
+}
+void fun3(int a) {
+  /* [3] */
+}
+void main() {
+  float p;
+  fun1(p);
+}
+    #+END_SRC
+
+*** Stack Content                                                     :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.65
+    :END:
+
+    [[file:img/ex-non-rec-3.pdf]]
+
+
+
+* Implement Static Scoping
+
+* Implement Dynamic Scoping
+
+* COMMENT Dummy
+
+#  LocalWords:  SETUPFILE EP callee Deallocate Deallocation BMCOL SRC
+#  LocalWords:  BEAMER cpp deallocation

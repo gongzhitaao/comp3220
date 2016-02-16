@@ -1,6 +1,7 @@
 #+TITLE: PPL -- Spring 2016
 #+SETUPFILE: ../general-setup.org
 #+OPTIONS: toc:2 num:2 H:3 ^:nil pri:t
+#+STARTUP: showall hideblocks
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://gongzhitaao.github.io/orgcss/org.css"/>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="css/ppl.css"/>
@@ -91,15 +92,27 @@
    | Total        |    100 |
    #+TBLFM: @6$2=vsum(@I..@II)
 
-** Late Work Policy
+** Submission Policy
    :PROPERTIES:
-   :CUSTOM_ID: sec:late-work-policy
+   :CUSTOM_ID: sec:submission-policy
    :END:
 
-   Be sure to subscribe to Canvas notifications and pay close
-   attention to deadlines.  There will be *NO* make up assignments or
-   quizzes, or late work accepted without a serious and compelling
-   reason and instructor approval.
+   Please review this following submission policy CAREFULLY.
+
+   - NO LATE SUBMISSION :: Be sure to subscribe to Canvas
+        notifications and pay close attention to deadlines.  There
+        will be *NO* make up assignments or quizzes, or late work
+        accepted without a serious and compelling reason (e.g., alien
+        invasion, zombie outbreak, petrified by Voldemort) and my
+        almighty approval.
+   - MAKE SURE IT IS VALID :: It is your responsibility to make sure
+        the files you submitted is valid.
+
+     1. If you /intentionally/ submit an empty placeholder, it is
+        your fault.  No makeup for it.
+
+     2. If you /unintentionally/ submit an empty file, it is also your
+        fault.  No makeup for it either.
 
 ** Letter Grade
    :PROPERTIES:
@@ -295,7 +308,7 @@ jsdom.jQueryify(window, 'http://code.jquery.com/jquery-2.2.0.min.js', function (
   :END:
 
   Notes on operator notations are from https://en.wikipedia.org.
-  Notes on Compiler optimization on associativity is adpated from
+  Notes on Compiler optimization on associativity is adapted from
   \cite{kliger2015}\cite{dair2015}.
 
   The =C++= version we use is =C++11= and above.  The tutorial is
@@ -306,7 +319,7 @@ jsdom.jQueryify(window, 'http://code.jquery.com/jquery-2.2.0.min.js', function (
   The =Scheme= version we use is R\(^{6}\)RS (The Revised\(^{6}\)
   Report on the Algorithmic Language =Scheme=) \cite{r6rs}, which
   could be found [[http://www.r6rs.org/]].  Tutorial on =Scheme= is
-  adpated from \cite{r6rs}\cite{sitaram2015}.  Equality predicates
+  adapted from \cite{r6rs}\cite{sitaram2015}.  Equality predicates
   comparison is adapted from \cite{shah2013}.  Notes about guile
   features are from \cite{guile}.
 
@@ -317,3 +330,13 @@ jsdom.jQueryify(window, 'http://code.jquery.com/jquery-2.2.0.min.js', function (
 [fn:1] Available online: http://www.webber-labs.com/mpl/.
 
 [fn:2] Available online: http://www.webber-labs.com/fl/
+
+#  LocalWords:  PPL SETUPFILE toc num pri STARTUP showall hideblocks
+#  LocalWords:  stylesheet css href automata Zhitao zzg TigerMail wzw
+#  LocalWords:  Wenlu Wednsday Sebesta Webber fn TBLFM vsum SRC js fs
+#  LocalWords:  html req async jsdom utf classday mon fri daysOfWeek
+#  LocalWords:  YYYY ddd pdflink pdf ziplink rowspan lnk ret td attr
+#  LocalWords:  ul itm faq lightbulb li createTextNode jQueryify th
+#  LocalWords:  jQuery thead dat cls kliger dair Bjarne
+#  LocalWords:  cplusplus stroustrup Stroustrup's sitaram nobibsource
+#  LocalWords:  nokeywords

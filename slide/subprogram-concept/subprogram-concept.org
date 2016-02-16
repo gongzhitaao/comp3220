@@ -191,6 +191,81 @@ kwargs = {'v1': 1, 'v2': 2}     # a dict
 func(**kwargs)                  # -> func(v1=1, v2=2)
    #+END_SRC
 
+** Design Issues
+
+   1. Are side effects allowed?
+   2. What types of values can be returned?
+   3. How many values can be returned?
+
+** Generic Subprograms
+
+   Why? \pause Programmers are lazy.
+
+   - Ad hoc polymorphism :: Overloaded subprograms need not behave
+        similarly.  The only bond is the name.
+   - Subtype polymorphism :: A variable of type T can access any
+        object of type T or any type derived from T.
+   - Parametric polymorphism :: A subprogram that takes generic
+        parameters that are used in type expressions that describe the
+        types of the parameters of the subprogram.  E.g., =C++=
+        template.
+
+
+   More general polymorphism as provided by script languages.
+
+* Closure
+
+** Definition
+
+   - Closure :: A /subprogram/ and the /referencing environment/ where
+        it was defined.  The referencing environment is needed if the
+        subprogram is called from any arbitrary place in the program.
+
+   - Unlimited Extend Variable ::  Lifetime is that of the whole
+        program which usually means they must be heap-dynamic, rather
+        than stack-dynamic.
+
+** Closure in =C++=
+
+   #+BEGIN_SRC cpp
+#include <functional>
+#include <cstdio>
+auto func(int b) {
+  int a = 100;
+  int bb = b;
+  return f = [&a, b](int c) { a += 100; return a + b + c; };
+}
+int main() {
+  auto f = func(20);
+  printf("%d\n", f(3));
+  printf("%d\n----------------\n", f(3));
+  auto f2 = func(40);
+  printf("%d\n", f2(3));
+  printf("%d\n----------------\n", f2(3));
+  auto f3 = func(40);
+  printf("%d\n", f3(3));
+  printf("%d\n", f3(3));
+}
+   #+END_SRC
+
+** Closure in =Javascript=
+
+   #+BEGIN_SRC js
+function genf (a) {
+  var b = 30;
+
+  return function(c) {
+    return a + b + c;
+  };
+}
+
+var f = genf(100);
+console.log(f(1));
+console.log(f(2));
+   #+END_SRC
+
+   E.g., Extensively used in D3.
+
 * Parameter Passing
 
 ** Semantic Models
@@ -280,8 +355,15 @@ foo(v[p], p);
 
 ** Pass-by-Name
 
-   Literally substitue formal parameters with actual parameters.  In
-   =C++=, it is similar to /macro/ and /template/ implements this.
+   Literally substitute formal parameters with actual parameters.
+
+   - Formal parameter is bound to an access method at the time of the
+     subprogram call.
+   - Actual binding to a value or an address is delayed until the
+     formal parameter is assigned or referenced.
+
+   In =C++=, it is used at /compile time/, i.e., /macro/ and
+   /template/.
 
    #+BEGIN_SRC cpp
 #define min(x, y) ((x) < (y) ? (x) : (y))
@@ -291,16 +373,34 @@ int main() {
 }
    #+END_SRC
 
-* Generic Subprograms
+** Copy-on-Write (COW)
 
-* First Class Citizen
+   AKA /implicit sharing/, is an an optimization strategy.
 
-* Subprogram Overloading
+   #+BEGIN_SRC R
+foo <- function(x) {
+    ## now formal parameter and actual parameter uses the same buffer
+    ## until
+    x <- 3
+    ## now they use different buffer
+}
+   #+END_SRC
 
-* Closure
+   It is not restricted to parameter passing.
+
+   #+BEGIN_SRC cpp
+#include <string>
+int main() {
+  std::string x{"Hello"};
+  std::string y = x;  // y and x use the same buffer
+  y += ", World!";    // now y uses a different buffer, x still uses
+                      // the same old buffer
+}
+   #+END_SRC
 
 * COMMENT Dummy
 
 #  LocalWords:  SETUPFILE SRC cpp callee Coroutine Multi func BPL js
 #  LocalWords:  PL's Cont'd Javascript typeof Variadic iostream nums
-#  LocalWords:  cstdarg va args arg tuple kwargs Inout
+#  LocalWords:  cstdarg va args arg tuple kwargs Inout hoc Subtype bb
+#  LocalWords:  cstdio printf genf

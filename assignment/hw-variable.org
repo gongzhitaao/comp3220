@@ -39,7 +39,11 @@ function fun1() {
     int v1 = 2;
     // [3]
   }
+
+  fun2();
 }
+
+fun1();
      #+END_SRC
      What is the referencing environment for each of the three
      positions in the program
@@ -85,7 +89,6 @@ function fun1() {
 }
 
 fun1();
-
      #+END_SRC
      - Assume static/lexical scoping, what is the output?
      - Assume dynamic scoping, what is the output?

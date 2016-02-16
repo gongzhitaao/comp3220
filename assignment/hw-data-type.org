@@ -1,0 +1,100 @@
+#+TITLE: Data Type Review
+#+SETUPFILE: assignment-setup.org
+
+* Concepts
+  :PROPERTIES:
+  :CUSTOM_ID: sec:concepts
+  :END:
+
+  1. Given a 2-dimensional matrix
+
+     \[\begin{bmatrix}1 & 2 & 3\\4 & 5 & 6\\7 & 8 & 9\end{bmatrix}\]
+
+     Suppose we store multidimensional array in single block of
+     contiguous memory, i.e., in a long 1D array fashion.
+
+     1. If we use /row major order/ to fatten the 2D array, what does
+        look like in memory?
+     2. If we use /column major order/, what does it look like?
+
+  2. Briefly describe the /tombstone/ method.
+     1. What is it used for?
+     2. Describe the advantages and disadvantages.
+
+  3. Describe the two commonly used mechanism to determine whether two
+     types are equivalent.  And show me examples for both in ~C++~.
+
+* Show Me Your Code
+  :PROPERTIES:
+  :CUSTOM_ID: sec:show-me-your-code
+  :END:
+
+  Given a /single precision/ floating number in IEEE 754 format (i.e.,
+  =float= type), print out its sign bit, exponent and fraction.  See
+  the zip file for start-up code.
+
+  #+BEGIN_SRC cpp :exports none :tangle hint-data-type-review.cpp
+#include <iostream>
+#include <bitset>
+#include <limits>
+
+// If you don't know how to use std::bitset, please google.
+
+struct ieee_float
+{
+  std::bitset<1> sign;
+  std::bitset<8> exponent;
+  std::bitset<23> fraction;
+};
+
+ieee_float dissect_float(float num)
+{
+  ieee_float ret;
+
+  // TODO dissect the num and fill out ret
+
+  return ret;
+}
+
+// Overload the output operator to printout ieee_float.  You don't
+// need to change this function.
+std::ostream& operator<<(std::ostream& os, const ieee_float& v)
+{
+  os << "Sign:     " << v.sign << '\n'
+     << "Exponent: " << v.exponent << '\n'
+     << "Fraction: " << v.fraction << '\n';
+}
+
+int main()
+{
+  ieee_float v;
+
+  float v0 = 0.f;
+  v = dissect_float(v0);
+  std::cout << v0 << std::endl;
+  std::cout << v << std::endl;
+
+  float v1 = 1.f;
+  v = dissect_float(v1);
+  std::cout << v1 << std::endl;
+  std::cout << v << std::endl;
+
+  float v2 = std::numeric_limits<float>::infinity();
+  std::cout << v2 << std::endl;
+  v = dissect_float(v2);
+  std::cout << v << std::endl;
+}
+  #+END_SRC
+
+* Deliverable
+
+  For question in Section [[#sec:concepts]], please submit a doc file
+  (doc, docx, pdf or txt).  For the coding problem in Section
+  [[#sec:show-me-your-code]], please submit a zip file including your
+  modified cpp file.
+
+* COMMENT Dummy
+
+#  LocalWords:  SETUPFILE IEEE bmatrix SRC cpp iostream bitset google
+#  LocalWords:  struct ieee num ret TODO os const docx pdf txt
+#  LocalWords:  Makefile
