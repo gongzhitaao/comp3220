@@ -1,127 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-<!-- 2015-10-20 Tue 10:27 -->
-<meta  charset="utf-8">
-<meta  name="viewport" content="width=device-width, initial-scale=1">
-<title>Principle of Programming Languages</title>
-<meta  name="generator" content="Org-mode">
-<meta  name="author" content="Zhitao Gong">
-<meta  name="description" content="COMP 3220 Principle of Programming Languages, Auburn University"
->
-<meta  name="keywords" content="comp3220, principle of programming languages, auburn university&quot;">
-<link rel="stylesheet" href="/comp3220/css/normalize.css" type="text/css" />
-<link rel="stylesheet" href="/comp3220/css/font-awesome.min.css" type="text/css" />
-<link rel="stylesheet" href="https://gongzhitaao.github.io/orgcss/org.css" type="text/css" />
-<link rel="stylesheet" href="css/index.css" type="text/css" />
-</head>
-<body>
-<div id="content">
-<header>
-<h1 class="title">Principle of Programming Languages</h1>
-</header><hr >
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PPL &#x2013; Spring 2016</title><meta name="generator" content="Org-mode"><meta name="author" content="Zhitao Gong"><link rel="stylesheet" type="text/css" href="https://gongzhitaao.github.io/orgcss/org.css"><link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"><link rel="stylesheet" type="text/css" href="css/ppl.css"><script type="text/x-mathjax-config">MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
 
-<div class="abstract">
-<p>
-This course introduces the programming languages in a general way
-including a formal description of grammer, lexical and syntax
-analysis, i.e., parsing, and the basic components available in almost
-all programming languages.  Many of the materials here are summary
-from Concepts of Programming Languages (10th edition).
-</p>
-
-</div>
-
-<div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="sec:brief"><a id="orgheadline1"></a> <span class="comp3220-logo">P<sup>2</sup>L</span> &#x2013; Fall 2015</h2>
-<div class="outline-text-2" id="text-sec:brief">
-<ul class="org-ul">
-<li>Email: zzg0009 at TigerMail</li>
-<li>Office: <i>Shelby 2307</i></li>
-<li>Office Hour: <i>Wed 1000-1100</i></li>
-</ul>
-
-<p>
-TA is Mr. Ting Shen (tzs0033)
-</p>
-
-<table>
-
-
-<colgroup>
-<col  class="org-left">
-
-<col  class="org-left">
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left"><a href="http:/comp3220/hw1/">Homework 1</a></td>
-<td class="org-left"> <span class="due-date">due on Sep 7 2359</span></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="http:/comp3220/hw2">Homework 2</a></td>
-<td class="org-left"> <span class="due-date">due on Sep 11 2359</span></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="http:/comp3220/hw3">Homework 3</a></td>
-<td class="org-left"> <span class="due-date">due on Sep 18 2359</span></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="http:/comp3220/midterm-guide">Midterm Guide</a></td>
-<td class="org-left"> <span class="exam-date">In class exam on Sep 29</span></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="http:homework/hw4.pdf">Homework 4</a></td>
-<td class="org-left"> <span class="due-date">due on Nov 3 2359</span></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="http:homework/hw5.pdf">Homework 5</a></td>
-<td class="org-left"> <span class="due-date">due on Nov 10 2359</span></td>
-</tr>
-
-<tr>
-<td class="org-left">Homework 6</td>
-<td class="org-left"> <span class="due-date">due on Nov 17 2359</span></td>
-</tr>
-
-<tr>
-<td class="org-left">Final Guide</td>
-<td class="org-left"> <span class="exam-date">In class exam on Dec 3</span></td>
-</tr>
-
-<tr>
-<td class="org-left"><a href="http:/comp3220/project">Term Project</a></td>
-<td class="org-left"> <span class="due-date">due on Dec 1 2359</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-
-<div id="outline-container-orgheadline2" class="outline-2">
-<h2 id="sec:outline"><a id="orgheadline2"></a>Outline</h2>
-<div class="outline-text-2" id="text-sec:outline">
-<dl class="org-dl">
-<dt><a href="./introduction">Introduction</a></dt><dd>Brief about me and the course</dd>
-<dt><a href="./preliminary">Priliminaries</a></dt><dd>Overview of topics in this course.</dd>
-<dt><a href="./history">History</a></dt><dd>Brief history of some programming languages.</dd>
-<dt><a href="./describe-syntax-semantics">Describe Syntax &amp; Semantics</a></dt><dd>Formally describe syntax and sematics.</dd>
-<dt><a href="./lexical-syntax-analysis">Parsing</a></dt><dd>Algorithms for syntax and lexical anaylysis.</dd>
-<dt><a href="./variable">Variable</a></dt><dd>Fundamental semantic issues of variables.</dd>
-<dt><a href="http:slide/concurrency.pdf">Concurrency</a></dt><dd>Concurrent programming issues.</dd>
-</dl>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<a class="author"
-         href="http://gongzhitaao.org">Zhitao Gong</a> / <span
-         class="date">2015-10-20 Tue 10:27</span><span class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3.2)</span>
-</div>
-</body>
-</html>
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});</script><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script></head><body><div id="content"><header><h1 class="title">PPL &#x2013; Spring 2016</h1><p class="subtitle">COMP3220 &#x2013; Principle of Programming Languages</p></header><nav id="table-of-contents"><h2>Table of Contents</h2><div id="text-table-of-contents"><ul><li><a href="#sec:course-information">1. Course Information</a><ul><li><a href="#sec:course-description">1.1. Course Description</a></li><li><a href="#sec:instructor-information">1.2. Instructor Information</a></li><li><a href="#sec:course-materials">1.3. Course Materials</a></li></ul></li><li><a href="#sec:grading-policy">2. Grading Policy</a><ul><li><a href="#sec:graded-course-activities">2.1. Graded Course Activities</a></li><li><a href="#sec:submission-policy">2.2. Submission Policy</a></li><li><a href="#sec:letter-grade">2.3. Letter Grade</a></li></ul></li><li><a href="#sec:syllabus">3. Syllabus</a></li><li><a href="#sec:credit">4. Credit</a></li></ul></div></nav><div id="outline-container-orgheadline6" class="outline-2"><h2 id="sec:course-information"><a id="orgheadline6"></a><span class="section-number-2">1</span> Course Information</h2><div class="outline-text-2" id="text-sec:course-information"></div><div id="outline-container-orgheadline1" class="outline-3"><h3 id="sec:course-description"><a id="orgheadline1"></a><span class="section-number-3">1.1</span> Course Description</h3><div class="outline-text-3" id="text-sec:course-description"><p>This course covers</p><ol class="org-ol"><li>Three tutorials on programming languages, each in a different programming paradigm.</li><li>Basic programming language concepts, e.g., data type, variable, functions, user-defined types and etc.</li><li>Compiler basics, e.g., context-free grammar, automata.</li></ol><dl class="org-dl"><dt>Course Number</dt><dd>COMP 3220</dd><dt>Course Title</dt><dd>Principle of Programming Languages</dd><dt>Total Credit</dt><dd>3</dd><dt>Prerequisites</dt><dd>COMP 2210</dd><dt>Class Meeting</dt><dd>3 hours per week</dd><dt>Course Website</dt><dd><a href="http://auburn.edu/~zzg0009/comp3220/spring2016/">http://auburn.edu/~zzg0009/comp3220/spring2016/</a></dd></dl></div></div><div id="outline-container-orgheadline2" class="outline-3"><h3 id="sec:instructor-information"><a id="orgheadline2"></a><span class="section-number-3">1.2</span> Instructor Information</h3><div class="outline-text-3" id="text-sec:instructor-information"><dl class="org-dl"><dt>Instructor</dt><dd>Zhitao Gong<dl class="org-dl"><dt>Office</dt><dd>Shelby 2307</dd><dt>Office Hours</dt><dd>Friday 1000 &#x2013; 1100</dd><dt>Email</dt><dd>zzg0009 at TigerMail</dd></dl></dd><dt>Teaching Assistant</dt><dd>Wenlu Wang<dl class="org-dl"><dt>Office</dt><dd>Shelby 2319</dd><dt>Office Hours</dt><dd>Wednsday 1500 &#x2013; 1600</dd><dt>Email</dt><dd>wzw0022 at TigerMail</dd></dl></dd></dl></div></div><div id="outline-container-orgheadline5" class="outline-3"><h3 id="sec:course-materials"><a id="orgheadline5"></a><span class="section-number-3">1.3</span> Course Materials</h3><div class="outline-text-3" id="text-sec:course-materials"></div><div id="outline-container-orgheadline3" class="outline-4"><h4 id="orgheadline3">Required Textbook</h4><div class="outline-text-4" id="text-orgheadline3"><p><i>Concepts of Programming Languages</i>, tenth edition by Robert W. Sebesta.</p></div></div><div id="outline-container-orgheadline4" class="outline-4"><h4 id="orgheadline4">Recommended Texts</h4><div class="outline-text-4" id="text-orgheadline4"><p>You may find a complete list of the auxiliary materials in the Section <a href="#sec:syllabus">3</a></p><ul class="org-ul"><li><i>Essentials of Programming Languages</i>, Third edition by Daniel P. Friedman and Mitchell Wand.</li><li><i>Modern Programming Languages: A Practical Introduction</i>, Second Edition by Dr. Adam Brooks Webber<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>.</li><li><i>Formal Language: A Practical Introduction</i> by Adam Brooks Webber<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.</li></ul></div></div></div></div><div id="outline-container-orgheadline10" class="outline-2"><h2 id="sec:grading-policy"><a id="orgheadline10"></a><span class="section-number-2">2</span> Grading Policy</h2><div class="outline-text-2" id="text-sec:grading-policy"></div><div id="outline-container-orgheadline7" class="outline-3"><h3 id="sec:graded-course-activities"><a id="orgheadline7"></a><span class="section-number-3">2.1</span> Graded Course Activities</h3><div class="outline-text-3" id="text-sec:graded-course-activities"><p>All assignments details are posted on <a href="https://auburn.instructure.com/">Canvas</a>.</p><table id="orgtable1"><caption class="t-above"><span class="table-number">Table 1:</span> Grade weight distribution</caption><colgroup><col class="org-left"><col class="org-right"></colgroup><thead><tr><th scope="col" class="org-left">Description</th><th scope="col" class="org-right">Points</th></tr></thead><tbody><tr><td class="org-left">Assignment</td><td class="org-right">40</td></tr><tr><td class="org-left">Midterm Exam</td><td class="org-right">20</td></tr><tr><td class="org-left">Final Exam</td><td class="org-right">20</td></tr><tr><td class="org-left">Term Project</td><td class="org-right">20</td></tr></tbody><tbody><tr><td class="org-left">Total</td><td class="org-right">100</td></tr></tbody></table></div></div><div id="outline-container-orgheadline8" class="outline-3"><h3 id="sec:submission-policy"><a id="orgheadline8"></a><span class="section-number-3">2.2</span> Submission Policy</h3><div class="outline-text-3" id="text-sec:submission-policy"><p>Please review this following submission policy CAREFULLY.</p><dl class="org-dl"><dt>NO LATE SUBMISSION</dt><dd>Be sure to subscribe to Canvas notifications and pay close attention to deadlines. There will be <b>NO</b> make up assignments or quizzes, or late work accepted without a serious and compelling reason (e.g., alien invasion, zombie outbreak, petrified by Voldemort) and my almighty approval.</dd><dt>MAKE SURE IT IS VALID</dt><dd>It is your responsibility to make sure the files you submitted is valid.<ol class="org-ol"><li>If you <i>intentionally</i> submit an empty placeholder, it is your fault. No makeup for it.</li><li>If you <i>unintentionally</i> submit an empty file, it is also your fault. No makeup for it either.</li></ol></dd></dl></div></div><div id="outline-container-orgheadline9" class="outline-3"><h3 id="sec:letter-grade"><a id="orgheadline9"></a><span class="section-number-3">2.3</span> Letter Grade</h3><div class="outline-text-3" id="text-sec:letter-grade"><p>Final grades assigned for this course will be based on the percentage of total points earned and are assigned as shown in Table <a href="#orgtable2">2</a>. Note that your grade will be automatically <i>rounded up</i>.</p><table id="orgtable2"><caption class="t-above"><span class="table-number">Table 2:</span> Letter Grade</caption><colgroup><col class="org-left"><col class="org-left"></colgroup><thead><tr><th scope="col" class="org-left">Letter Grade</th><th scope="col" class="org-left">Percentage</th></tr></thead><tbody><tr><td class="org-left">A</td><td class="org-left">90% &#x2013; 100%</td></tr><tr><td class="org-left">B</td><td class="org-left">80% &#x2013; 89%</td></tr><tr><td class="org-left">C</td><td class="org-left">70% &#x2013; 79%</td></tr><tr><td class="org-left">D</td><td class="org-left">60% &#x2013; 69%</td></tr><tr><td class="org-left">F</td><td class="org-left">00% &#x2013; 59%</td></tr></tbody></table></div></div></div><div id="outline-container-orgheadline11" class="outline-2"><h2 id="sec:syllabus"><a id="orgheadline11"></a><span class="section-number-2">3</span> Syllabus</h2><div class="outline-text-2" id="text-sec:syllabus"><table><caption><ul><li><i class="fa fa-book"></i>book chapters</li><li><i class="fa fa-pencil-square-o"></i>written assignment</li><li><i class="fa fa-code"></i>programming assignment</li><li><i class="fa fa-bookmark-o"></i>optional reading</li><li><i class="fa fa-lightbulb-o"></i>hint</li><li><i class="fa fa-history"></i>exam review</li></ul></caption><thead><tr><th>Date</th><th>Topic</th><th>Assignment</th></tr></thead><tr class="language-concept"><td>2016-01-13 Wed</td><td><a href="slide/introduction.pdf">Introduction</a></td><td><ul><li><i class="fa fa-book"></i>Chapter 1 Preliminaries</li></ul></td></tr><tr class="tutorial"><td>2016-01-15 Fri</td><td rowspan="6"><a href="slide/tutorial-cpp.pdf">Tutorial C++</a></td><td rowspan="6"><ul><li><i class="fa fa-bookmark-o"></i><a href="http://www.stroustrup.com/bs_faq2.html">Bjarne Stroustrup's C++ Style and Technique FAQ</a></li><li><i class="fa fa-bookmark-o"></i><a href="http://www.stroustrup.com/Tour.html">A Tour of C++ by Bjarne Stroustrup</a></li><li><i class="fa fa-lightbulb-o"></i><a href="assignment/hint-term-project.zip">Term Project Startup Code</a></li><li><i class="fa fa-lightbulb-o"></i><a href="assignment/hint-cpp-excercise.zip">Programmer Excercise Startup Code</a></li><li><i class="fa fa-code"></i><a href="assignment/project.pdf">Term Project</a></li><li><i class="fa fa-code"></i><a href="assignment/hw-cpp.pdf">C++ Programming Excercise</a></li></ul></td></tr><tr class="tutorial"><td>2016-01-20 Wed</td></tr><tr class="tutorial"><td>2016-01-22 Fri</td></tr><tr class="tutorial"><td>2016-01-25 Mon</td></tr><tr class="tutorial"><td>2016-01-27 Wed</td></tr><tr class="tutorial"><td>2016-01-29 Fri</td></tr><tr class="language-concept"><td>2016-02-01 Mon</td><td rowspan="3"><a href="slide/variable.pdf">Variable</a></td><td rowspan="3"><ul><li><i class="fa fa-pencil-square-o"></i><a href="assignment/hw-variable.pdf">Variable Review</a></li><li><i class="fa fa-book"></i>Chapter 5 Names, Bindings, and Scopes</li></ul></td></tr><tr class="language-concept"><td>2016-02-03 Wed</td></tr><tr class="language-concept"><td>2016-02-05 Fri</td></tr><tr class="language-concept"><td>2016-02-08 Mon</td><td rowspan="3"><a href="slide/data-type.pdf">Date Type</a></td><td rowspan="3"><ul><li><i class="fa fa-lightbulb-o"></i><a href="assignment/hint-data-type-review.zip">Data Type Startup Code</a></li><li><i class="fa fa-pencil-square-o"></i><a href="assignment/hw-data-type.pdf">Data Type Review</a></li><li><i class="fa fa-book"></i>Chapter 6 Date Types</li></ul></td></tr><tr class="language-concept"><td>2016-02-10 Wed</td></tr><tr class="language-concept"><td>2016-02-12 Fri</td></tr><tr class="language-concept"><td>2016-02-15 Mon</td><td rowspan="3"><a href="slide/statement-control-structure.pdf">Statement and Control Structure</a></td><td rowspan="3"><ul><li><i class="fa fa-pencil-square-o"></i><a href="assignment/hw-control-structure.pdf">Control Structure Review</a></li><li><i class="fa fa-book"></i>Chapter 7 Expressions and Assignment Statements</li><li><i class="fa fa-book"></i>Chapter 8 Statement-Level Control Structures</li></ul></td></tr><tr class="language-concept"><td>2016-02-17 Wed</td></tr><tr class="language-concept"><td>2016-02-19 Fri</td></tr><tr class="exam"><td>2016-02-22 Mon</td><td><a href="slide/undefined.pdf">Midterm Exam</a></td><td><ul><li><i class="fa fa-history"></i><a href="exam/review-mid.pdf">Midterm Review</a></li></ul></td></tr><tr class="language-concept"><td>2016-02-24 Wed</td><td rowspan="2"><a href="slide/subprogram-concept.pdf">Subprogram Concept</a></td><td rowspan="2"><ul><li><i class="fa fa-pencil-square-o"></i><a href="assignment/hw-subprogram-concept.pdf">Subprogram Concept Review</a></li><li><i class="fa fa-book"></i>Chapter 9 Subprograms</li></ul></td></tr><tr class="language-concept"><td>2016-02-26 Fri</td></tr><tr class="language-concept"><td>2016-02-29 Mon</td><td rowspan="2"><a href="slide/subprogram-implementation.pdf">Subprogram Implementation</a></td><td rowspan="2"><ul><li><i class="fa fa-pencil-square-o"></i><a href="assignment/hw-subprogram-implementation.pdf">Subprogram Implementation Review</a></li><li><i class="fa fa-book"></i>Chapter 10 Implementing Subbprograms</li></ul></td></tr><tr class="language-concept"><td>2016-03-02 Wed</td></tr><tr class="compiler-basic"><td>2016-03-04 Fri</td><td><a href="slide/formal-language.pdf">Formal Language</a></td><td><ul><li><i class="fa fa-pencil-square-o"></i><a href="assignment/hw-formal-language.pdf">Formal Language Review</a></li></ul></td></tr><tr class="compiler-basic"><td>2016-03-07 Mon</td><td rowspan="2"><a href="slide/finite-automata.pdf">Finite State Automata</a></td><td rowspan="2"><ul><li><i class="fa fa-pencil-square-o"></i><a href="assignment/hw-fsa.pdf">Finite Automata Review</a></li></ul></td></tr><tr class="compiler-basic"><td>2016-03-09 Wed</td></tr><tr class="compiler-basic"><td>2016-03-11 Fri</td><td rowspan="2"><a href="slide/regex.pdf">Regular Expression</a></td><td rowspan="2"><ul><li><i class="fa fa-pencil-square-o"></i><a href="assignment/hw-regex.pdf">Regular Expression Review</a></li></ul></td></tr><tr class="compiler-basic"><td>2016-03-21 Mon</td></tr><tr class="compiler-basic"><td>2016-03-23 Wed</td><td rowspan="6"><a href="slide/cfg.pdf">Context Free Grammar</a></td><td rowspan="6"><ul><li><i class="fa fa-pencil-square-o"></i><a href="assignment/hw-cfg.pdf">Context Free Grammar Review</a></li><li><i class="fa fa-book"></i>Chapter 3 Describing Syntax and Semantics</li></ul></td></tr><tr class="compiler-basic"><td>2016-03-25 Fri</td></tr><tr class="compiler-basic"><td>2016-03-28 Mon</td></tr><tr class="compiler-basic"><td>2016-03-30 Wed</td></tr><tr class="compiler-basic"><td>2016-04-01 Fri</td></tr><tr class="compiler-basic"><td>2016-04-04 Mon</td></tr><tr class="tutorial"><td>2016-04-06 Wed</td><td rowspan="6"><a href="slide/tutorial-scheme.pdf">Tutorial Scheme</a></td><td rowspan="6"><ul><li><i class="fa fa-bookmark-o"></i><a href="http://www.r6rs.org/">R6RS</a></li><li><i class="fa fa-bookmark-o"></i><a href="http://www.gnu.org/software/guile/manual/">GNU Guile</a></li><li><i class="fa fa-bookmark-o"></i><a href="http://ds26gte.github.io/tyscheme/">Teacher yourself Scheme in Fixnum Days</a></li><li><i class="fa fa-code"></i><a href="assignment/hw-scheme.pdf">Scheme Programming Excercise</a></li></ul></td></tr><tr class="tutorial"><td>2016-04-08 Fri</td></tr><tr class="tutorial"><td>2016-04-11 Mon</td></tr><tr class="tutorial"><td>2016-04-13 Wed</td></tr><tr class="tutorial"><td>2016-04-15 Fri</td></tr><tr class="tutorial"><td>2016-04-18 Mon</td></tr><tr class="tutorial"><td>2016-04-20 Wed</td><td rowspan="6"><a href="slide/tutorial-prolog.pdf">Tutorial Prolog</a></td><td rowspan="6"><ul><li><i class="fa fa-bookmark-o"></i><a href="https://www.cis.upenn.edu/~matuszek/cis554-2015/">CIS 554</a></li><li><i class="fa fa-bookmark-o"></i><a href="http://www.gprolog.org/">GNU Prolog</a></li><li><i class="fa fa-code"></i><a href="assignment/hw-prolog.pdf">Prolog Programming Excercise</a></li></ul></td></tr><tr class="tutorial"><td>2016-04-22 Fri</td></tr><tr class="tutorial"><td>2016-04-25 Mon</td></tr><tr class="tutorial"><td>2016-04-27 Wed</td></tr><tr class="tutorial"><td>2016-04-29 Fri</td></tr><tr class="tutorial"><td>2016-05-02 Mon</td></tr><tr class="exam"><td>2016-05-04 Wed</td><td><a href="slide/undefined.pdf">Final Exam</a></td><td><ul><li><i class="fa fa-history"></i><a href="exam/review-final.pdf">Final Review</a></li></ul></td></tr></table></div></div><div id="outline-container-orgheadline12" class="outline-2"><h2 id="sec:credit"><a id="orgheadline12"></a><span class="section-number-2">4</span> Credit</h2><div class="outline-text-2" id="text-sec:credit"><p>Notes on operator notations are from <a href="https://en.wikipedia.org/">https://en.wikipedia.org/</a>. Notes on Compiler optimization on associativity is adapted from [<a href="#kliger2015">Kli15</a>,<a href="#dair2015">Dai15</a>].</p><p>The <code>C++</code> version we use is <code>C++11</code> and above. The tutorial is adapted from [<a href="#cplusplus">cpl14</a>,<a href="#stroustrup2014">Str14</a>]. More authority FAQ's about <code>C++</code> can be found on Bjarne Stroustrup's (creator of <code>C++</code>) website <a href="http://www.stroustrup.com/">http://www.stroustrup.com/</a>.</p><p>The <code>Scheme</code> version we use is R\(^{6}\)RS (The Revised\(^{6}\) Report on the Algorithmic Language <code>Scheme</code>) [<a href="#r6rs">SDF</a>], which could be found <a href="http://www.r6rs.org/">http://www.r6rs.org/</a>. Tutorial on <code>Scheme</code> is adapted from [<a href="#r6rs">SDF</a>,<a href="#sitaram2015">Sit15</a>]. Equality predicates comparison is adapted from [<a href="#shah2013">Sha13</a>]. Notes about guile features are from [<a href="#guile">GNU14</a>].</p><div id="bibliography"><h2>References</h2><table><tr valign="top"><td align="right" class="bibtexnumber">[<a name="cplusplus">cpl14</a>]</td><td class="bibtexitem">cplusplus. C++ language, Nov 2014. [&nbsp;<a href="http://www.cplusplus.com/doc/tutorial/">http</a>&nbsp;]</td></tr><tr valign="top"><td align="right" class="bibtexnumber">[<a name="dair2015">Dai15</a>]</td><td class="bibtexitem">Dair. What is the name of this code transformation that uses associativity of addition?, 2015. [&nbsp;<a href="http://cs.stackexchange.com/questions/48751/what-is-the-name-of-this-code-transformation-that-uses-associativity-of-addition">http</a>&nbsp;]</td></tr><tr valign="top"><td align="right" class="bibtexnumber">[<a name="guile">GNU14</a>]</td><td class="bibtexitem">GNU. Guile reference manual, 2014. [&nbsp;<a href="http://www.gnu.org/software/guile/manual/">http</a>&nbsp;]</td></tr><tr valign="top"><td align="right" class="bibtexnumber">[<a name="kliger2015">Kli15</a>]</td><td class="bibtexitem">Aleksey Kliger. Why doesn't gcc optimize a*a*a*a*a*a to (a*a*a)*(a*a*a)?, 2015. [&nbsp;<a href="http://stackoverflow.com/questions/6430448/why-doesnt-gcc-optimize-aaaaaa-to-aaaaaa">http</a>&nbsp;]</td></tr><tr valign="top"><td align="right" class="bibtexnumber">[<a name="r6rs">SDF<sup>+</sup>09</a>]</td><td class="bibtexitem">Michael Sperber, R.&nbsp;Kent Dybvig, Matthew Flatt, Anton Van&nbsp;Straaten, Robby Findler, and Jacob Matthews. Revised6 report on the algorithmic language scheme. <em>Journal of Functional Programming</em>, 19:1--301, 2009. [&nbsp;<a href="http://dx.doi.org/10.1017/S0956796809990074">DOI</a>&nbsp;| <a href="http://journals.cambridge.org/article_S0956796809990074">http</a>&nbsp;]</td></tr><tr valign="top"><td align="right" class="bibtexnumber">[<a name="shah2013">Sha13</a>]</td><td class="bibtexitem">Aadit&nbsp;M Shah. What is the difference between eq?, eqv?, equal?, and = in scheme?, Jul 2013. [&nbsp;<a href="http://stackoverflow.com/questions/16299246/what-is-the-difference-between-eq-eqv-equal-and-in-scheme">http</a>&nbsp;]</td></tr><tr valign="top"><td align="right" class="bibtexnumber">[<a name="sitaram2015">Sit15</a>]</td><td class="bibtexitem">Dorai Sitaram. Teach yourself scheme in fixnum days, Jun 2015. [&nbsp;<a href="http://ds26gte.github.io/tyscheme/">http</a>&nbsp;]</td></tr><tr valign="top"><td align="right" class="bibtexnumber">[<a name="stroustrup2014">Str14</a>]</td><td class="bibtexitem">Bjarne Stroustrup. <em>A Tour of C++</em>. The C++ in-depth series. Addison-Wesley, 2014. [&nbsp;<a href="https://books.google.com/books?id=-VNsAQAAQBAJ">http</a>&nbsp;]</td></tr></table></div></div></div><div id="footnotes"><h2 class="footnotes">Footnotes:</h2><div id="text-footnotes"><div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup><div class="footpara"><p class="footpara">Available online: <a href="http://www.webber-labs.com/mpl/">http://www.webber-labs.com/mpl/</a>.</p></div></div><div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup><div class="footpara"><p class="footpara">Available online: <a href="http://www.webber-labs.com/fl/">http://www.webber-labs.com/fl/</a></p></div></div></div></div></div><div id="postamble" class="status"><a class="author" href="http://gongzhitaao.org">Zhitao Gong</a> / <span class="date">2016-02-16 Tue 09:50</span><span class="creator">Emacs 24.5.1 (Org mode 8.3.2)</span></div></body></html>
