@@ -1,0 +1,43 @@
+#+TITLE: Review Midterm Exam
+#+SETUPFILE: exam-setup.org
+
+* Introduction
+
+  Difference between compiled languages and interpreted languages, or
+  compiler v.s. interpreter.
+
+* Tutorial -- ~C++~
+
+  You can read and understand simple ~C++~ code snippets.  In the
+  midterm exam, you are expected to execute simple code /within your
+  mind/ and write down the results.  You won't see the insane code
+  like =++ ++i;=.  And I won't ask you to write code on paper, never.
+  Because I hate it.
+
+* Variables
+
+  1. Special words in PL, i.e., keywords and reserved words.
+  2. Concepts of static type binding and dynamic type binding,
+     advantages and disadvantages.
+  3. Scope of variables, dynamic scoping and static scoping.
+  4. Lifetime of variables.
+
+* Data Type
+
+  1. Array.  Memory layout, compile type descriptor.
+  2. Record.  compile type descriptor.
+  3. Pointer problems
+  4. Type equivalence.  Name equivalence and structural equivalence.
+     ~C++~ example of type equivalence.
+
+* Statement and Control Structure
+
+  NOT COVERED IN MIDTERM EXAM.
+
+* COMMENT Dummy
+
+# Local Variables:
+# eval: (add-to-list 'org-latex-text-markup-alist '(verbatim . "\\cpp/%s/"))
+# End:
+
+#  LocalWords:  SETUPFILE eval alist cpp

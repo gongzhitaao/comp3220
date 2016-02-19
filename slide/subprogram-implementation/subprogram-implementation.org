@@ -27,7 +27,7 @@
    - Restore the execution status of the caller.
    - Transfer control back to caller.
 
-** Runtime Stack
+** Run-time Stack
 
    The /call/ and /return/ semantics specify that the subprogram last
    called is the first to complete, i.e., First-In Last-Out (FILO).
@@ -208,7 +208,7 @@ int main() {
     :BEAMER_col: 0.7
     :END:
 
-    1. In static scoping, this link is used to provide traceback
+    1. In static scoping, this link is used to provide trace-back
        information when a run-time error occurs.
     2. In dynamic scoping, the dynamic link is used to access non
        local variables.
@@ -348,13 +348,240 @@ void main() {
 
     [[file:img/ex-non-rec-3.pdf]]
 
+** Recursive Subprogram
 
+*** Activation Record                                                 :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.3
+    :END:
+
+    [[file:img/recursive-act-record.pdf]]
+
+*** Dummy                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.7
+    :END:
+
+    1. One more field is needed -- return value.
+    2. Local variable and parameter field are both /optional/.
+
+** Example -- Recursive Calls 1
+
+*** Code                                                              :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.35
+    :END:
+
+    #+BEGIN_SRC c
+int fact(int n) {
+  /* [1] */
+  if (n <= 1)
+    return 1;
+  return n * fact(n - 1);
+}
+
+int main() {
+  int v = fact(3);
+}
+    #+END_SRC
+
+*** Stack Content                                                     :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.65
+    :END:
+
+    [[file:img/ex-rec-1-1.pdf]]
+
+** Example -- Recursive Calls 1
+
+*** Code                                                              :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.35
+    :END:
+
+    #+BEGIN_SRC c
+int fact(int n) {
+  /* [1] */
+  if (n <= 1)
+    return 1;
+  return n * fact(n - 1);
+}
+
+int main() {
+  int v = fact(3);
+}
+    #+END_SRC
+
+*** Stack Content                                                     :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.65
+    :END:
+
+    [[file:img/ex-rec-1-2.pdf]]
+
+** Example -- Recursive Calls 1
+
+*** Code                                                              :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.35
+    :END:
+
+    #+BEGIN_SRC c
+int fact(int n) {
+  /* [1] */
+  if (n <= 1)
+    return 1;
+  return n * fact(n - 1);
+}
+
+int main() {
+  int v = fact(3);
+}
+    #+END_SRC
+
+*** Stack Content                                                     :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.65
+    :END:
+
+    [[file:img/ex-rec-1-3.pdf]]
+
+** Example -- Recursive Calls 2
+
+*** Code                                                              :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.35
+    :END:
+
+    #+BEGIN_SRC c
+int fact(int n) {
+  if (n <= 1)
+    return 1;
+  return n * fact(n - 1);
+  /* [2] */
+}
+
+int main() {
+  int v = fact(3);
+}
+    #+END_SRC
+
+*** Stack Content                                                     :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.65
+    :END:
+
+    [[file:img/ex-rec-2-1.pdf]]
+
+** Example -- Recursive Calls 2
+
+*** Code                                                              :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.35
+    :END:
+
+    #+BEGIN_SRC c
+int fact(int n) {
+  if (n <= 1)
+    return 1;
+  return n * fact(n - 1);
+  /* [2] */
+}
+
+int main() {
+  int v = fact(3);
+}
+    #+END_SRC
+
+*** Stack Content                                                     :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.65
+    :END:
+
+    [[file:img/ex-rec-2-2.pdf]]
+
+** Example -- Recursive Calls 2
+
+*** Code                                                              :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.35
+    :END:
+
+    #+BEGIN_SRC c
+int fact(int n) {
+  if (n <= 1)
+    return 1;
+  return n * fact(n - 1);
+  /* [2] */
+}
+
+int main() {
+  int v = fact(3);
+}
+    #+END_SRC
+
+*** Stack Content                                                     :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.65
+    :END:
+
+    [[file:img/ex-rec-2-3.pdf]]
+
+** Example -- Recursive Calls 3
+
+*** Code                                                              :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.35
+    :END:
+
+    #+BEGIN_SRC c
+int fact(int n) {
+  if (n <= 1)
+    return 1;
+  return n * fact(n - 1);
+}
+
+int main() {
+  int v = fact(3);
+  /* [3] */
+}
+    #+END_SRC
+
+*** Stack Content                                                     :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.65
+    :END:
+
+    [[file:img/ex-rec-3.pdf]]
 
 * Implement Static Scoping
+
+** Without Nested Subprograms
+
+   If subprogram nesting is not allowed, everything is fine. (why??)
+
+
+   \pause Because non local variables are all /global/ and resides in
+   a special block called /data segment/.
+
+
+** With Nested Subprograms
+
+
+   In case of nesting, non local variables are accessed in two steps
+
+   1. Find the ARI in the stack in which the variable was allocated.
+   2. Access the variable with the local offset within the ARI.
+
+
+   \pause
+
+   Fact: All /non static variables/ that can be /non-locally/ accessed
+   are in existing ARI and therefore are somewhere in the stack.
 
 * Implement Dynamic Scoping
 
 * COMMENT Dummy
 
 #  LocalWords:  SETUPFILE EP callee Deallocate Deallocation BMCOL SRC
-#  LocalWords:  BEAMER cpp deallocation
+#  LocalWords:  BEAMER cpp deallocation ARI

@@ -1,0 +1,5 @@
+#+SETUPFILE: ../general-setup.org
+#+OPTIONS: toc:nil author:nil
+#+STARTUP: showall hideblocks
+#+LATEX_HEADER: \usepackage[newitem,newenum]{paralist}
+#+LATEX_HEADER: \newmintinline[cpp]{cpp}{fontsize=\small}

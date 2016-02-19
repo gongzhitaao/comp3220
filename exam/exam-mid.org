@@ -1,0 +1,187 @@
+#+TITLE: Midterm Exam
+#+SETUPFILE: exam-setup.org
+
+\newpage
+
+* Read My Code
+
+  1. Show me the outputs.
+
+     #+BEGIN_SRC cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+  const char foo[10] = "1234";
+  cout << foo << endl;
+  const char bar[10] = "12340abcd";
+  cout << bar << endl;
+}
+     #+END_SRC
+
+     \vspace{10em}
+
+  2. Show me the outputs.
+
+     #+BEGIN_SRC cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+  int end = 5;
+  for (int i = 0; i < end; ++i, --end)
+    cout << i << endl;
+}
+     #+END_SRC
+
+     \newpage
+
+  3. Show me the outputs.
+
+     #+BEGIN_SRC cpp
+#include <iostream>
+using namespace std;
+
+int func(int a) {
+  static int b = a;
+  return b--;
+}
+
+int main() {
+  for (int i = 0; i < 3; ++i)
+    cout << func(i) << endl;
+}
+     #+END_SRC
+
+     \vspace{10em}
+
+  4. Show me the outputs.
+
+     #+BEGIN_SRC cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+  enum class Color {Red, Yellow, Green};
+  cout << int(Color::Red) << endl;
+  cout << int(Color::Yellow) << endl;
+  cout << int(Color::Green) << endl;
+}
+     #+END_SRC
+
+     \newpage
+
+  5. Show me the outputs.  /Hint: =char= is 8-bit./
+
+     #+BEGIN_SRC cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+  union U {
+    char a;
+    unsigned char b;
+  };
+
+  U u;
+  u.a = -1;
+  cout << int(u.b) << endl;
+}
+     #+END_SRC
+
+     \newpage
+
+* About Variables
+
+  1. There are two special words in programming languages, /keywords/
+     and /reserved words/.
+
+     1. Explain what is keyword and what is reserved word.
+     2. Please discuss the pros and cons of using reserved words.
+     \newpage
+
+  2. Consider the following code snippet.
+
+     #+BEGIN_SRC cpp
+namespace foo {
+extern int foo_a;
+}
+
+int g_a;
+
+namespace foo {
+
+int foo_a = 3;
+
+void func(int p) {
+  // [[1]]
+  int a = 3;
+  // [[2]]
+}}
+
+int main() {
+  {
+    int b = 3;
+  }
+  // [[3]]
+}
+     #+END_SRC
+
+     What is the reference environment for each of the three positions?
+     \newpage
+
+  3. Consider the following code snippet.
+
+     #+BEGIN_SRC cpp
+#include <cstdio>
+
+int x;
+
+void h() {
+  printf("%d\n",x);
+}
+
+void f() {
+  int x = 13;
+  h();
+}
+
+void g() {
+  int x = 12;
+  h();
+}
+
+int main() {
+  x = 14;
+  f();
+  g();
+}
+     #+END_SRC
+
+     1. If static scoping is used, what are the outputs?
+     2. If dynamic scoping is used, what are the outputs?
+
+     \newpage
+
+  4. Consider the following code snippet.
+
+     #+BEGIN_SRC cpp
+int* foo() {
+  int* a = new int{3};
+  return a;
+}
+
+int main() {
+  int* p = foo();
+  delete p;
+}
+     #+END_SRC
+
+     1. What is the scope of =a= and =p=?
+     2. What is the lifetime of =a= and =p=?
+
+* COMMENT Dummy
+
+
+#  LocalWords:  SETUPFILE newpage SRC cpp iostream namespace const
+#  LocalWords:  cout endl abcd vspace func enum extern
