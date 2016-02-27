@@ -1,0 +1,58 @@
+\documentclass[crop,border=2pt]{standalone}
+
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{positioning,scopes,arrows,shapes,decorations.pathreplacing}
+
+\begin{document}
+\begin{tikzpicture}[font=\sffamily,
+  mystack/.style={rectangle split,rectangle split parts=#1,draw,anchor=center},
+  myline/.style={->, rounded corners=5pt},
+  dynamiclink/.style={myline},
+  staticlink/.style={dynamiclink, dashed},
+  mydec/.style={decorate,decoration={brace,amplitude=2pt}}]
+
+  \node[mystack=20] (stk) {
+    Local \texttt{z}
+    \nodepart{two}Local \texttt{x}
+    \nodepart{three}Dynamic Link
+    \nodepart{four}Return to \texttt{f1}
+    \nodepart{five}Local \texttt{w}
+    \nodepart{six}Local \texttt{x}
+    \nodepart{seven}Dynamic Link
+    \nodepart{eight}Return to \texttt{f0}
+    \nodepart{nine}Local \texttt{v}
+    \nodepart{ten}Local \texttt{w}
+    \nodepart{eleven}Parameter \texttt{i}
+    \nodepart{twelve}Dynamic Link
+    \nodepart{thirteen}Return to \texttt{f0}
+    \nodepart{fourteen}Local \texttt{v}
+    \nodepart{fifteen}Local \texttt{w}
+    \nodepart{sixteen}Parameter \texttt{i}
+    \nodepart{seventeen}Dynamic Link
+    \nodepart{eighteen}Return to \texttt{main}
+    \nodepart{nineteen}Local \texttt{v}
+    \nodepart{twenty}Local \texttt{u}
+  };
+
+  \draw[dynamiclink] (stk.three east) -- ([xshift=.3cm]stk.three east) -- ([xshift=.3cm]stk.four split east) -- (stk.four split east);
+  \draw[dynamiclink] (stk.seven east) -- ([xshift=.3cm]stk.seven east) -- ([xshift=.3cm]stk.eight split east) -- (stk.eight split east);
+  \draw[dynamiclink] (stk.twelve east) -- ([xshift=.3cm]stk.twelve east) -- ([xshift=.3cm]stk.thirteen split east) -- (stk.thirteen split east);
+  \draw[dynamiclink] (stk.seventeen east) -- ([xshift=.3cm]stk.seventeen east) -- ([xshift=.3cm]stk.eighteen split east) -- (stk.eighteen split east);
+
+  \node [right=2.5cm of stk.text] (top) {Top};
+  \draw[myline] ([xshift=.3cm]stk.north east) -- (stk.north east);
+
+  \draw[mydec] ([xshift=-.1cm,yshift=.5mm]stk.four split west) --
+               ([xshift=-.1cm,yshift=-.5mm]stk.north west) node [black,midway,xshift=-1cm] {\texttt{f2} ARI};
+  \draw[mydec] ([xshift=-.1cm,yshift=.5mm]stk.eight split west) --
+               ([xshift=-.1cm,yshift=-.5mm]stk.four split west) node [black,midway,xshift=-1cm] {\texttt{f1} ARI};
+  \draw[mydec] ([xshift=-.1cm,yshift=.5mm]stk.thirteen split west) --
+               ([xshift=-.1cm,yshift=-.5mm]stk.eight split west) node [black,midway,xshift=-1cm] {\texttt{f0} ARI\(^2\)};
+  \draw[mydec] ([xshift=-.1cm,yshift=.5mm]stk.eighteen split west) --
+               ([xshift=-.1cm,yshift=-.5mm]stk.thirteen split west) node [black,midway,xshift=-1cm] {\texttt{f0} ARI\(^1\)};
+  \draw[mydec] ([xshift=-.1cm,yshift=.5mm]stk.south west) --
+               ([xshift=-.1cm,yshift=-.5mm]stk.eighteen split west) node [black,midway,xshift=-1cm] {\texttt{main} ARI};
+
+\end{tikzpicture}
+\end{document}

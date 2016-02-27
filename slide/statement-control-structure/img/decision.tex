@@ -1,0 +1,23 @@
+\documentclass[crop,border=0pt]{standalone}
+
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{positioning,scopes,arrows,shapes}
+
+\begin{document}
+\begin{tikzpicture}[node distance=0,
+  process/.style = {rectangle, minimum width=2cm, minimum height=.8cm,
+    text centered, fill=orange!30},
+  decision/.style = {diamond, minimum width=2cm, minimum height=.8cm,
+    text centered, fill=green!30, inner sep=0},
+  flow/.style = {draw,->,>=stealth}]
+
+  \node [decision] (cond) {condition};
+  \node [process, below left=.5cm of cond] (y) {statement};
+  \node [process, below right=.5cm of cond] (n) {statement};
+
+  \path[flow] (cond) -| node [above] {y} (y);
+  \path[flow] (cond) -| node [above] {n} (n);
+
+\end{tikzpicture}
+\end{document}
