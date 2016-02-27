@@ -813,16 +813,42 @@ int main() {
 
 ** Really World
 
-   #+BEGIN_SRC c
-void foo(int a, char b) {
-  int local0 = 111111;
-  int local1 = 222222;
-}
+*** Dummy                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.55
+    :END:
 
-int main() {
-  foo(0, 'c');
+    #+BEGIN_SRC c
+int foo(int a1, int a2, int a3,
+        int a4, int a5, int a6,
+        int a7, int a8, int a9) {
+  int local0 = 0x1111;
+  int local1 = 0x2222;
+  int local2 = 0x3333;
+  int local3 = 0x4444;
+  int local4 = 0x5555;
+  local0 = a1;
+  local1 = a2;
+  return 0x33;
 }
-   #+END_SRC
+int main() {
+  foo(0x1, 0x2, 0x3,
+      0x4, 0x5, 0x6,
+      0x7, 0x8, 0x9);
+  return 0;
+}
+    #+END_SRC
+
+*** Dummy                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.45
+    :END:
+
+    Note that on x86 machines, stack grows /downward/ to /lower/
+    memory address.
+
+    #+CAPTION: x86 Linux AR
+    [[file:img/real-act-record.pdf]]
 
 ** Summary
 
