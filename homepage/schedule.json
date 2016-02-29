@@ -21,7 +21,7 @@
                      { "type": "hint", "text": "Data Type Startup Code", "link": "hint-data-type-review"},
                      { "type": "book", "text": "Chapter 6 Date Types"}]},
     { "topic": "Statement and Control Structure", "link": "statement-control-structure", "span": 3, "class": "language-concept",
-      "assignment": [{ "type": "faq", "text": "Control Structure Review", "link": "hw-control-structure"},
+      "assignment": [{ "type": "faq", "text": "Statement and Control Structure Review", "link": "hw-statement-control-structure"},
                      { "type": "book", "text": "Chapter 7 Expressions and Assignment Statements"},
                      { "type": "book", "text": "Chapter 8 Statement-Level Control Structures"}]},
     { "topic": "Midterm Exam", "class": "exam",

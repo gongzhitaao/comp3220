@@ -140,7 +140,6 @@ int main() {
     & 1280 & . & 245 & \end{array}
     \]
 
-
 *** \(a + (b + c)\)                                           :B_block:BMCOL:
     :PROPERTIES:
     :BEAMER_env: block

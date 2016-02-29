@@ -1,5 +1,5 @@
 #+TITLE: Review Statement and Control Structure
-#+SETUPFILE: ../general-setup.org
+#+SETUPFILE: assignment-setup.org
 #+LATEX_HEADER: \usepackage{algorithm2e}
 
 * Control Structure

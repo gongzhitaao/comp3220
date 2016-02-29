@@ -4,7 +4,7 @@
 #+EMAIL: zzg0009@auburn.edu
 #+LANGUAGE: en
 #+CREATOR: Emacs 24.5.1 (Org mode 8.3.2)
-#+OPTIONS: ^:{}
+#+OPTIONS: ^:{} toc:nil
 #+LATEX_HEADER: \usepackage{svg}
 #+LATEX_HEADER: \usepackage[backend=biber,style=alphabetic]{biblatex}
 #+LATEX_HEADER: \fvset{fontsize=\footnotesize}

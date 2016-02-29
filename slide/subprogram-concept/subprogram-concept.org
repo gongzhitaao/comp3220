@@ -398,6 +398,14 @@ int main() {
 }
    #+END_SRC
 
+* Summary
+
+** Summary
+
+   1. Actual and formal parameter
+   2. Closure
+   3. Parameter passing
+
 * COMMENT Dummy
 
 #  LocalWords:  SETUPFILE SRC cpp callee Coroutine Multi func BPL js
