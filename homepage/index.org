@@ -311,6 +311,13 @@ jsdom.jQueryify(window, 'http://code.jquery.com/jquery-2.2.0.min.js', function (
   Notes on Compiler optimization on associativity is adapted from
   \cite{kliger2015}\cite{dair2015}.
 
+  Slides on formal languages (i.e., finite state automata, regular
+  expression, context-free grammar) are based on
+  1. book [[http://www.webber-labs.com/fl/][Formal Language: A Practical Introduction]] by Dr. Adam Brooks
+     Webber.
+  2. [[http://www.cs.rutgers.edu/~lou/314-f04-slides/][lecture notes]] by Dr. Louis Steinberg.
+  3. [[http://infolab.stanford.edu/~ullman/ialc/slides/slides7.pdf][lecture notes]] by Dr. Jeffrey D. Ullman.
+
   The =C++= version we use is =C++11= and above.  The tutorial is
   adapted from \cite{cplusplus}\cite{stroustrup2014}.  More authority FAQ's
   about =C++= can be found on Bjarne Stroustrup's (creator of =C++=)
