@@ -1,0 +1,59 @@
+#+TITLE: Variable Review Solution
+#+SETUPFILE: assignment-setup.org
+
+* General Design Issue
+
+  1. Refer to the textbook.
+  2. Note that global ~a~ may or may not be accessible in position [1]
+     and [2], depending on the language features.  In the exam I will
+     specify whether shadowed variables from outer scope are
+     accessible or not.
+
+     | Position | RE                        |
+     |----------+---------------------------|
+     | [1]      | ~a~ in foo                |
+     | [2]      | ~a~, ~b~ in foo           |
+     | [3]      | global ~a~                |
+     | [4]      | global ~a~, ~c~ in ~main~ |
+  3. If static scoping is used
+
+     | Position | RE                             |
+     |----------+--------------------------------|
+     | [1]      | ~v0~ in ~fun1~                 |
+     | [2]      | ~v0~ in ~fun2~                 |
+     | [3]      | ~v0~ in ~fun1~, ~v1~ in ~fun3~ |
+
+     If dynamic scoping is used
+
+     | Position | RE                             |
+     |----------+--------------------------------|
+     | [1]      | ~v0~ in ~fun1~                 |
+     | [2]      | ~v0~ in ~fun2~                 |
+     | [3]      | ~v0~ in ~fun2~, ~v1~ in ~fun3~ |
+
+  4. For static scoping
+
+     #+BEGIN_EXAMPLE
+0
+     #+END_EXAMPLE
+
+     For dynamic scoping
+
+     #+BEGIN_EXAMPLE
+1
+     #+END_EXAMPLE
+
+  5. For both,
+
+     #+BEGIN_EXAMPLE
+1
+     #+END_EXAMPLE
+
+  6.
+     | Variable | Lifetime                 | Scope          |
+     |----------+--------------------------+----------------|
+     | ~a~      | whole program            | global         |
+     | ~b~      | whole program            | local in ~foo~ |
+     | ~c~      | when ~foo~ is active     | local in ~foo~ |
+     | ~d~      | when the block is active | local in block |
+     | ~e~      | when ~foo~ is active     | local in ~foo~ |

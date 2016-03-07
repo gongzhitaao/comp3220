@@ -1,0 +1,65 @@
+#+TITLE: Subprogram Concept Review
+#+SETUPFILE: assignment-setup.org
+
+* Parameter Passing
+
+  Note that =printf= prints the corresponding values.  If you don't
+  know the formatter in =printf=, just Google.
+
+  1. Consider the following code snippet.
+
+     #+BEGIN_SRC c
+#INLCUDE <cstdio>
+
+int n;
+
+void foo(int k)
+{
+  n = n + 1;
+  k = k + 4;
+  printf("%d\n", n);
+}
+
+int main()
+{
+  n = 0;
+  foo(n);
+  printf("%d\n", n);
+}
+     #+END_SRC
+
+     1. If parameter =k= is passed by value, what are the outputs?
+        # 1 1
+     2. If parameter =k= is passed by copy (i.e., passed by
+        value-result), what are the outputs?
+        # 1 4
+     3. If parameter =k= is passed by reference, what are the outputs?
+        # 5 5
+
+  2. Consider the following code snippet.
+
+     #+BEGIN_SRC c
+#include <cstdio>
+
+void foo(int *p) {
+  ,*p = 5;
+  p = NULL;
+}
+
+int main()
+{
+  int x = 2;
+  int* q = &x;
+
+  foo(q);
+  printf("%d\n%d\n", x, q == NULL);
+}
+     #+END_SRC
+
+     Dose the program compile?
+     1. If yes, what are the outputs?
+     2. If no, what is the error?
+
+* COMMENT Dummy
+
+#  LocalWords:  SETUPFILE printf formatter SRC INLCUDE cstdio

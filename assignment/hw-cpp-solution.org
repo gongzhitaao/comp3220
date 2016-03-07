@@ -1,0 +1,50 @@
+#+TITLE: ~C++~ Exercises Solution
+#+SETUPFILE: assignment-setup.org
+
+* Does it Compile
+
+  #+ATTR_LaTeX: :environment inparaenum
+  1. (d)
+  2. (a)
+  3. (d)
+  4. (b)
+  5. (c)
+
+* Run The Code
+
+  1.
+     #+BEGIN_EXAMPLE
+Hello
+     #+END_EXAMPLE
+  2.
+     #+BEGIN_EXAMPLE
+3 3 3
+4 4 4
+40 40 40
+     #+END_EXAMPLE
+  3.
+     #+BEGIN_EXAMPLE
+foo
+     #+END_EXAMPLE
+  4.
+     #+BEGIN_EXAMPLE
+3
+     #+END_EXAMPLE
+  5.
+     #+BEGIN_EXAMPLE
+3
+2
+     #+END_EXAMPLE
+  6.
+     #+BEGIN_EXAMPLE
+234
+abcd2345678
+abcd2345678hello
+abcd2345678
+     #+END_EXAMPLE
+  7. Output whatever integer you input.  Stops at a non-integer input.
+  8.
+     #+BEGIN_EXAMPLE
+Hello
+Wor ld!
+     #+END_EXAMPLE
