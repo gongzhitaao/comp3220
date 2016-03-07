@@ -1,0 +1,46 @@
+\documentclass[crop,border=2pt]{standalone}
+
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{positioning,scopes,arrows,shapes,decorations.pathreplacing}
+
+\begin{document}
+\begin{tikzpicture}[font=\sffamily,
+  mystack/.style={rectangle split,rectangle split parts=#1,draw,anchor=center},
+  myline/.style={->, rounded corners=5pt},
+  mydec/.style={decorate,decoration={brace,amplitude=2pt}}]
+
+  \node[mystack=13] (stk) {
+    Parameter \texttt{a}
+    \nodepart{two}Dynamic Link
+    \nodepart{three}Return to \texttt{fun2}
+    \nodepart{four}Local \texttt{y}
+    \nodepart{five} Parameter \texttt{x}
+    \nodepart{six} Dynamic Link
+    \nodepart{seven} Return to \texttt{fun1}
+    \nodepart{eight}Local \texttt{a}
+    \nodepart{nine} Local \texttt{b}
+    \nodepart{ten} Parameter \texttt{v}
+    \nodepart{eleven} Dynamic Link
+    \nodepart{twelve} Return to \texttt{main}
+    \nodepart{thirteen} Local \texttt{p}
+  };
+
+  \draw[myline] (stk.two east) -- ([xshift=.3cm]stk.two east) -- ([xshift=.3cm]stk.seven split east) -- (stk.seven split east);
+  \draw[myline] (stk.six east) -- ([xshift=.5cm]stk.six east) -- ([xshift=.5cm]stk.twelve split east) -- (stk.twelve split east);
+  \draw[myline] (stk.eleven east) -- ([xshift=.3cm]stk.eleven east) -- ([xshift=.3cm]stk.south east) -- (stk.south east);
+
+  \node [right=2.5cm of stk.text] (top) {Top};
+  \draw[myline] ([xshift=.3cm]stk.north east) -- (stk.north east);
+
+  \draw[mydec] ([xshift=-.1cm,yshift=.5mm]stk.three split west) --
+               ([xshift=-.1cm,yshift=-.5mm]stk.north west) node [black,midway,xshift=-1cm] {\texttt{fun3} ARI};
+  \draw[mydec] ([xshift=-.1cm,yshift=.5mm]stk.seven split west) --
+               ([xshift=-.1cm,yshift=-.5mm]stk.three split west) node [black,midway,xshift=-1cm] {\texttt{fun2} ARI};
+  \draw[mydec] ([xshift=-.1cm,yshift=.5mm]stk.twelve split west) --
+               ([xshift=-.1cm,yshift=-.5mm]stk.seven split west) node [black,midway,xshift=-1cm] {\texttt{fun1} ARI};
+  \draw[mydec] ([xshift=-.1cm,yshift=.5mm]stk.south west) --
+               ([xshift=-.1cm,yshift=-.5mm]stk.twelve split west) node [black,midway,xshift=-1cm] {\texttt{main} ARI};
+
+\end{tikzpicture}
+\end{document}

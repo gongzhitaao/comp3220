@@ -1,0 +1,31 @@
+\documentclass[crop,tikz,border=1px]{standalone}
+
+\usetikzlibrary{shapes,arrows,positioning,scopes}
+
+\begin{document}
+\begin{tikzpicture}[font=\Large\sffamily,
+  block/.style = {fill=blue!20, minimum height=4em},
+  mytext/.style = {draw=none, text centered, text width=8em, minimum height=4},
+  mytext2/.style = {mytext, text width=5cm, fill=yellow!20, fill opacity=0.8, text opacity=1, rounded corners=10pt}]
+
+  \foreach \i/\n in {4/Recursively Enumerable,3/Context
+    Sensitive,2/Context Free,1/Regular}
+  {
+    \draw[block,fill opacity={\i * 0.2}] (0, {1 * \i}) ellipse ({2 * \i} and {1 * \i});
+    \node[mytext] (n\i) at (0, {2 * \i - 1}) {\n};
+  }
+
+  \node[mytext2, right=3cm of n1] (t1) {Finite State\\ Automaton (FSA)};
+  \node[mytext2, right=3cm of n2] (t2) {Non-deterministic\\ Pushdown Automaton};
+  \node[mytext2, right=3cm of n3] (t3) {Linear-bounded\\ non-deterministic\\ Turing machine};
+  \node[mytext2, right=3cm of n4] (t4) {Turing Machine};
+
+  {[dashed, thick]
+    \foreach \i in {1,2,3,4} {
+      \draw (n\i) -- (t\i);
+    }
+  }
+
+
+\end{tikzpicture}
+\end{document}

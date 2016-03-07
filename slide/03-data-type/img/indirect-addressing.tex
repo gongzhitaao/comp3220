@@ -1,0 +1,20 @@
+\documentclass[crop,border=0pt]{standalone}
+
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{fit,shapes,positioning,scopes,arrows}
+
+\begin{document}
+\begin{tikzpicture}
+
+  \node (a0) {1234};
+
+  \node [align=center,draw,shape=rectangle split,
+         rectangle split parts=3,
+         text width=.8cm,
+         minimum height=1.2em,
+         text centered,right=of a0] (mem0)
+         {\nodepart{one}0078 \nodepart{two} 3254 \nodepart{three}\ 'ab' };
+
+\end{tikzpicture}
+\end{document}
