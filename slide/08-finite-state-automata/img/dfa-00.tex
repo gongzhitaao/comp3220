@@ -1,0 +1,27 @@
+\documentclass[crop,tikz,border=1px]{standalone}
+
+\usepackage{color}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+
+\usetikzlibrary{arrows,positioning,scopes,automata}
+
+\begin{document}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+  distance=2cm,inner sep=2pt,minimum size=.6cm,
+  mystate/.style={state,text centered}]
+
+  \node[initial, mystate] (q0) {\(q_0\)};
+  \node[accepting, mystate] (q1) [right=of q0] {\(q_1\)};
+
+  {[every edge/.append style={bend left=20}]
+    \path (q0) edge node [above] {a} (q1)
+          (q1) edge node [below] {b} (q0);
+  }
+
+  {[every edge/.append style={loop above}]
+    \path (q0) edge node [above] {b} (q0)
+          (q1) edge node [above] {a} (q1);
+  }
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,251 @@
+#+TITLE: Finite State Automata
+#+SETUPFILE: ../slide-setup.org
+#+LATEX_HEADER: \usepackage{tikz}
+
+* Introduction
+
+** Goal -- Define A Language
+
+   One way To define a language
+
+   1. Construct an automaton (i.e., a kind of abstract computer) that
+      takes a string as input and produces a /yes/ or /no/ answer.
+   2. The language it defines is the set of all strings for which it
+      says yes.
+
+
+   The simplest kind of automaton is the /finite automaton/, which has
+   a /finite/ memory or /states/.
+
+** Automata Hierarchy
+
+*** Dummy                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :END:
+
+    #+CAPTION: All the automata
+    [[file:img/automata-theory.png]]
+
+*** Dummy                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :END:
+
+    - Combinational Logic used in computer circuits to perform Boolean
+      algebra on input signals and on stored data.  E.g., ALU.
+    - FSA used in communication protocol design, language parsing, etc.
+
+** Concepts and Representation
+
+   - State :: is a description of the status of a system that is
+        waiting to execute a transition.
+   - Transition :: is a set of actions to be executed when a condition
+        is fulfilled or when an event is received.
+
+
+   Representation include state/event table, UML state machine, SDL
+   state machine, etc.
+
+   #+ATTR_LaTeX: :width .6\textwidth
+   #+CAPTION: Toss A Coin
+   [[file:img/toss-coin.pdf]]
+
+* Man Wolf Goat Cabbage
+
+** The Problem
+
+   - Problem
+
+     - A man travels with wolf, goat and cabbage.
+     - He wants to cross a river from east to west.
+
+   - Conditions
+
+     - A rowboat is available, but only large enough for the man plus
+       one possession.
+     - Wolf eats goat if left alone together.
+     - Goat eats cabbage if left alone together
+
+   - Goal how can the man cross /without loss/?
+
+** Solution String
+
+   Four moves may be encoded as four symbols
+
+   - Man crosses with wolf \(w\)
+   - Man crosses with goat \(g\)
+   - Man crosses with cabbage \(c\)
+   - Man crosses with /nothing/ \(n\)
+
+
+   Then a sequence of moves constitute a string.  E.g., \(gnwgcng\):
+   cross with goat, cross back with nothing, cross with wolf, cross
+   back with goat, etc.
+
+** State and Transition
+
+   - State -- The current items on east \(E\) and west \(W\) bank
+     constitute the current state
+   - Transition -- The moves are transitions, i.e., they change the
+     current state.
+   - Man is represented with \(m\) which is \(not\) in the language.
+
+
+   #+ATTR_LaTeX: :width .7\textwidth
+   #+CAPTION: MWGC Example
+   [[file:img/mwgc-00.pdf]]
+
+** Transition Diagram Version 0
+
+   #+ATTR_LaTeX: :width .85\textwidth
+   [[file:img/mwgc-01.pdf]]
+
+** The Language of Solution
+
+   Given an alphabet \(\Sigma=\{w, g, c, n\}\), every path yields a
+   string \(x\in\Sigma^*\).  And all the strings constitute the
+   language of solutions.
+
+   \[\begin{aligned}\{x\in\{w, g, c, n\}^* \mid
+   &\text{ starts in the \emph{starting state,}}\\
+   &\text{ follows the transitions of } x \text{ and}\\
+   &\text{ ends in the \emph{accepting state }}\}\end{aligned}\]
+
+   The starting state is
+   #+ATTR_LaTeX: :width 1.2cm
+   [[file:img/mwgc-start.pdf]], and the accepting state is
+   #+ATTR_LaTeX: :width 1.2cm
+   [[file:img/mwgc-accepting.pdf]]
+
+   - The language is infinite.
+   - Two shortest strings in the language are \(gnwgcng\) and
+     \(gncgwng\).
+
+** Diagram Gets Stuck
+
+   What happens to strings not in the language, e.g., \(c\), \(gncn\).
+
+   The previous diagram is not complete, it gets stuck when the
+   strings are not solutions.
+
+   #+CAPTION: Error State
+   #+ATTR_LaTeX: :width 6cm
+   [[file:img/mwgc-error.pdf]]
+
+** Transition Diagram Version 1
+
+   #+ATTR_LaTeX: :width .8\textwidth
+   [[file:img/mwgc-02.pdf]]
+
+** Complete Specification
+
+   - The above diagram shows exactly /one/ transition from every state
+     on every symbol in \(\Sigma = \{w,g,c,n\}\).
+   - It gives a computational procedure for deciding whether a given
+     string is a solution:
+     1. Start in the start state, and
+     2. make one transition for each symbol in the string.
+     3. /Accept/ if end in the accepting state, /reject/ if error.
+
+* Deterministic Finite Automata
+
+** DFA Informal
+
+   - A diagram with /finite/ number of states, represented by circles.
+   - Two special states, the starting state (usually pointed to by an
+     arrow from start) and accepting state (usually double circled).
+   - For every state, for every symbol in \Sigma, there is exactly one
+     arrow labeled with that symbol going to another state (or loop
+     back to self)
+
+** DFA Defines Languages
+
+   - Given a string over \Sigma, the DFA can read the string and
+     follow its transition as denoted by the string.
+   - At the end of the string, if DFA reaches an accepting state, we
+     say /it accepts the string/, otherwise /it rejects the string/.
+   - The language defined by a DFA is /the set of strings in
+     \(\Sigma^*\) that it accepts/.
+
+** Example
+
+   #+BEGIN_CENTER
+   #+ATTR_LaTeX: :width .5\textwidth
+   #+CAPTION: DFA Toy Example
+   [[file:img/dfa-00.pdf]]
+   #+END_CENTER
+
+   - This DFA defines (a set-builder notation) \pause \(\{xa\mid
+     x\in\{a, b\}^*\}\).
+   - Meaningless states, may be omitted.
+
+** DFA Convention
+
+   - No two arrows have the same source and destination
+
+     #+ATTR_LaTeX: :width .5\textwidth
+     [[file:img/dfa-01.pdf]]
+
+   - Instead, one arrow with list of transitions (symbols)
+
+     #+ATTR_LaTeX: :width .5\textwidth
+     [[file:img/dfa-02.pdf]]
+
+** DFA Formal
+
+   A DFA \(\mathcal{M}\) is a 5-tuple
+
+   \[\mathcal{M} = (Q, \Sigma, \delta, q_0, F)\]
+
+   - \(Q\) /finite/ set of states
+   - \Sigma alphabet, i.e., /finite/ set of symbols
+   - \(\delta\in (Q\times\Sigma\to Q)\) transition function
+   - \(q_0\in Q\) the start state
+   - \(F\subseteq Q\) the set of accepting states
+
+** Example
+
+   #+BEGIN_CENTER
+   #+ATTR_LaTeX: :width .5\textwidth
+   #+CAPTION: This DFA defines \(\{xa\mid x \in \{a, b\}^*\}\)
+   [[file:img/dfa-00.pdf]]
+   #+END_CENTER
+
+   Formally, \(\mathcal{M} = (Q, \Sigma, \delta, q_0, F)\) where
+   - \(Q = \{q_0, q_1\}\)
+   - \(\Sigma = \{a, b\}\)
+   - \(F = {q_1}\)
+   - \(\delta(q_0, a) = q_1\), \(\delta(q_0, b) = q_0\), \(\delta(q_1,
+     a) = q_1\), \(\delta(q_1, b) = q_0\).
+
+** The \(\delta^*\) Function
+
+   - \(\delta\) defines 1-symbole moves
+   - \(\delta^*\) gives whole-string results by applying zero or more
+     \delta moves
+
+
+   \[\begin{aligned}
+   \delta^*(q, \epsilon) &= q\\
+   \delta^*(q, xa) &= \delta(\delta^*(q, x), a)
+   \end{aligned}\]
+
+** \(\mathcal{M}\) Accepts \(x\)
+
+   \(\delta^*(q, x)\) is the state \(\mathcal{M}\) ends up in,
+   starting from state \(q\) and reading all of string \(x\)
+
+   #+BEGIN_theorem
+   Given a DFA \(\mathcal{M} = (Q, \Sigma, \delta, q_0, F)\), a string
+   \(x\in\Sigma^*\) is accepted by \(\mathcal{M}\) if and only if
+   \(\delta^*(q_0, x)\in F\).
+   #+END_theorem
+
+* Non-deterministic Finite Automata
+
+* COMMENT Dummy
+
+#  LocalWords:  Automata SETUPFILE BMCOL BEAMER automata ALU FSA tikz
+#  LocalWords:  Combinational usepackage UML SDL ATTR LaTeX textwidth
+#  LocalWords:  gnwgcng MWGC emph gncgwng gncn

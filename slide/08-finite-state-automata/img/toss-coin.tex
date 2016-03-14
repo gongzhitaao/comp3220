@@ -1,0 +1,17 @@
+\documentclass[crop,tikz,border=1px]{standalone}
+
+\usetikzlibrary{arrows,positioning,scopes,automata}
+
+\begin{document}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,inner sep=2pt]
+
+  \node[initial, state] (head) {Head};
+  \node[state] (tail) [right=of head] {Tail};
+
+  \path (head) edge [bend left] node [above] {toss} (tail)
+        (tail) edge [bend left] node [below] {toss} (head)
+        (head) edge [loop above] node [above] {toss} (head)
+        (tail) edge [loop above] node [above] {toss} (tail);
+
+\end{tikzpicture}
+\end{document}

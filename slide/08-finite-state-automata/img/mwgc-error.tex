@@ -1,0 +1,14 @@
+\documentclass[crop,tikz,border=0pt]{standalone}
+
+\usetikzlibrary{automata, arrows}
+
+\begin{document}
+\begin{tikzpicture}[
+  mystate/.style={state,inner sep=2pt}]
+
+  \node[mystate] (err) {Error};
+  \path[->,>=stealth',shorten >=1pt,auto]
+      (err) edge [loop left] node [left] {\(m,w,g,c\)} (err);
+
+\end{tikzpicture}
+\end{document}

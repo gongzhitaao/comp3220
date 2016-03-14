@@ -1,6 +1,5 @@
 #+TITLE: Tutorial -- =C++=
 #+SETUPFILE: ../slide-setup.org
-#+LATEX_HEADER: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Content}\tableofcontents[currentsection]\end{frame}}
 
 * Get Started
 
@@ -1110,13 +1109,13 @@ all : complex-demo
 complex-demo : complex main
 
 complex : complex.cpp complex.h
-	$(CXX) -$(CXXFLAGS) -c -o libcomplex.so $<
+        $(CXX) -$(CXXFLAGS) -c -o libcomplex.so $<
 
 main : complex-demo.cpp complex
-	$(CXX) -$(CXXFLAGS) -L. -lcomplex $<
+        $(CXX) -$(CXXFLAGS) -L. -lcomplex $<
 
 clean :
-	rm -rf *.so *.out
+        rm -rf *.so *.out
 
 .PHONY : all clean complex-demo complex main
 
