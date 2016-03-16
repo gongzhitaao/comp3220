@@ -53,7 +53,7 @@
 
 * Man Wolf Goat Cabbage
 
-** The Problem
+** The Classic Riddle
 
    - Problem
 
@@ -159,7 +159,7 @@
      arrow labeled with that symbol going to another state (or loop
      back to self)
 
-** DFA Defines Languages
+** Concepts
 
    - Given a string over \Sigma, the DFA can read the string and
      follow its transition as denoted by the string.
@@ -242,10 +242,365 @@
    \(\delta^*(q_0, x)\in F\).
    #+END_theorem
 
+** Language Defined by DFA
+
+   For any DFA \(\mathcal{M} = (Q, \Sigma, \delta, q_0, F)\),
+   \(\mathcal{L}(\mathcal{M})\) denotes the language accepted by
+   \(\mathcal{M}\)
+
+   \[\mathcal{L}(\mathcal{M}) = \{x\in\Sigma^* \mid \delta^*(q_0,
+   x)\in F\}\]
+
 * Non-deterministic Finite Automata
+
+** NFA Advantage
+
+   \[\{x\in\{0,1\}^*\mid x\text{'s next-to-last symbol is 1}\}\]
+
+   \pause
+
+*** DFA                                                       :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :BEAMER_env: block
+    :END:
+
+    [[file:img/dfa-03.pdf]]
+
+    \pause
+
+*** NFA                                                       :B_block:BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :BEAMER_env: block
+    :END:
+
+    [[file:img/nfa-00.pdf]]
+
+** NFA Advantage Cont'd
+
+   \(\{xa \mid x\in\{a,b\}^*\}\)
+
+   \pause
+
+*** DFA                                                               :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :END:
+
+    [[file:img/dfa-00.pdf]]
+
+*** NFA                                                               :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.5
+    :END:
+
+    [[file:img/nfa-01.pdf]]
+
+** DFA v.s. NFA
+
+   - A DFA has exactly one transition from every state on every symbol
+     in the alphabet.
+   - By relaxing this requirement we get a related but more flexible
+     automaton: the non-deterministic finite automaton (NFA).
+   - DFA is a special case of NFA.
+
+** Simple NFA
+
+   #+BEGIN_CENTER
+   #+ATTR_LaTeX: :width .5\textwidth
+   #+CAPTION: Simple NFA
+   [[file:img/nfa-01.pdf]]
+   #+END_CENTER
+
+   Does not have exactly one transition from every state on every
+   symbol:
+
+   - Two transitions from \(q_0\) on symbol \(a\)
+   - No transitions from \(q_1\)
+
+** Possible Move Sequences
+
+   #+BEGIN_CENTER
+   #+ATTR_LaTeX: :width .5\textwidth
+   #+CAPTION: Simple NFA
+   [[file:img/nfa-01.pdf]]
+   #+END_CENTER
+
+   Consider all the possible move sequences for the string \(aa\).
+   - \(q_0\to q_0\) rejecting
+   - \(q_0\to q_1\) accepting
+   - \(q_0\to q_1\) stuck on the last a
+
+
+   \(\mathcal{M}\) accepts \(x\) (i.e., \(x\in
+   \mathcal{L}(\mathcal{M})\)) if there is /at least one accepting
+   sequence/.
+
+** \(\epsilon\)-Transition
+
+   #+BEGIN_CENTER
+   #+ATTR_LaTeX: :width .5\textwidth
+   [[file:img/nfa-02.pdf]]
+   #+END_CENTER
+
+   - NFA may make a state transition (spontaneously) without consuming
+     an input symbol, or consuming an \(\epsilon\).  (NFA-\epsilon)
+   - /DFA cannot/.
+
+** Accept \(\epsilon\)
+
+   #+BEGIN_CENTER
+   #+ATTR_LaTeX: :width .5\textwidth
+   [[file:img/nfa-02.pdf]]
+   #+END_CENTER
+
+   Consider all the possible move sequences for \epsilon, i.e., (empty
+   string)
+   - \(q_0\) no moves, ending in \(q_0\), rejecting
+   - \(q_0\to q_1\) accepting
+   - \(q_0\to q_2\) accepting
+
+
+   Any state with an \epsilon-transition to an accepting state ends up
+   working like an accepting state too.
+
+** NFA(-\epsilon) Formal
+
+   An NFA-\epsilon \(\mathcal{M}\) is a quintuple
+
+   \[\mathcal{M} = (Q, \Sigma, \delta, q_0, F)\]
+
+   - \(Q\) /finite/ set of states
+   - \Sigma alphabet, i.e., /finite/ set of symbols
+   - *\(\delta\in (Q\times\Sigma_\epsilon\to \mathcal{P}(Q))\)*
+     transition function
+   - \(q_0\in Q\) the start state
+   - \(F\subseteq Q\) the set of accepting states
+
+
+   And note that
+
+   - \(\epsilon\notin\Sigma\)
+   - *\(\Sigma_\epsilon = \Sigma \bigcup \{\epsilon\}\)*
+
+** Powerset
+
+   If \(S\) is a set, the /powerset/ of \(S\) is the set of all
+   subsets of \(S\)
+
+   \[\mathcal{P}(S) = \{R\mid R\subseteq S\}\]
+
+   E.g., if \(S = {1,2,3}\), then \(\mathcal{P}(S) = \{\{\}, \{1\},
+   \{2\}, \{3\}, \{1,2\}, \{1,3\}, \{2,3\}, \{1,2,3\}\}\).
+
+** NFA Example
+
+   #+BEGIN_CENTER
+   #+ATTR_LaTeX: :width .5\textwidth
+   #+CAPTION: \(\mathcal{L}(\mathcal{M}) = \{a,b\}^*\)
+   [[file:img/nfa-09.pdf]]
+   #+END_CENTER
+
+   \(\mathcal{M} = (Q, \Sigma, \delta, q_0, F)\)
+   - \(Q = \{q_0, q_1, q_2\}\)
+   - \(\Sigma = \{a, b\}\)
+   - \(F = {q_2}\)
+   - \(\delta\)?
+
+** NFA v.s. NFA-\epsilon
+
+   #+BEGIN_theorem
+   Any NFA-\epsilon can be turned into an NFA.
+   #+END_theorem
+
+   - \epsilon-transitions are just syntax sugar.
+   - Both NFA-\epsilon and NFA recognize /exactly/ the same languages.
+   - NFA and NFA-\epsilon may be converted to each other.
+
+** \epsilon-Transition for Correct Union
+
+*** Dummy                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.4
+    :END:
+
+    #+CAPTION: \(A = \{a^n\mid n \text{ is odd}\}\)
+    [[file:img/nfa-03.pdf]]
+
+    #+CAPTION: \(B = \{b^n\mid n \text{ is odd}\}\)
+    [[file:img/nfa-04.pdf]]
+
+*** Dummy                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.6
+    :END:
+
+**** Wrong Union                                                     :B_only:
+     :PROPERTIES:
+     :BEAMER_env: only
+     :BEAMER_act: <-2>
+     :END:
+
+     #+CAPTION: \(C = A\bigcup B\)???
+     [[file:img/nfa-05.pdf]]
+
+     \pause  *NO*, this accepts \(aab\).
+
+**** Correct Union                                                   :B_only:
+     :PROPERTIES:
+     :BEAMER_act: <3>
+     :BEAMER_env: only
+     :END:
+
+     #+CAPTION: \(C = A\bigcup B\)
+     [[file:img/nfa-06.pdf]]
+
+** \epsilon-Transition for Correct Concatenation
+
+*** Dummy                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.4
+    :END:
+
+    #+CAPTION: \(A = \{a^n\mid n \text{ is odd}\}\)
+    [[file:img/nfa-03.pdf]]
+
+    #+CAPTION: \(B = \{b^n\mid n \text{ is odd}\}\)
+    [[file:img/nfa-04.pdf]]
+
+*** Dummy                                                             :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 0.6
+    :END:
+
+**** Wrong Concatenation                                             :B_only:
+     :PROPERTIES:
+     :BEAMER_env: only
+     :BEAMER_act: <-2>
+     :END:
+
+     #+CAPTION: \(C = \{xy | x\in A \text{ and } y\in B\}\)???
+     [[file:img/nfa-07.pdf]]
+
+     \pause  *NO*, this accepts \(abbaab\).
+
+**** Correct Concatenation                                           :B_only:
+     :PROPERTIES:
+     :BEAMER_act: <3>
+     :BEAMER_env: only
+     :END:
+
+     #+CAPTION: \(C = \{xy | x\in A \text{ and } y\in B\}\)
+     [[file:img/nfa-08.pdf]]
+
+** \(\delta^*\) Function
+
+   - \delta function gives 1-symbol move.
+   - \(\delta^*\) gives a whole-string result.
+
+
+   \[\delta^*(q, x) = \{r\mid (q,x)\mapsto^*(r,\epsilon)\}\]
+
+   Intuitively, \(\delta^*(q,x)\) is the set of all states the NFA
+   might be in starting in state \(q\) and reading whole \(x\).
+
+** NFA ID
+
+   - Instantaneous Description (ID) :: is a description of a point in an
+        NFA's execution.
+
+
+   Suppose \(I\) is an ID, \(I = (q, x)\)
+   - \(q\in Q\) is the current state
+   - \(x\in \Sigma^*\) is the /unread/ part of the input
+
+
+   And given an NFA \(\mathcal{M}\) and a string \(x\),
+   - Initially, before \(\mathcal{M}\) processes the \(x\), we have ID
+     \((q_0, x)\).
+   - When \(\mathcal{M}\) /accepts/ \(x\), it ends in an ID \((f,
+     \epsilon)\) where \(f\in F\).
+
+** Move Relation on ID
+
+   - One-Move Relation
+
+     If \(I = (q, \omega x)\) and \(J = (r,x)\), \(\forall
+     x\in\Sigma^*, \forall\omega\in\Sigma \text{ or } \omega = \epsilon\)
+
+     \[I\mapsto J \text{ if and only if } r\in \delta(q,\omega)\]
+
+   - Zero-or-More-Move Relation
+
+     if there is a sequence of zero or more moves that starts with
+     \(I\) and ends with \(J\)
+
+     \[I\mapsto^* J\]
+
+     Note that \(I\mapsto^* I\)
+
+** \(\mathcal{M}\) Accepts \(x\)
+
+   #+BEGIN_theorem
+   A string \(x\in\Sigma^*\) is accepted by an NFA \(\mathcal{M} = (Q,
+   \Sigma, \delta, q_0, F)\) if and only if \(\delta^*(q_0, x)\cap F
+   \neq \emptyset\).
+   #+END_theorem
+
+** Language Defined by NFA
+
+   For any NFA \(\mathcal{M} = (Q, \Sigma, \delta, q_0, F)\),
+   \(\mathcal{L}(\mathcal{M})\) denotes the language accepted by
+   \(\mathcal{M}\)
+
+   \[\mathcal{L}(\mathcal{M}) = \{x\in\Sigma^* \mid \delta^*(q_0,
+   x)\cap F \neq \emptyset\}\]
+
+* Summary
+
+** DFA Summary
+
+   - Good Faster and simpler
+   - Bad
+     - There are languages for which DFA-based implementation takes
+       exponentially more space than NFA-based.
+     - Harder to extend for non-regular constructs
+
+   - Example: scanner in compiler
+     - Speed is critical
+     - Token languages do not usually bring out the exponential-size
+       pathology of DFAs
+
+** NFA Summary
+
+   - Good
+     - Easier to extend for non-regular language constructs
+     - No exponential-space pathology
+   - Bad slower and trigger
+   - Example: regular expression features in =Python=, =Perl=, etc.
+     Need to handle non-regular constructs as well as regular ones.
+
+** D/N-FA Accept Regular Languages
+
+   - \(\mathcal{L}_{DFA}\) :: All languages accepted by DFAs
+   - \(\mathcal{L}_{NFA}\) :: All languages accepted by NFAs
+   - \(\mathcal{L}_{R}\) :: Regular Languages
+
+
+   \[\mathcal{L}_{DFA} = \mathcal{L}_{NFA} = \mathcal{L}_{R}\]
+
+** Advanced Topics
+
+   - Conversion between DFA and NFA
+   - \epsilon-transition elimination
+   - Equivalence prove
+   - Implementation
 
 * COMMENT Dummy
 
 #  LocalWords:  Automata SETUPFILE BMCOL BEAMER automata ALU FSA tikz
 #  LocalWords:  Combinational usepackage UML SDL ATTR LaTeX textwidth
-#  LocalWords:  gnwgcng MWGC emph gncgwng gncn
+#  LocalWords:  gnwgcng MWGC emph gncgwng gncn DFA xa mathcal tuple
+#  LocalWords:  NFA Cont'd aa bigcup Powerset powerset xy forall neq
+#  LocalWords:  emptyset DFAs NFAs
