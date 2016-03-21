@@ -24,7 +24,7 @@ TEST_CASE("Edge cases", "[bf][edge-case]") {
   }
 
   SECTION("memory byte underflow") {
-    std::string src("-,");
+    std::string src("-.");
 
     REQUIRE(bf.interpret(src, is, os));
 
@@ -35,7 +35,7 @@ TEST_CASE("Edge cases", "[bf][edge-case]") {
 
   SECTION("memory byte overflow") {
     std::string src('+', UINT8_MAX);
-    src += "+,";
+    src += "+.";
 
     REQUIRE(bf.interpret(src, is, os));
 
@@ -78,7 +78,7 @@ TEST_CASE("Ignore unrecognized operations", "[bf][ignore-other]") {
   REQUIRE(bf.interpret(src, is, os));
 
   SECTION("with output") {
-    src = "a+,";
+    src = "a+.";
     REQUIRE(bf.interpret(src, is, os));
 
     uint8_t v;
@@ -87,7 +87,7 @@ TEST_CASE("Ignore unrecognized operations", "[bf][ignore-other]") {
   }
 
   SECTION("with output") {
-    src = "+8,";
+    src = "+8.";
     REQUIRE(bf.interpret(src, is, os));
 
     uint8_t v;
@@ -96,7 +96,7 @@ TEST_CASE("Ignore unrecognized operations", "[bf][ignore-other]") {
   }
 
   SECTION("with output") {
-    src = "+,$";
+    src = "+.$";
     REQUIRE(bf.interpret(src, is, os));
 
     uint8_t v;
@@ -105,7 +105,7 @@ TEST_CASE("Ignore unrecognized operations", "[bf][ignore-other]") {
   }
 
   SECTION("with input and output") {
-    src = ".$,";
+    src = ",$.";
     uint8_t in = 3;
     is.write(&in, 1);
     REQUIRE(bf.interpret(src, is, os));

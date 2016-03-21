@@ -1,2 +1,0 @@
-#+TITLE: Backus-Naur Form
-#+SETUPFILE: ../slide-setup.org

@@ -91,6 +91,7 @@ gulp.task('deploy', function() {
       root: dist,
       hostname: 'mallard',
       destination: '~/public_html/comp3220/spring2016',
+      incremental: true,
       progress: true,
       compress: true,
       recursive: true,

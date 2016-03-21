@@ -25,27 +25,27 @@
    3. Compiler basics, e.g., context-free grammar, automata.
 
 
-   - Course Number :: COMP 3220
-   - Course Title :: Principle of Programming Languages
-   - Total Credit :: 3
-   - Prerequisites :: COMP 2210
-   - Class Meeting :: 3 hours per week
-   - Course Website :: http://auburn.edu/~zzg0009/comp3220/spring2016/
+   - Course Number: COMP 3220
+   - Course Title: Principle of Programming Languages
+   - Total Credit: 3
+   - Prerequisites: COMP 2210
+   - Class Meeting: 3 hours per week
+   - Course Website: http://auburn.edu/~zzg0009/comp3220/spring2016/
 
 ** Instructor Information
    :PROPERTIES:
    :CUSTOM_ID: sec:instructor-information
    :END:
 
-   - Instructor :: Zhitao Gong
-     + Office :: Shelby 2307
-     + Office Hours :: Friday 1000 -- 1100
-     + Email :: zzg0009 at TigerMail
+   - Instructor: Zhitao Gong
+     + Office: Shelby 2307
+     + Office Hours: Friday 1000 -- 1100
+     + Email: zzg0009 at TigerMail
 
-   - Teaching Assistant :: Wenlu Wang
-     + Office :: Shelby 2319
-     + Office Hours :: Wednsday 1500 -- 1600
-     + Email :: wzw0022 at TigerMail
+   - Teaching Assistant: Wenlu Wang
+     + Office: Shelby 2307
+     + Office Hours: Wednsday 1500 -- 1600
+     + Email: wzw0022 at TigerMail
 
 ** Course Materials
    :PROPERTIES:
@@ -318,6 +318,7 @@ jsdom.jQueryify(window, 'http://code.jquery.com/jquery-2.2.0.min.js', function (
   2. [[http://www.cs.rutgers.edu/~lou/314-f04-slides/][lecture notes]] by Dr. Louis Steinberg.
   3. [[http://infolab.stanford.edu/~ullman/ialc/slides/slides7.pdf][lecture notes]] by Dr. Jeffrey D. Ullman.
   4. [[http://www.cs.colostate.edu/~massey/Teaching/cs301/RestrictedAccess/Slides/301lecture03.pdf][Lecture notes]] by Dr. Dan Massey.
+  5. [[http://www.cs.odu.edu/~toida/nerzic/390teched/regular/reg-lang/definitions.html][Lecture notes]] by Dr. Shunichi Toida
 
   The =C++= version we use is =C++11= and above.  The tutorial is
   adapted from \cite{cplusplus}\cite{stroustrup2014}.  More authority FAQ's
