@@ -1,0 +1,46 @@
+\documentclass[crop,tikz,border=1px]{standalone}
+
+\usetikzlibrary{arrows,positioning,scopes,automata,calc}
+
+\begin{document}
+\begin{tikzpicture}[remember picture,
+  ->,>=stealth',shorten >=1pt,auto,node distance=1cm,inner sep=2pt,
+  mystate/.style={state,text centered},
+  mymachine/.style={draw,rectangle,minimum width=2cm,minimum
+    height=1cm,inner sep=5pt},
+  mytext/.style={draw=none,node distance=.2cm}]
+
+  \node[mymachine] (m0) {
+    \begin{tikzpicture}
+      \node[mystate] (q00) {};
+      \node[mystate, accepting] (q01) [right=of q00] {};
+
+      \path[dashed] (q00) edge (q01);
+    \end{tikzpicture}
+  };
+
+  \node[mytext,above=of m0] {\(M_0\)};
+
+  \node[mymachine] (m1) [below=of m0]{
+    \begin{tikzpicture}
+      \node[mystate] (q10) {};
+      \node[mystate, accepting] (q11) [right=of q10] {};
+
+      \path[dashed] (q10) edge (q11);
+    \end{tikzpicture}
+  };
+
+  \node[mytext,below=of m1] {\(M_1\)};
+
+  \coordinate (q0mid) at ($(m0.west)!.5!(m1.west)$);
+  \node[initial,mystate] (q0) [left=of q0mid] {};
+
+  \coordinate (q1mid) at ($(m0.east)!.5!(m1.east)$);
+  \node[accepting,mystate] (q1) [right=of q1mid] {};
+
+  \path (q0) edge node [above] {\(\epsilon\)} (q00)
+        (q01) edge node [below] {\(\epsilon\)} (q10)
+        (q11) edge node [below] {\(\epsilon\)} (q1);
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,16 @@
+\documentclass[crop,tikz,border=1px]{standalone}
+
+\usetikzlibrary{arrows,positioning,scopes,automata,calc}
+
+\begin{document}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+  distance=1cm,inner sep=2pt,
+  mystate/.style={state,text centered}]
+
+  \node[initial,mystate] (q0) {};
+  \node[accepting,mystate] (q1) [right=of q0] {};
+
+  \path (q0) edge node [above] {b} (q1);
+
+\end{tikzpicture}
+\end{document}

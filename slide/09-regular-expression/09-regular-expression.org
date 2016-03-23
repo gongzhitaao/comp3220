@@ -1,0 +1,184 @@
+#+TITLE: Regular Expression
+#+SETUPFILE: ../slide-setup.org
+
+* Combining Languages
+
+** Concatenation of Languages
+
+   The concatenation of two languages \(L_1\) and \(L_2\) is
+
+   \[L_1L_2 = \{xy\mid x\in L_1 \text{ and } y\in L_2\}\]
+
+   Basically, concatenate every string from the first language with
+   every string from the second.  E.g., if \(L_1 = \{a, b\}\) and
+   \(L_2 = \{c, d\}\), then \(L_1L_2 = \{ac, ad, bc, bd\}\).
+
+** Union of Languages
+
+   The union of two languages \(L_1\) and \(L_2\) is
+
+   \[L_1\bigcup L_2 = \{x \mid x\in L_1 \text{ or } x\in L_2\}\]
+
+   Basically, it is a plain /set union/.
+
+** Kleene Closure of A Language
+
+   Given a language \(L\), its Kleene closure \(L^*\) may be defined
+   recursively.
+
+   - Base clause :: \(\epsilon\in L^*\)
+   - Inductive clause :: \(xw \in L^*\ \forall x\in L^* \text{ and }
+        w\in L\)
+   - Extremal clause :: A string is in \(L\) if and only if it can be
+        obtained from the above two clauses.
+
+
+   E.g., if \(L = \{ab, cd\}\), \(L^* = \{\epsilon, ab, cd, abab,
+   abcd, cdab, cdcd, ababab, \dots\}\).
+
+* Regular Language
+
+** Recursive Definition
+
+   The regular language over an alphabet \Sigma may be defined
+   /recursively/.
+
+   - Basic clause :: \emptyset, \(\{\epsilon\}\), \(\{a\}\ \forall
+        a\in\Sigma\) are regular language.
+   - Inductive clause :: If \(L_r\) and \(L_s\) are regular languages,
+        then \(L_r\bigcup L_s\), \(L_r L_s\), \(L_r^*\) are regular
+        languages.
+   - Extremal clause :: A language is regular if and only if it can be
+        obtained from the above two clauses.
+
+** Example
+
+   Given an alphabet \(\Sigma = \{a, b\}\)
+
+   - \(\{a\}\) and \(\{b\}\) are regular language.
+   - \(\{a, b\}\) (\(= \{a\}\bigcup\{b\}\)), \(\{ab\}\) (\(=
+     \{a\}\{b\}\)) are regular language.
+   - \(\{a\}^*\) (\(= \{\epsilon, a, aa, aaa, \dots\}\)) is regular
+     language.
+   - \(\Sigma^*\) is also a regular language since \(\{a, b\}\) is
+     regular.
+
+* Regular Expression
+
+** Recursive Definition
+
+   #+BEGIN_theorem
+   A regular expression is a string \(r\) that denotes a regular
+   language \(L(r)\) over some alphabet \Sigma.
+   #+END_theorem
+
+   - Basic clause :: \(\varnothing\), \epsilon and \(a\) are regular
+        expressions denoting \emptyset, \(\{\epsilon\}\) and \(\{a\}\
+        \forall a\in\Sigma\), respectively.  They are called /atomic/
+        regular expression.
+   - Inductive clause :: \(r\) and \(s\) are regular expressions
+        denoting regular language \(L_r\) and \(L_s\), then the
+        follows are /compound/ reguar expressions
+     - \(r + s\) denotes \(L_r\bigcup L_s\)
+     - \(rs\) denotes \(L_r L_s\)
+     - \(r^*\) denotes \(L_r^*\)
+   - Extremal clause :: A string is a regular expression if and only
+        if it can be obtained from above two clauses.
+
+** Base Clause NFAs
+
+   - \(\forall a\in \Sigma, \mathcal{L}(a) = {a}\),
+     #+ATTR_LaTeX: :width .4\textwidth
+     [[file:img/nfa-regex-a.pdf]]
+
+   - \(\mathcal{L}(\epsilon) = {\epsilon}\),
+     #+ATTR_LaTeX: :width .2\textwidth
+     [[file:img/nfa-regex-e.pdf]]
+
+   - \(\mathcal{L}(\varnothing) = \emptyset\),
+     #+ATTR_LaTeX: :width .2\textwidth
+     [[file:img/nfa-regex-0.pdf]]
+
+** Inductive Clause -- Union
+
+   \(M_0\), \(M_1\) recognize \(\mathcal{L}(R_0)\) and
+   \(\mathcal{L}(R_1)\) respectively.
+
+   #+ATTR_LaTeX: :width .7\textwidth
+   #+CAPTION: \(R = R_0 + R_1\)
+   [[file:img/nfa-regex-union.pdf]]
+
+** Inductive Clause -- Concatenation
+
+   \(M_0\), \(M_1\) recognize \(\mathcal{L}(R_0)\) and
+   \(\mathcal{L}(R_1)\) respectively.
+
+   #+ATTR_LaTeX: :width .7\textwidth
+   #+CAPTION: \(R = R_0R_1\)
+   [[file:img/nfa-regex-concat.pdf]]
+
+** Inductive Clause -- Kleene Closure
+
+   \(M_0\) recognizes \(\mathcal{L}(R_0)\)
+
+   #+ATTR_LaTeX: :width .7\textwidth
+   #+CAPTION: \(R = R_0^*\)
+   [[file:img/nfa-regex-kleene.pdf]]
+
+** Why It Matters
+
+   #+BEGIN_theorem
+   For any regular expression \(R\), there is an NFA \(N\) such that
+
+   \[\mathcal{L}(R) = \mathcal{L}(N)\]
+   #+END_theorem
+
+   \pause
+   Working solution for matching regular expressions against text.
+   - Convert regular expression to an NFA.
+   - (Optionally) convert NFA to a DFA.
+   - Run the text through the DFA.
+
+** Example Regular Expression \(\to\) NFA
+
+   #+CAPTION: \(L = ab\bigcup a^*\)
+   [[file:img/regex-nfa-ex.pdf]]
+
+   - \(a\): {{{imginline(height=2em,img/regex-nfa-ex-a.pdf)}}}, \(b\):
+     {{{imginline(height=2em,img/regex-nfa-ex-b.pdf)}}}
+   - \(ab\): {{{imginline(height=2em,img/regex-nfa-ex-ab.pdf)}}}
+   - \(a^*\): {{{imginline(height=3em,img/regex-nfa-ex-astar.pdf)}}}
+
+** D/N-FA/Regular Expression Accept Regular Languages
+
+   - \(\mathcal{L}_{DFA}\) :: All languages accepted by DFAs
+   - \(\mathcal{L}_{NFA}\) :: All languages accepted by NFAs
+   - \(\mathcal{L}_{REG}\) :: All languages denoted by regular expressions
+   - \(\mathcal{L}_{R}\) :: Regular Languages
+
+
+   \[\mathcal{L}_{DFA} = \mathcal{L}_{NFA} = \mathcal{L}_{REG} = \mathcal{L}_{R}\]
+
+** Regular Expression Conventions
+
+   1. For precedence, \((R) > R^* > R_1R_2 > R_1 + R_2\).
+      - \((a +(b(c^*))))\) is the same as \(a + bc^*\).
+      - \(ab^*c + d\) is the same as \(((a(b^*))c) + d\).
+
+   2. Similar to string concatenation, concatenation of \(k\) regular
+      expression \(r\)'s is written as \(r^k = \overbrace{rr\dots
+      r}^{k}\), specifically \(r^0 = \varnothing\).
+
+** Regular Expression Examples
+
+   - \(trick + treat \to \{trick, treat\}\)
+   - \(booo^* \to \{boo, booo, boooo, \dots\}\)
+   - \(candy!(candy!)^* \to \{candy!, candy!candy!,
+     candy!candy!candy!, \dots\}\)
+
+* COMMENT Dummy
+
+#  LocalWords:  SETUPFILE bc bd bigcup geq Kleene cd abab abcd cdab
+#  LocalWords:  cdcd ababab emptyset forall Extremal aa aaa overbrace
+#  LocalWords:  rr varnothing NFAs ATTR LaTeX textwidth mathcal NFA
+#  LocalWords:  DFA booo boooo DFAs

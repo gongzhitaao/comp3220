@@ -7,3 +7,4 @@
 #+LATEX_HEADER: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Outline}\tableofcontents[currentsection]\end{frame}}
 #+LATEX_HEADER: \beamertemplatenavigationsymbolsempty
 #+LATEX_HEADER: \setbeamertemplate{footline}[frame number]
+#+MACRO: imginline \(\vcenter{\hbox{\includegraphics[$1]{$2}}}\)
