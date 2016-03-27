@@ -140,166 +140,166 @@
   :END:
 
   #+BEGIN_SRC js :exports results :results output html
-var path = require('path');
-var fs = require('fs');
-var base = '/home/gongzhitaao/node_modules/';
+    var path = require('path');
+    var fs = require('fs');
+    var base = '/home/gongzhitaao/node_modules/';
 
-function req(m) {
-  return require(path.join(base, m));
-}
-
-var async = req('async');
-var jsdom = req('jsdom');
-var moment = req('moment');
-req('moment-recur');
-
-var data = JSON.parse(fs.readFileSync('schedule.json', 'utf8'));
-var recur = moment().recur(data.start, data.end);
-
-var classday = recur
-    .every(["mon", "wed", "fri"]).daysOfWeek()
-    .except("2016-01-18")
-    .except("2016-03-14")
-    .except("2016-03-15")
-    .except("2016-03-16")
-    .except("2016-03-17")
-    .except("2016-03-18")
-    .all("YYYY-MM-DD ddd");
-
-function pdflink(rel, l) {
-  return rel + '/' + l + ".pdf";
-}
-
-function ziplink(rel, l) {
-  return rel + '/' + l + ".zip";
-}
-
-function make_topic($, d, rowspan) {
-  var $lnk = $('<a>', {href: pdflink(data.rel.slide, d.link), text: d.topic});
-  var $ret = $('<td>').append($lnk);
-  if (rowspan && rowspan > 1) $ret.attr({rowspan: rowspan});
-  return $ret;
-}
-
-function make_assignment($, doc, d, rowspan) {
-  var $ret = $('<td>');
-  if (rowspan && rowspan > 1) $ret.attr({rowspan: rowspan});
-
-  var $ul = $('<ul>');
-  $ret.append($ul);
-
-  d.sort(function(a, b) { return a.type < b.type; });
-  for (var j = 0; j < d.length; ++j) {
-    var itm = d[j];
-    var $icon, $item;
-    switch (itm.type) {
-    case 'book':
-      $icon = $('<i>', {class: 'fa fa-book'});
-      $item = $(doc.createTextNode(itm.text));
-      break;
-    case 'faq':
-      $icon = $('<i>', {class: 'fa fa-pencil-square-o'});
-      $item = $('<a>', {href: pdflink(data.rel.assignment, itm.link), text: itm.text});
-      break;
-    case 'code':
-      $icon = $('<i>', {class: 'fa fa-code'});
-      $item = $('<a>', {href: pdflink(data.rel.assignment, itm.link), text: itm.text});
-      break;
-    case 'read':
-      $icon = $('<i>', {class: 'fa fa-bookmark-o'});
-      $item = $('<a>', {href: itm.link, text: itm.text});
-      break;
-    case 'hint':
-      $icon = $('<i>', {class: 'fa fa-lightbulb-o'});
-      $item = $('<a>', {href: ziplink(data.rel.assignment, itm.link), text: itm.text});
-      break;
-    case 'review':
-      $icon = $('<i>', {class: 'fa fa-history'});
-      $item = $('<a>', {href: pdflink(data.rel.review, itm.link), text: itm.text});
-      break;
-    default:
-      /* empty */
-    }
-    $ul.append($('<li>').append($icon, $item));
-  }
-
-  return $ret;
-}
-
-function make_caption($, doc) {
-  var $ret = $('<caption>');
-  $ret.append(
-    $('<ul>').append(
-      $('<li>').append(
-        $('<i>', {class: 'fa fa-book'}),
-        $(doc.createTextNode('book chapters'))),
-      $('<li>').append(
-        $('<i>', {class: 'fa fa-pencil-square-o'}),
-        $(doc.createTextNode('written assignment'))),
-      $('<li>').append(
-        $('<i>', {class: 'fa fa-code'}),
-        $(doc.createTextNode('programming assignment'))),
-      $('<li>').append(
-        $('<i>', {class: 'fa fa-bookmark-o'}),
-        $(doc.createTextNode('optional reading'))),
-      $('<li>').append(
-        $('<i>', {class: 'fa fa-lightbulb-o'}),
-        $(doc.createTextNode('hint'))),
-      $('<li>').append(
-        $('<i>', {class: 'fa fa-history'}),
-        $(doc.createTextNode('exam review')))));
-  return $ret;
-}
-
-
-var window = jsdom.jsdom().defaultView;
-
-jsdom.jQueryify(window, 'http://code.jquery.com/jquery-2.2.0.min.js', function (window) {
-  var $ = window.jQuery;
-  var doc = window.document;
-
-  var $table = $('<table>');
-
-  $table.append(make_caption($, doc));
-
-  var $thead = $('<thead>');
-  $table.append($thead);
-
-  $thead.append($('<tr>').append(
-    $('<th>', {html: "Date"}),
-    $('<th>', {html: "Topic"}),
-    $('<th>', {html: "Assignment"})));
-
-  var dat = data.data;
-  var rowspan = 1;
-  var cls = dat[0]["class"]
-  for (var i = 0, j = 0; i < classday.length; ++i) {
-    var $tr = $('<tr>', {"class": cls});
-    $table.append($tr);
-
-    var $date = $('<td>', {html: classday[i]});
-    $tr.append($date);
-
-    if (rowspan > 1) {
-      --rowspan;
-      continue;
+    function req(m) {
+      return require(path.join(base, m));
     }
 
-    var d = dat[j];
-    rowspan = 'span' in d ? d.span : 1;
-    cls = d["class"];
-    $tr.attr("class", cls);
+    var async = req('async');
+    var jsdom = req('jsdom');
+    var moment = req('moment');
+    req('moment-recur');
 
-    var $topic, $assignment;
-    $topic = make_topic($, d, rowspan);
-    $assignment = make_assignment($, doc, d.assignment, rowspan);
-    $tr.append($topic, $assignment);
+    var data = JSON.parse(fs.readFileSync('schedule.json', 'utf8'));
+    var recur = moment().recur(data.start, data.end);
 
-    ++j;
-  }
+    var classday = recur
+        .every(["mon", "wed", "fri"]).daysOfWeek()
+        .except("2016-01-18")
+        .except("2016-03-14")
+        .except("2016-03-15")
+        .except("2016-03-16")
+        .except("2016-03-17")
+        .except("2016-03-18")
+        .all("YYYY-MM-DD ddd");
 
-  console.log($('<div>').append($table).html());
-});
+    function pdflink(rel, l) {
+      return rel + '/' + l + ".pdf";
+    }
+
+    function ziplink(rel, l) {
+      return rel + '/' + l + ".zip";
+    }
+
+    function make_topic($, d, rowspan) {
+      var $lnk = $('<a>', {href: pdflink(data.rel.slide, d.link), text: d.topic});
+      var $ret = $('<td>').append($lnk);
+      if (rowspan && rowspan > 1) $ret.attr({rowspan: rowspan});
+      return $ret;
+    }
+
+    function make_assignment($, doc, d, rowspan) {
+      var $ret = $('<td>');
+      if (rowspan && rowspan > 1) $ret.attr({rowspan: rowspan});
+
+      var $ul = $('<ul>');
+      $ret.append($ul);
+
+      d.sort(function(a, b) { return a.type < b.type; });
+      for (var j = 0; j < d.length; ++j) {
+        var itm = d[j];
+        var $icon, $item;
+        switch (itm.type) {
+        case 'book':
+          $icon = $('<i>', {class: 'fa fa-book'});
+          $item = $(doc.createTextNode(itm.text));
+          break;
+        case 'faq':
+          $icon = $('<i>', {class: 'fa fa-pencil-square-o'});
+          $item = $('<a>', {href: pdflink(data.rel.assignment, itm.link), text: itm.text});
+          break;
+        case 'code':
+          $icon = $('<i>', {class: 'fa fa-code'});
+          $item = $('<a>', {href: pdflink(data.rel.assignment, itm.link), text: itm.text});
+          break;
+        case 'read':
+          $icon = $('<i>', {class: 'fa fa-bookmark-o'});
+          $item = $('<a>', {href: itm.link, text: itm.text});
+          break;
+        case 'hint':
+          $icon = $('<i>', {class: 'fa fa-lightbulb-o'});
+          $item = $('<a>', {href: ziplink(data.rel.assignment, itm.link), text: itm.text});
+          break;
+        case 'review':
+          $icon = $('<i>', {class: 'fa fa-history'});
+          $item = $('<a>', {href: pdflink(data.rel.review, itm.link), text: itm.text});
+          break;
+        default:
+          /* empty */
+        }
+        $ul.append($('<li>').append($icon, $item));
+      }
+
+      return $ret;
+    }
+
+    function make_caption($, doc) {
+      var $ret = $('<caption>');
+      $ret.append(
+        $('<ul>').append(
+          $('<li>').append(
+            $('<i>', {class: 'fa fa-book'}),
+            $(doc.createTextNode('book chapters'))),
+          $('<li>').append(
+            $('<i>', {class: 'fa fa-pencil-square-o'}),
+            $(doc.createTextNode('written assignment'))),
+          $('<li>').append(
+            $('<i>', {class: 'fa fa-code'}),
+            $(doc.createTextNode('programming assignment'))),
+          $('<li>').append(
+            $('<i>', {class: 'fa fa-bookmark-o'}),
+            $(doc.createTextNode('optional reading'))),
+          $('<li>').append(
+            $('<i>', {class: 'fa fa-lightbulb-o'}),
+            $(doc.createTextNode('hint'))),
+          $('<li>').append(
+            $('<i>', {class: 'fa fa-history'}),
+            $(doc.createTextNode('exam review')))));
+      return $ret;
+    }
+
+
+    var window = jsdom.jsdom().defaultView;
+
+    jsdom.jQueryify(window, 'http://code.jquery.com/jquery-2.2.0.min.js', function (window) {
+      var $ = window.jQuery;
+      var doc = window.document;
+
+      var $table = $('<table>');
+
+      $table.append(make_caption($, doc));
+
+      var $thead = $('<thead>');
+      $table.append($thead);
+
+      $thead.append($('<tr>').append(
+        $('<th>', {html: "Date"}),
+        $('<th>', {html: "Topic"}),
+        $('<th>', {html: "Assignment"})));
+
+      var dat = data.data;
+      var rowspan = 1;
+      var cls = dat[0]["class"]
+      for (var i = 0, j = 0; i < classday.length; ++i) {
+        var $tr = $('<tr>', {"class": cls});
+        $table.append($tr);
+
+        var $date = $('<td>', {html: classday[i]});
+        $tr.append($date);
+
+        if (rowspan > 1) {
+          --rowspan;
+          continue;
+        }
+
+        var d = dat[j];
+        rowspan = 'span' in d ? d.span : 1;
+        cls = d["class"];
+        $tr.attr("class", cls);
+
+        var $topic, $assignment;
+        $topic = make_topic($, d, rowspan);
+        $assignment = make_assignment($, doc, d.assignment, rowspan);
+        $tr.append($topic, $assignment);
+
+        ++j;
+      }
+
+      console.log($('<div>').append($table).html());
+    });
   #+END_SRC
 
 * Credit
@@ -319,6 +319,7 @@ jsdom.jQueryify(window, 'http://code.jquery.com/jquery-2.2.0.min.js', function (
   3. [[http://infolab.stanford.edu/~ullman/ialc/slides/slides7.pdf][lecture notes]] by Dr. Jeffrey D. Ullman.
   4. [[http://www.cs.colostate.edu/~massey/Teaching/cs301/RestrictedAccess/Slides/301lecture03.pdf][Lecture notes]] by Dr. Dan Massey.
   5. [[http://www.cs.odu.edu/~toida/nerzic/390teched/regular/reg-lang/definitions.html][Lecture notes]] by Dr. Shunichi Toida
+  6. [[https://www.coursera.org/course/automata][Lecture notes]] by Dr. Jeff Ullman.
 
   The =C++= version we use is =C++11= and above.  The tutorial is
   adapted from \cite{cplusplus}\cite{stroustrup2014}.  More authority FAQ's

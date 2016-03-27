@@ -1,5 +1,8 @@
 #+TITLE: Regular Expression
 #+SETUPFILE: ../slide-setup.org
+#+MACRO: r \(\colorbox{red!10}{\texttt{$1}}\)
+#+MACRO: t \(\colorbox{blue!10}{\texttt{$1}}\)
+#+LATEX_HEADER: \newcommand{\re}[1]{\colorbox{red!10}{\texttt{#1}}}
 
 * Combining Languages
 
@@ -63,7 +66,7 @@
    - \(\Sigma^*\) is also a regular language since \(\{a, b\}\) is
      regular.
 
-* Regular Expression
+* Regular Expression in Theory
 
 ** Recursive Definition
 
@@ -125,12 +128,38 @@
    #+CAPTION: \(R = R_0^*\)
    [[file:img/nfa-regex-kleene.pdf]]
 
+** Equivalence of RE and FSA
+
+   1. We need to show for every RE, there is a FSA that accepts the
+      language.  Done with NFA-\epsilon.
+   2. We need to show for every FSA, there is a RE denoting its
+      language.  Trickier and ignored for now.
+
+** Regular Expression Conventions
+
+   1. For precedence, \((R) > R^* > R_1R_2 > R_1 + R_2\).
+      - \((a +(b(c^*))))\) is the same as \(a + bc^*\).
+      - \(ab^*c + d\) is the same as \(((a(b^*))c) + d\).
+
+   2. Similar to string concatenation, concatenation of \(k\) regular
+      expression \(r\)'s is written as \(r^k = \overbrace{rr\dots
+      r}^{k}\), specifically \(r^0 = \varnothing\).
+
+** Regular Expression Examples
+
+   - \(\mathcal{L}(01) = \{01\}\)
+   - \(\mathcal{L}(01 + 0) = \{01, 0\}\)
+   - \(\mathcal{L}(0(1 + 0)) = \{01, 00\}\)
+   - \(\mathcal{L}(0^*) = \{\epsilon, 0, 00, 000, \dots\}\)
+   - \(\mathcal{L}((0+01)^*(\epsilon+1)) =\)\pause all strings of 0's
+     and 1's without two consecutive 1's.
+
 ** Why It Matters
 
    #+BEGIN_theorem
-   For any regular expression \(R\), there is an NFA \(N\) such that
+   For any regular expression \(R\), there is FSA \(M\) such that
 
-   \[\mathcal{L}(R) = \mathcal{L}(N)\]
+   \[\mathcal{L}(R) = \mathcal{L}(M)\]
    #+END_theorem
 
    \pause
@@ -159,26 +188,428 @@
 
    \[\mathcal{L}_{DFA} = \mathcal{L}_{NFA} = \mathcal{L}_{REG} = \mathcal{L}_{R}\]
 
-** Regular Expression Conventions
+* Regular Expression in Practice
 
-   1. For precedence, \((R) > R^* > R_1R_2 > R_1 + R_2\).
-      - \((a +(b(c^*))))\) is the same as \(a + bc^*\).
-      - \(ab^*c + d\) is the same as \(((a(b^*))c) + d\).
+** Regular Expression Caveat
 
-   2. Similar to string concatenation, concatenation of \(k\) regular
-      expression \(r\)'s is written as \(r^k = \overbrace{rr\dots
-      r}^{k}\), specifically \(r^0 = \varnothing\).
+   #+BEGIN_QUOTE
+   Some people, when confronted with a problem, think "I know I'll use
+   regular expressions."  Now they have two problems.
 
-** Regular Expression Examples
+   -- Jamie Zawinski (flame war on alt.religion.emacs)
+   #+END_QUOTE
 
-   - \(trick + treat \to \{trick, treat\}\)
-   - \(booo^* \to \{boo, booo, boooo, \dots\}\)
-   - \(candy!(candy!)^* \to \{candy!, candy!candy!,
-     candy!candy!candy!, \dots\}\)
+   Writing RE is like writing a program.
+   - Need to understand programming model.
+   - Can be easier to write than read.
+   - Can be difficult to debug.
+
+** Are You Smart Enough
+
+   http://www.ex-parrot.com/~pdw/Mail-RFC822-Address.html
+
+   #+BEGIN_EXAMPLE
+(?:(?:\r\n)?[ \t])*(?:(?:(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[ \t]))*"(?:(?:
+\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[
+\t]))*"(?:(?:\r\n)?[ \t])*))*@(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\
+](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:
+(?:\r\n)?[ \t])*))*|(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[ \t]))*"(?:(?:\r\n)
+?[ \t])*)*\<(?:(?:\r\n)?[ \t])*(?:@(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[
+ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t]
+)*))*(?:,@(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*
+)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*))*)
+*:(?:(?:\r\n)?[ \t])*)?(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[ \t]))*"(?:(?:\r
+\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[ \t
+]))*"(?:(?:\r\n)?[ \t])*))*@(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](
+?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?
+:\r\n)?[ \t])*))*\>(?:(?:\r\n)?[ \t])*)|(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?
+[ \t]))*"(?:(?:\r\n)?[ \t])*)*:(?:(?:\r\n)?[ \t])*(?:(?:(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|"(?:[^\"\r\\]|
+\\.|(?:(?:\r\n)?[ \t]))*"(?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|"
+(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[ \t]))*"(?:(?:\r\n)?[ \t])*))*@(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\
+".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[
+\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*))*|(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(
+?:(?:\r\n)?[ \t]))*"(?:(?:\r\n)?[ \t])*)*\<(?:(?:\r\n)?[ \t])*(?:@(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([
+^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\
+]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*))*(?:,@(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\
+r\\]|\\.)*\](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]
+|\\.)*\](?:(?:\r\n)?[ \t])*))*)*:(?:(?:\r\n)?[ \t])*)?(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\
+.|(?:(?:\r\n)?[ \t]))*"(?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|"(?
+:[^\"\r\\]|\\.|(?:(?:\r\n)?[ \t]))*"(?:(?:\r\n)?[ \t])*))*@(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".
+\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\]
+]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*))*\>(?:(?:\r\n)?[ \t])*)(?:,\s*(?:(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\
+".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[ \t]))*"(?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[
+\["()<>@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[ \t]))*"(?:(?:\r\n)?[ \t])*))*@(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t
+])+|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|
+\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*))*|(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".\[\
+]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[ \t]))*"(?:(?:\r\n)?[ \t])*)*\<(?:(?:\r\n)?[ \t])*(?:@(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["
+()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>
+@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*))*(?:,@(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,
+;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\
+".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*))*)*:(?:(?:\r\n)?[ \t])*)?(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\["()<>@,;:\\".
+\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[ \t]))*"(?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z|(?=[\[
+"()<>@,;:\\".\[\]]))|"(?:[^\"\r\\]|\\.|(?:(?:\r\n)?[ \t]))*"(?:(?:\r\n)?[ \t])*))*@(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])
++|\Z|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \000-\031]+(?:(?:(?:\r\n)?[ \t])+|\Z
+|(?=[\["()<>@,;:\\".\[\]]))|\[([^\[\]\r\\]|\\.)*\](?:(?:\r\n)?[ \t])*))*\>(?:(?:\r\n)?[ \t])*))*)?;\s*)
+   #+END_EXAMPLE
+
+** RE Standard
+
+   IEEE POSIX standard has three set of compliance:
+   - /B/-asic RE (BRE)
+   - /E/-xtended RE (ERE) and
+   - +/S/-imple RE (SRE)+ (deprecated).
+
+
+   ERE extends BRE
+   1. it adds \(?\), \(+\), \(\vert\), and
+   2. removes the need to escape /meta-characters/ \(( )\) and \(\{
+      \}\).
+
+** Notations
+
+   - Regular expression is abbreviated as /regex/ or /RE/ in the
+     following discussions.
+   - We use {{{r(regex)}}} to denote a regex, {{{t(text)}}} a plain
+     text string.
+   - {{{r(regex)}}} \(= \) {{{t(text)}}} denotes that {{{r(regex)}}}
+     matches {{{t(text)}}}.
+   - {{{r(regex)}}} \(\neq\) {{{t(text)}}} denotes that {{{r(regex)}}}
+     does not match {{{t(text)}}}.
+   - {{{r(regex1)}}} \(= \) {{{r(regex2)}}} denotes that both regexes
+     are equivalent.
+
+** Literal Characters
+
+   Single literal character, such as {{{r(a)}}}, matches the /first
+   occurrence/ of the character.
+
+   - Given the string {{{t(Jack is a boy)}}} it matches {{{t(a)}}}
+     after the {{{t(J)}}}.
+   - The fact that {{{t(a)}}} is in middle of the string does not
+     matter in this case unless you use /word delimiter/.
+
+
+   Matching is /case sensitive/ by default.  E.g., {{{r(cat)}}}
+   \(\neq\) {{{t(Cat)}}}.  It is configurable however.
+
+** Meta Characters
+
+   - escape, backslash {{{r(\textbackslash)}}}
+   - anchors, caret {{{r(\^)}}}, dollar sign {{{r(\$)}}}
+   - matches all (almost), period {{{r(.)}}}
+   - alternation, vertical bar {{{r(|)}}}
+   - question mark {{{r(?)}}}, asterisk {{{r(*)}}}, plus sign
+     {{{r(+)}}}
+   - grouping, opening and closing parenthesis {{{r(()}}}, {{{r())}}}
+   - character set, opening square bracket {{{r([)}}}, {{{r(])}}} and
+   - repetition, opening curly brace {{{r(\{)}}}, {{{r(\})}}}.
+
+** Meta Character Match
+
+   To match meta characters, you need to /escape/ them with a
+   {{{r(\textbackslash)}}}.
+
+   - to match {{{t(1+1=2)}}}, the correct regex is
+     {{{r(1\textbackslash+1=2)}}}.
+   - {{{r(1+1=2)}}} is a valid regex, matching {{{t(111=2)}}},
+     {{{t(1111=2)}}}, {{{t(123+111=234)}}}, etc.
+
+** Non-Printable Characters
+
+   Conventional formatter, {{{r(\textbackslash t)}}} (tab, 0x09),
+   {{{r(\textbackslash r)}}} (carriage return, 0x0D),
+   {{{r(\textbackslash n)}}} (line feed, 0x0A) and etc.  The
+   followings are inconsistent.
+
+   - Control sequences, {{{r(\textbackslash cA)}}} \(= \) Control+A.
+   - Unicode characters, {{{r(\textbackslash u20AC)}}} (or
+     {{{r(\textbackslash x\{20AC\})}}}) \(= \) {{{t(\texteuro)}}}.
+
+** Character Class
+
+   With a "character class", also called "character set", you can tell
+   the regex engine to match /only one/ out of several characters.
+
+   - {{{r([ae])}}} \(= \) {{{t(a)}}} or {{{t(e)}}}.  E.g.,
+     {{{r(gr[ae]y)}}} \(= \) {{{t(gray)}}} or {{{t(grey)}}}.  The
+     order in the bracket /does not/ matter.
+   - Hyphen specifies a range.
+     - {{{r([0-9])}}} \(= \) /single/ digit between 0 and 9
+     - {{{r([a-z])}}} \(= \) /single/ character between a and z.
+     - {{{r(0[xX][A-Fa-f0-9]+)}}} \(= \) =C=-style hexadecimal number.
+
+** Negated Character Class
+
+   A caret {{{r(\^)}}} after the opening square bracket /negates/ the
+   character class.  The result is that the character class matches
+   any character that is /not/ in the character class.
+
+   - {{{r([\^{}0-9\textbackslash r\textbackslash n])}}} \(= \) any
+     single character that is /not/ a digit or a line break.
+   - {{{r(q[\^{}u])}}} does /not/ mean "a {{{t(q)}}} not followed by a
+     {{{t(u)}}}".  Instead it means "a {{{t(q)}}} followed by a
+     character that is not a {{{t(u)}}}".  E.g., {{{r(q[\^{}u])}}}
+     \(\neq\) {{{t(q)}}}, {{{r(q[\^{}u])}}} \(= \) {{{t(q )}}}, note
+     that space after {{{t(q)}}}.
+
+** Meta Character inside Character Class
+
+   Inside character class, only {{{r(])}}}, {{{r(\^{})}}},
+   {{{r(\textbackslash)}}} and {{{r(-)}}} are special.
+
+   - {{{r([\textbackslash ]])}}} \(= \) {{{t(])}}},
+     {{{r([\textbackslash \^{}])}}} \(= \) {{{t(\^{})}}}, etc.
+   - {{{r([\textbackslash +])}}} \(= \) {{{r([+])}}} \(= \)
+     {{{t(+)}}}.
+   - {{{r([0\^{}])}}} \(= \) {{{t(0)}}} or {{{t(\^{})}}}
+   - The hyphen can be included a) right after the opening bracket, or
+     b) right before the closing bracket, or c) right after the
+     negating caret.  E.g., {{{r([-x])}}} \(= \) {{{r([x-])}}} \(= \)
+     {{{t(x)}}} or {{{t(-)}}}.
+
+** Shorthand Character Class
+
+   Some character classes are often used.
+
+   - digit {{{r(\textbackslash d)}}} \(= \) {{{r([0-9])}}}
+   - word character {{{r(\textbackslash w)}}} \(= \)
+     {{{r([A-Za-z0-9\_{}])}}}
+   - whitespace character {{{r(\textbackslash s)}}} \(= \) {{{r([
+     \textbackslash t\textbackslash r\textbackslash n\textbackslash
+     f])}}}.
+   - Shorthand may also be used inside square brackets.  E.g.,
+     {{{r([\textbackslash s\textbackslash d])}}} \(= \) a whitespace
+     or a digit.
+
+** Negated Shorthand Character Class
+
+   Most shorthand character classes have negated shorthand.
+
+   - non-digit {{{r(\textbackslash D)}}} \(= \)
+     {{{r([\^{}\textbackslash d])}}}
+   - non-whitespace {{{r(\textbackslash S)}}} \(= \)
+     {{{r([\^{}\textbackslash s])}}}
+   - non-word character {{{r(\textbackslash W)}}} \(= \)
+     {{{r([\^{}\textbackslash w])}}}
+   - {{{r([\textbackslash S\textbackslash D])}}} \(\neq\)
+     {{{r([\^{}\textbackslash s\textbackslash d])}}}
+
+** Dot
+
+   Dot {{{r(.)}}} matches any character /but line breaks/.
+
+   Given the four date formats
+   - =mm/dd/yy=
+   - =mm-dd-yy=
+   - =mm.dd.yy=
+   - =mm dd yy=
+
+   - A quick solution is {{{r(\textbackslash d\textbackslash
+     d.\textbackslash d\textbackslash d.\textbackslash d\textbackslash
+     d)}}}.  \pause However {{{t(02512703)}}} is also a match. \pause
+   - Modified version is {{{r(\textbackslash d\textbackslash d[-
+     /.]\textbackslash d\textbackslash d[- /.]\textbackslash
+     d\textbackslash d)}}}.  \pause However it matches
+     {{{t(99/99/99)}}}.
+
+** Anchors
+
+   Anchors match positions instead of characters.
+
+   - {{{r(\^{})}}} \(= \) the position before the first character in
+     the string.  E.g., {{{r(\^{}a)}}} \(= \) {{{t(a)}}} in
+     {{{t(abc)}}}, {{{r(\^{}b)}}} \(\neq\) {{{t(b)}}} in {{{t(abc)}}}.
+   - {{{r(\$)}}} \(= \) the position right after the last character in
+     the string.  E.g., {{{r(c\$)}}} \(= \) {{{t(c)}}} in
+     {{{t(abc)}}}, {{{r(a\$)}}} \(\neq\) {{{t(a)}}} in {{{t(abc)}}}.
+   - In /multi-line mode/, {{{r(\^{})}}} and {{{r(\$)}}} matches the
+     start and end of each line respectively.
+
+** Word Boundary
+
+   {{{r(\textbackslash b)}}} matches a position called "word
+   boundary".  It allows whole-words-only search.  Its negation is
+   {{{r(\textbackslash B)}}}.
+
+   - Before the first character in the string, if the first character
+     is a word character.
+   - After the last character in the string, if the last character is
+     a word character.
+   - Between two characters in the string, where one is a word
+     character and the other is not a word character.
+
+
+   E.g., {{{r(\textbackslash b4\textbackslash b)}}} \(\neq\)
+   {{{t(4)}}} in {{{t(44 sheets of a4)}}}.
+
+** Alternation
+
+   Alternation =|= is used to match a single regular expression out of
+   several possible ones.
+
+   - {{{r(cat|dog)}}} \(= \) {{{t(cat)}}} or {{{t(dog)}}},
+   - {{{r(cat|dog|mouse|fish)}}} \(= \) {{{t(cat)}}} or {{{t(dog)}}}
+     or {{{t(mouse)}}} or {{{t(fish)}}}
+
+
+   The =|= has the /lowest precedence/ of all regex operators.
+
+   - {{{r(\textbackslash bcat|dog\textbackslash b)}}} \(= \)
+     {{{t(cat)}}} in {{{t(Hi cats!!)}}} or {{{t(dog)}}} in
+     {{{t(hotdog!)}}}.
+   - {{{r(\textbackslash b(cat|dog)\textbackslash b)}}} matches
+     nothing in {{{t(Hi cats!!)}}} or {{{t(hotdog!)}}}.
+
+** Optional Item
+
+   The question mark =?= the preceding token optional.  The question
+   mark is called a /quantifier/.
+
+   - {{{r(colou?r)}}} \(= \) {{{t(color)}}} and {{{t(colour)}}}.
+   - {{{r(Nov(ember)?)}}} \(= \) {{{t(Nov)}}} and {{{t(November)}}}.
+   - {{{r(Feb 23(rd)?)}}} \(= \) {{{t(Feb 23rd)}}} in {{{t(Today is
+     Feb 23rd, 2016)}}} since {{{r(?)}}} is /greedy/, discussed later.
+
+** Repetition
+
+   Two more quantifiers.
+
+   - =*= tells the regex engine to attempt to match the preceding
+     token zero or more times.
+   - =+= tells the regex engine to attempt to match the preceding
+     token once or more.
+
+
+   E.g., {{{r(<[A-Za-z][A-Za-z0-9]*>)}}} \(= \) an HTML tag without
+   attributes, i.e., {{{t(<B>)}}}, {{{t(<html>)}}}, etc.
+
+** Limiting Repetion
+
+   An additional quantifier allows you to specify how many times a
+   token can be repeated, the syntax is ={min, max}=.
+
+   - {{{r(0?)}}} \(= \) {{{r(0\{0\,1\})}}}
+   - {{{r(0+)}}} \(= \) {{{r(0\{1\,\})}}}
+   - {{{r(0*)}}} \(= \) {{{r(0\{0\,\})}}}
+   - {{{r(0\{3\})}}} \(= \) {{{r(000)}}}
+
+** Greedy and Lazy Quantifiers
+
+   =?=, =*=, =+=, ={min,max}= are all greedy, they tell the regex
+   engine to match as many as possible unless it results in a match
+   fail.
+
+   - {{{r(<.+>)}}} \(= \) {{{t(<em>emph</em>)}}} in {{{t(a
+     <em>emph</em> test)}}}, not {{{t(<em>)}}} or {{{t(</em>)}}}.
+
+
+   Putting a =?= after these greedy quantifiers makes them /lazy/ (or
+   /ungreedy/, /reluctant/).
+
+   - {{{r(<.+?>)}}} \(= \) {{{t(<em>)}}} and {{{t(</em>)}}} in {{{t(a
+     <em>emph</em> test)}}}.
+
+** Atomic Grouping
+
+   - An atomic group :: is a group that, when the regex engine exits
+        from it, automatically throws away all backtracking positions
+        remembered by any tokens inside the group.
+     - Atomic groups are non-capturing.
+     - The syntax is {{{r((?>group))}}}
+
+
+   - {{{r(a(bc|b)c)}}} \(= \) {{{t(abcc)}}} and {{{t(abc)}}}.
+   - {{{r(a(?>bc|b)c)}}} \(= \) {{{t(abcc)}}}
+   - {{{r(a(?>bc|b)c)}}} \(\neq\) {{{t(abc)}}}
+   - {{{r(\textbackslash b(integer|insert|in)\textbackslash b)}}}
+     \(\neq\) {{{t(integers)}}}.  Optimized version is
+     {{{r(\textbackslash b(?>integer|insert|in)\textbackslash b)}}}
+
+** Possessive Quantifiers
+
+   Possessive quantifiers are a syntax sugar to place an atomic group
+   around a single quantifier.  {{{r(X*+)}}} \(= \) {{{r((?>X*))}}}.
+
+   - {{{r(".*")}}} \(= \) {{{t("abc")}}} in {{{t("abc"x)}}}
+   - {{{r(".*+")}}} \(\neq\) {{{t("abc")}}} in {{{t("abc"x)}}}
+
+** Grouping and Capturing
+
+   - Only parentheses, =(= and =)= can be used for grouping, which
+     allows you to apply a quantifier to the entire group or to
+     restrict alternation to part of the regex.
+     - {{{r(cat|dog)}}} \(= \) {{{t(cat)}}} and {{{t(dog)}}} in
+       {{{t(rains cats and dogs)}}}.
+     - {{{r(ca(t|d)og)}}} \(= \) {{{t(catog)}}} or {{{t(cadog)}}}.
+   - =(= =)= not only creates groups, but /numbered capturing groups/.
+     - {{{r(get(value)\textbackslash 1)}}} \(= \) {{{t(getvaluevalue)}}}.
+   - To disable capturing, put =?:= right after opening =(=.
+     - {{{r(get(?:value)\textbackslash 1)}}} results in error.
+
+** Backreference
+
+   Previously, {{{r(get(value)\textbackslash 1)}}} =
+   {{{t(getvaluevalue)}}}.
+   - =\1= is called backreference, matching the /exact same text/ that
+     was matched by the /first capturing group/.
+   - =\2= matches the /second capturing group/, etc.
+   - Backreference may be reused many times.
+
+
+   Backreference stores the last match.
+
+   - {{{r(([abc]+)=\textbackslash 1)}}} \(= \) {{{t(cab=cab)}}}
+   - {{{r(([abc])+=\textbackslash 1)}}} \(\neq\) {{{t(cab=cab)}}}
+   - {{{r(([abc])+=\textbackslash 1)}}} \(= \) {{{t(cab=b)}}}
+
+
+   {{{r(\textbackslash b(\textbackslash w+)\textbackslash
+   s+\textbackslash 1\textbackslash b)}}} \(= \) doubled word, e.g,
+   {{{t(the the)}}}.
+
+** Backreference to Failed Groups
+
+   - {{{r((q?)b\textbackslash 1)}}} \(= \) {{{t(b)}}} {{{r(q?)}}}
+     matches nothing, so does =\1=.
+   - {{{r((q)?b\textbackslash 1)}}} \(\neq\) {{{t(b)}}} {{{r((q)?)}}}
+     proceeds to {{{r(b)}}}, then =\1= which fails by mimicking the
+     result of the group.
+   - {{{r((q)?b\textbackslash 1?)}}} \(= \) {{{t(b)}}}
+
+** Regex Engine is /Eager/
+
+   Regex engine stops searching as soon as it finds a valid match.
+
+   - {{{r(Get|GetValue)}}} \(= \) {{{t(Get)}}} in {{{t(GetValue)}}}.
+   - {{{r(GetValue|Get)}}} \(= \) {{{t(GetValue)}}} in
+     {{{t(GetValue)}}}.
+   - {{{r(\textbackslash b(Get|GetValue)\textbackslash b)}}} \(= \)
+     {{{t(GetValue)}}} in {{{t(GetValue)}}}
+   - {{{r(Get(Value)?)}}} \(= \) {{{t(GetValue)}}} in
+     {{{t(GetValue)}}} since {{{r(?)}}} is /greedy/.
+
+** Advanced Topics
+
+   - Lookahead and lookaround
+   - Conditionals
+   - Recursiion
+   - Subroutine
+   - etc.
+
+* Summary
+
+** Regular Expression and Regular Language
+
+   1. RE is used to /denote/ regular language.
+   2. RE may be implemented using NFA.
+   3. Without knowing regular language, RE is also useful
+   4. RE is crazy.
 
 * COMMENT Dummy
 
 #  LocalWords:  SETUPFILE bc bd bigcup geq Kleene cd abab abcd cdab
 #  LocalWords:  cdcd ababab emptyset forall Extremal aa aaa overbrace
 #  LocalWords:  rr varnothing NFAs ATTR LaTeX textwidth mathcal NFA
-#  LocalWords:  DFA booo boooo DFAs
+#  LocalWords:  DFA booo boooo DFAs FSA imginline img IEEE POSIX BRE
+#  LocalWords:  SRE vert colorbox texttt regex textbackslash neq ae
+#  LocalWords:  newcommand whitespace abc multi

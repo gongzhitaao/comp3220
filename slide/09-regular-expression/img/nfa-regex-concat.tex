@@ -13,7 +13,7 @@
   \node[mymachine] (m0) {
     \begin{tikzpicture}
       \node[mystate] (q00) {};
-      \node[mystate, accepting] (q01) [right=of q00] {};
+      \node[mystate] (q01) [right=of q00] {};
 
       \path[dashed] (q00) edge (q01);
     \end{tikzpicture}
@@ -24,7 +24,7 @@
   \node[mymachine] (m1) [below=of m0]{
     \begin{tikzpicture}
       \node[mystate] (q10) {};
-      \node[mystate, accepting] (q11) [right=of q10] {};
+      \node[mystate] (q11) [right=of q10] {};
 
       \path[dashed] (q10) edge (q11);
     \end{tikzpicture}
