@@ -592,7 +592,7 @@ r\\]|\\.)*\](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \0
 
    - Lookahead and lookaround
    - Conditionals
-   - Recursiion
+   - Recursion
    - Subroutine
    - etc.
 
@@ -604,6 +604,14 @@ r\\]|\\.)*\](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\] \0
    2. RE may be implemented using NFA.
    3. Without knowing regular language, RE is also useful
    4. RE is crazy.
+
+** Limitation
+
+   Given alphabet \(\Sigma = \{a, b\}\)
+
+   \[\mathcal{L} = \{a^n b^n \vert n\geq 1\}\]
+
+   Can you find a finite automaton or regular expression for it?
 
 * COMMENT Dummy
 

@@ -1,7 +1,8 @@
 var gulp = require('gulp');
 var path = require('path');
-var concat = require('gulp-concat');
-var cssnano = require('gulp-cssnano');
+var concat = require('gulp-continuous-concat');
+var cssnano = require('cssnano');
+var postcss = require('gulp-postcss');
 var htmlmin = require('gulp-htmlmin');
 var autoprefixer = require('gulp-autoprefixer');
 var browsersync = require('browser-sync');
@@ -48,10 +49,13 @@ gulp.task('optimize-html', function() {
 });
 
 gulp.task('optimize-css', function() {
+    var processors = [
+      cssnano({autoprefixer: { browsers: ['last 2 version']},
+               discardComments: {removeAll: true}})];
+
   return gulp.src('homepage/css/*.css')
     .pipe(watch('homepage/css/*.css', {verbose: true}))
-    .pipe(cssnano())
-    .pipe(autoprefixer({ browsers: ['last 2 version']}))
+    .pipe(postcss(processors))
     .pipe(concat('css/ppl.css'))
     .pipe(gulp.dest(dist));
 });

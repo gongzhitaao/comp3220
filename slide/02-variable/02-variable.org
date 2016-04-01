@@ -1,6 +1,5 @@
 #+TITLE: Variable
 #+SETUPFILE: ../slide-setup.org
-#+LATEX_HEADER: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Content}\tableofcontents[currentsection]\end{frame}}
 
 * Variable Name
 

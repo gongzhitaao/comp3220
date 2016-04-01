@@ -1,9 +1,18 @@
-td > ul {
-    list-style:none
+.syllabus ul {
+    list-style:none;
+}
+
+.syllabus caption li {
+    width: 50%;
+    float: left;
+}
+
+.syllabus caption {
+    margin-bottom: 20px;
 }
 
 i {
-    margin-right:5px
+    margin-right:6px
 }
 
 caption > ul {
@@ -22,4 +31,21 @@ caption > ul {
 
 .language-concept {
     background-color: rgba(255,255,0,0.2);
+}
+
+table.syllabus {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.syllabus td:nth-child(1), .syllabus th:nth-child(1) {
+    width: 17%;
+}
+
+.syllabus td:nth-child(2), .syllabus th:nth-child(2) {
+    width: 30%;
+}
+
+.syllabus td:nth-child(3), .syllabus th:nth-child(3) {
+    width: 53%;
 }
