@@ -1,0 +1,22 @@
+\documentclass[crop,tikz,border=1px]{standalone}
+
+\usetikzlibrary{arrows,positioning,scopes,automata,calc}
+
+\begin{document}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+  distance=1cm,inner sep=2pt,
+  mystate/.style={state,text centered,minimum size=.6cm}]
+
+  \node[initial,accepting,mystate] (q0) {S};
+  \node[mystate] (q1) [right=of q0] {T};
+  \node[mystate] (q2) [right=of q1] {U};
+
+  \draw (q0) edge node {0} (q1)
+        (q1) edge node {0} (q2)
+        (q2) edge [bend left] node {0} (q0)
+        (q0) edge [loop above] node {1} (q0)
+        (q1) edge [loop above] node {1} (q1)
+        (q2) edge [loop above] node {1} (q2);
+
+\end{tikzpicture}
+\end{document}

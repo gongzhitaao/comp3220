@@ -4,7 +4,6 @@ var concat = require('gulp-continuous-concat');
 var cssnano = require('cssnano');
 var postcss = require('gulp-postcss');
 var htmlmin = require('gulp-htmlmin');
-var autoprefixer = require('gulp-autoprefixer');
 var browsersync = require('browser-sync');
 var flatten = require('gulp-flatten');
 var watch = require('gulp-watch');
@@ -50,7 +49,7 @@ gulp.task('optimize-html', function() {
 
 gulp.task('optimize-css', function() {
     var processors = [
-      cssnano({autoprefixer: { browsers: ['last 2 version']},
+      cssnano({autoprefixer: {browsers: ['last 2 version'], add: true},
                discardComments: {removeAll: true}})];
 
   return gulp.src('homepage/css/*.css')

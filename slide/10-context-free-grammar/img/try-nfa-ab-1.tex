@@ -1,0 +1,19 @@
+\documentclass[crop,tikz,border=1px]{standalone}
+
+\usetikzlibrary{arrows,positioning,scopes,automata,calc,chains}
+
+\begin{document}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+  distance=.8cm,inner sep=2pt,,
+  mystate/.style={state,text centered,minimum size=.5cm}]
+
+  \node[initial,mystate] (q0) {};
+  \node[mystate] (q1) [right=of q0] {};
+  \node[mystate,accepting] (q2) [below=of q1] {};
+
+  \draw (q0) edge node {a} (q1)
+        (q1) edge node {b} (q2)
+        (q0) edge node {\(\epsilon\)} (q2);
+
+\end{tikzpicture}
+\end{document}

@@ -1,8 +1,0 @@
-#+TITLE: Term Project
-#+SETUPFILE: ../slide-setup.org
-
-* Introduction
-
-** Goal
-
-   1. Implement an /interpreter/ for BrainFuck.

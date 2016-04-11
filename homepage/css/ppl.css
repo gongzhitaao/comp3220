@@ -2,11 +2,6 @@
     list-style:none;
 }
 
-.syllabus caption li {
-    width: 50%;
-    float: left;
-}
-
 .syllabus caption {
     margin-bottom: 20px;
 }
@@ -38,8 +33,18 @@ table.syllabus {
     width: 100%;
 }
 
+table.syllabus tbody ul {
+    padding-left: 1em;
+    margin: 0;
+}
+
+table.syllabus tbody ul>li {
+    padding-left: 10px;
+    text-indent:  -10px;
+}
+
 .syllabus td:nth-child(1), .syllabus th:nth-child(1) {
-    width: 17%;
+    width: 20%;
 }
 
 .syllabus td:nth-child(2), .syllabus th:nth-child(2) {
@@ -47,5 +52,5 @@ table.syllabus {
 }
 
 .syllabus td:nth-child(3), .syllabus th:nth-child(3) {
-    width: 53%;
+    width: 50%;
 }

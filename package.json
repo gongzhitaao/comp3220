@@ -1,0 +1,43 @@
+{
+  "name": "comp3220",
+  "version": "1.0.0",
+  "description": "Course materials for COMP3220 principle of programming languages",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "autoprefixer": "^6.3.6",
+    "browser-sync": "^2.11.2",
+    "cssnano": "^3.5.2",
+    "gulp": "^3.9.1",
+    "gulp-continuous-concat": "^0.1.1",
+    "gulp-flatten": "^0.2.0",
+    "gulp-htmlmin": "^1.3.0",
+    "gulp-postcss": "^6.1.0",
+    "gulp-rsync": "0.0.5",
+    "gulp-watch": "^4.3.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gongzhitaao/comp3220.git"
+  },
+  "keywords": [
+    "programming",
+    "languages",
+    "regular",
+    "expression",
+    "automata",
+    "context-free",
+    "language",
+    "c++",
+    "tutorial"
+  ],
+  "author": "Zhitao Gong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gongzhitaao/comp3220/issues"
+  },
+  "homepage": "https://github.com/gongzhitaao/comp3220#readme"
+}

@@ -1,0 +1,19 @@
+\documentclass[crop,tikz,border=1px]{standalone}
+
+\usetikzlibrary{arrows,positioning,scopes,automata,calc}
+
+\begin{document}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node
+  distance=1cm,inner sep=2pt,
+  mystate/.style={state,text centered,minimum size=.6cm}]
+
+  \node[initial,mystate] (q0) {S};
+  \node[mystate] (q1) [right=of q0] {R};
+  \node[accepting,mystate] (q2) [right=of q1] {T};
+
+  \draw (q0) edge node {a} (q1)
+        (q1) edge node {a} (q2)
+        (q1) edge [loop above] node {b} (q1);
+
+\end{tikzpicture}
+\end{document}

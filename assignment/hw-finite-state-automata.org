@@ -1,0 +1,21 @@
+#+TITLE: Review Finite State Automata
+#+SETUPFILE: assignment-setup.org
+
+* Solve with FSA
+
+  For question 1-4, assume alphabet is \(\Sigma = \{0, 1\}\).
+
+  1. =C=-equivalent Boolean operators. please implement an FSA for
+     each of the =C=-equivalent Boolean operators, =||= (logic =OR=),
+     ~&&~ (logic =AND=) and =^= (logic =XOR=).  /Note that logic ~OR~
+     and logic ~AND~ are short-circuit/.
+  2. Implement an FSA that accepts strings which are /even length/.
+  3. Implement an FSA that accepts /exactly/ 3 0's.
+  4. Implement an FSA that accepts /at least/ 3 0's.
+  5. Implement an FSA that only accepts strings which are =ART=,
+     =ARTS=, =ARTIST=, or =ABLE=.  The alphabet is \(\Sigma = \{A, B,
+     E, I, L, R, S, T\}\).
+
+* COMMENT Dummy
+
+#  LocalWords:  Automata SETUPFILE FSA

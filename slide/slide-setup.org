@@ -1,6 +1,6 @@
 #+SETUPFILE: ../general-setup.org
 #+OPTIONS: H:2 toc:nil
-#+STARTUP: hideblocks content
+#+STARTUP: hideblocks showcontent
 #+LATEX_CLASS: beamer
 #+COLUMNS: %45ITEM %10BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
 #+BEAMER_THEME: default
